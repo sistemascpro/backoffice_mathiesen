@@ -1,0 +1,147 @@
+.bbbootstrap {
+  background-image: url(../images/Alimentos.jpg) !important;
+  background-size: cover;
+ /* padding: 40px 0 30px 0;*/
+  background-repeat: no-repeat;
+  background-size: cover;
+ /* background-position: center center;
+  background-attachment: fixed;*/
+  position: relative;
+  transition: background 0.3s, border 0.3s, border-radius 0.3s, box-shadow 0.3s;
+  height: 100px;
+  
+}
+.bbbootstrap-color {
+  position: absolute;
+  background-color: #013B59;
+  opacity: 0.7;
+  transition: background 0.3s, border-radius 0.3s, opacity 0.3s;
+  height: -webkit-fill-available;
+  width: 100%;
+  
+}
+
+*, ::after, ::before {
+  box-sizing: border-box;
+}
+
+
+.bbbootstrap h1 {
+  color:#fff;
+  box-shadow: 0px 8px 20px 0px rgb(0 0 0 / 15%);
+}
+
+.bbbootstrap form {
+  position: absolute;
+  width: 40%;
+  /* margin: 22px auto 0; */
+  top: 24px;
+  right: 30px;
+}
+
+
+@media only screen and (max-width: 991px) {
+
+  .bbbootstrap form {
+    width: 80%;
+  
+  }
+}
+
+span {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  font-weight: inherit;
+  font-style: inherit;
+  font-size: 100%;
+  font-family: inherit;
+  vertical-align: baseline
+}
+
+.bbbootstrap form input[type="text"] {
+  padding: 15px 20px;
+  padding-right: 100px;
+  border-color: transparent;
+  border-radius:135px;
+  box-shadow: 0px 8px 20px 0px rgb(0 0 0 / 15%);
+}
+
+input.InputBox {
+  font-family: "lucida grande", "Lucida Sans Unicode", tahoma, sans-serif;
+  color: #333;
+  font-size: 15px;
+  padding: 3px;
+  margin: 0;
+  width: 250px;
+  background: #fff;
+  border: 1px solid #999;
+  border: 1px solid rgba(0, 0, 0, 0.4)
+}
+
+input[type=text] {
+  box-sizing: border-box
+}
+
+.InputBox {
+  display: block;
+  width: 100% !important;
+  padding: 6px 12px;
+  font-size: 15px;
+  line-height: 22px;
+  border-radius: 4px
+}
+
+.bbbootstrap form input[type="submit"] {
+  position: absolute;
+  top: 0px;
+  right: -1px;
+  float: right;
+  padding: 15px 25px;
+}
+
+.bbbootstrap .Button,
+.bbbootstrap .button {
+  background-color:  var(--acent-500);
+  background-image: none
+}
+
+input[type="submit"] {
+  -webkit-appearance: button;
+  cursor: pointer
+}
+
+.Button,
+.Button:hover,
+.Button:focus,
+.Button:active {
+  text-shadow: none;
+  border-color: transparent
+}
+
+.Button {
+  display: inline-block;
+  padding: 6px 12px;
+  vertical-align: middle;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 22px;
+  text-transform: uppercase;
+  border: transparent solid 1px;
+  border-radius: 3px 30px 30px 3px;
+  -webkit-transition: -webkit-box-shadow 50ms;
+  transition: -webkit-box-shadow 50ms;
+  -o-transition: box-shadow 50ms;
+  transition: box-shadow 50ms;
+  transition: box-shadow 50ms, -webkit-box-shadow 50ms;
+  -webkit-font-smoothing: inherit;
+  color: #fff;
+  background-color: #2e9df7;
+  background-repeat: repeat-x;
+  background-color: #38a2f7;
+  background-image: -webkit-linear-gradient(#38a2f7, #2498f7);
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#38a2f7), to(#2498f7));
+  background-image: -o-linear-gradient(#38a2f7, #2498f7);
+  background-image: linear-gradient(#38a2f7, #2498f7)
+}

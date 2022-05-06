@@ -1,0 +1,149 @@
+.contTopBar {
+  float: right;
+  width: auto;
+padding-left: 10px;
+box-sizing: border-box;
+}
+
+
+.contenedor-corp {
+    width: 175px;
+    float: left;
+    margin-right: 15px;
+    margin-left: 15px;
+}
+
+.selectbox {
+  width: 175px;
+  margin: auto;
+  /* position: absolute; */
+  /* top: 6px; */
+  font-size: var(--bodySm);
+  height: 44px;
+  /* right: 16%;*/
+  margin-top: 2px;
+}
+
+.select {
+  background: #fff;
+    width: 175px;
+    /* box-shadow: 0px 0px 0px rgb(0 0 0 / 16%); */
+    border-radius: 4px;
+    cursor: pointer;
+    /* display: flex; */
+    /* justify-content: space-between; */
+    /* align-items: center; */
+    transition: .2s ease all;
+    /* margin-bottom: -1px; */
+    padding: 6px 0 0 5px;
+    position: relative;
+    z-index: 200;
+    /* border: 1px solid transparent; */
+    height: 28px;
+    font-size: var(--bodySm);
+}
+
+.select.active,
+.select:hover {
+    /* box-shadow: 0px 5px 10px rgb(0 0 0 / 16%); */
+  
+}
+
+.select.active:before {
+	content: "";
+	display: block;
+	height: 0;
+	width: 0;
+	border-top: 15px solid #213f8f;
+	border-right: 15px solid transparent;
+	border-bottom: 15px solid transparent;
+	border-left: 15px solid transparent;
+	position: absolute;
+	bottom: -30px;
+	left: calc(50% - 15px);
+  display: none;
+}
+
+.select i {
+	font-size: 10px;
+    margin-left: 30px;
+    color: #213f8f;
+    font-weight: bold;
+    position: absolute;
+    top: 9px;
+    right: 5px;
+}
+
+.titulo {
+	margin-bottom: 10px;
+	color: #000;
+	font-weight: 500;
+  font-size: var(--caption);
+  padding-top: 2px;
+}
+
+.descripcion {
+  font-size: var(--bodySm);
+	color: #434343;
+}
+
+.opciones {
+  background: #fff;
+  border-radius: 10px;
+  border-radius: 0 0 10px 10px;
+  max-height: 589px;
+  overflow: auto;
+  z-index: 100;
+  width: 175px;
+  margin-top: -3px;
+	display: none;
+}
+
+.opciones.active {
+	display: block;
+	animation: fadeIn .3s forwards;
+}
+
+@keyframes fadeIn {
+	from {
+		transform: translateY(-200px) scale(.5);
+	}
+	to {
+		transform: translateY(0) scale(1);
+	}
+}
+
+.contenido-opcion {
+	width: 100%;
+	transition: .2s ease all;
+}
+
+.opciones .contenido-opcion {
+  padding: 4px;
+}
+
+.contenido-opcion img {
+  width: 20px;
+  height: 20px;
+  margin-right: 3px;
+  float: left;
+  margin-top: -2px;
+}
+
+.opciones .contenido-opcion:hover {
+	background: #213F8F;
+}
+
+.opciones .contenido-opcion:hover .titulo,
+.opciones .contenido-opcion:hover .descripcion {
+	color: #fff;
+}
+
+@media screen and (max-width: 800px){
+	.selectbox {
+		width: 100%;
+	}
+  .contTopBar {
+    width: 100%;
+  }
+}
