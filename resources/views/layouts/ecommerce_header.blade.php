@@ -325,6 +325,6 @@
         </div>
       </div>
     </nav>
-    <div class="container-flow header" style="padding-top:120px">
+    <div class="container-flow header">
     </div>
 
