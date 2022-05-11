@@ -1,6 +1,6 @@
 		@extends("layouts.app")
         @section("script")
-        <script src="{{ asset('assets/js/js/mant_roles.obfuscated.js') }}"></script>
+        <script src="{{ asset('assets/js/js/mant_roles.js') }}"></script>
         @endsection
 		@section("wrapper")
             <div class="page-wrapper">
@@ -23,7 +23,7 @@
                             <input
                             type="hidden"
                             class="RolRequired form-control"
-                            value="<?=$Rol[0]->rolid?>"
+                            value="<?=$Rol[0]->id?>"
                             id="RolId"
                             name="RolId"
                             readonly

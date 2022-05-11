@@ -17,7 +17,7 @@ class MantPaises extends Model
         return DB::select("
         SELECT
         *
-        FROM ".$BDBACK.".dbo.paises
+        FROM ".$BDBACK.".public.paises
         where codigo='".$codigo."' and id!=".$id."
         ");
     }
@@ -27,7 +27,7 @@ class MantPaises extends Model
         return DB::select("
         SELECT
         *
-        FROM ".$BDBACK.".dbo.paises
+        FROM ".$BDBACK.".public.paises
         where nombre='".$nombre."' and id!=".$id."
         ");
     }
@@ -42,7 +42,7 @@ class MantPaises extends Model
         return DB::select("
         SELECT
         *
-        FROM ".$BDBACK.".dbo.paises
+        FROM ".$BDBACK.".public.paises
         where id=".$id."
         ");
     }
@@ -53,7 +53,7 @@ class MantPaises extends Model
         SELECT 
         *
         FROM 
-        ".$BDBACK.".dbo.paises
+        ".$BDBACK.".public.paises
         order by
         nombre
         asc

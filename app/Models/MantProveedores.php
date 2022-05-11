@@ -17,7 +17,7 @@ class MantProveedores extends Model
         return DB::select("
         SELECT
         *
-        FROM ".$BDBACK.".dbo.proveedores
+        FROM ".$BDBACK.".public.proveedores
         where codigo='".$codigo."' and id!=".$id."
         ");
     }
@@ -27,7 +27,7 @@ class MantProveedores extends Model
         return DB::select("
         SELECT
         *
-        FROM ".$BDBACK.".dbo.proveedores
+        FROM ".$BDBACK.".public.proveedores
         where nombre='".$nombre."' and id!=".$id."
         ");
     }
@@ -42,7 +42,7 @@ class MantProveedores extends Model
         return DB::select("
         SELECT
         *
-        FROM ".$BDBACK.".dbo.proveedores
+        FROM ".$BDBACK.".public.proveedores
         where id=".$id."
         ");
     }
@@ -53,7 +53,7 @@ class MantProveedores extends Model
         SELECT 
         *
         FROM 
-        ".$BDBACK.".dbo.proveedores
+        ".$BDBACK.".public.proveedores
         order by
         nombre
         asc

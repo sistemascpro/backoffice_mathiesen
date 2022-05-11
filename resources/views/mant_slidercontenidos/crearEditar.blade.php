@@ -28,14 +28,6 @@
                             name="id"
                             readonly
                             />
-                            <input
-                            type="hidden"
-                            class="form-control"
-                            value=""
-                            id="Tipo"
-                            name="Tipo"
-                            readonly
-                            />
                         <div class="card-body row">
                             <div class="col-6">
                                 <div class="col-sm-12">

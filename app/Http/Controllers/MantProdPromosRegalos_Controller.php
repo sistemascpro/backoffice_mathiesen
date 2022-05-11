@@ -60,7 +60,7 @@ class MantProdPromosRegalos_Controller extends BaseController
             }
             else {
 
-                if( md5(md5('0'))==$data['promoid'] ){
+                if( '0'==$data['promoid'] ){
                     try {
 
                         $DataModel = [
@@ -122,7 +122,7 @@ class MantProdPromosRegalos_Controller extends BaseController
         if( count($Detalle)<=0 ){
 
             $Detalle[0] = (object)array(
-                'promoid'=>md5(md5('0'))
+                'promoid'=>'0'
                 , 'prod1'=>''
                 , 'desc1'=>''
                 , 'cant1'=>0

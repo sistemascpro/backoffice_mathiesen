@@ -17,7 +17,6 @@
                     </div>
                     <div class="user-box dropdown">
                         <a class="d-flex align-items-center nav-link dropdown-toggle dropdown-toggle-nocaret" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <div id="AvatarUsuarioHeader"><img src="<?=session('avatar')?>" class="user-img" alt="user avatar"></div>
                             <div class="user-info ps-3">
                                 <p class="user-name mb-0"><?=session('nombre')?></p>
                                 <p class="designattion mb-0"><?=session('rol')?></p>

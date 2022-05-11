@@ -29,7 +29,6 @@
                                         <tr>
                                             <th>ACCIONES</th>
                                             <th>POSICION</th>
-                                            <th>TIPO</th>
                                             <th>TITULO</th>
                                             <th>IMAGEN</th>
                                         </tr>
@@ -45,13 +44,8 @@
                                                     <span class="pointer badge badge-pill bg-danger" onclick="EliminarNoticia(<?=$Rows->id?>)">ELIMINAR</span>
                                                 </td>
                                                 <td><?=$Rows->posicion?></td>
-                                                <td><?=$Rows->tipo?></td>
                                                 <td><?=$Rows->titulo?></td>
-                                                
-                                                <?php if($Rows->tipo=='Imagen'){
-                                                    ?><td><a href="<?=$Rows->imagen?>" target="_blank"><img style="max-width:200px!important;" src="<?=$Rows->imagen?>?<?=date("YmdHis")?>" alt="logo icon"></a></td><?php
-                                                } else { ?><td></td><?php } ?>
-
+                                                <td><a href="<?=$Rows->imagen?>" target="_blank"><img style="max-width:200px!important;" src="<?=$Rows->imagen?>?<?=date("YmdHis")?>" alt="logo icon"></a></td>
                                             </tr>
                                             <?php
                                         }

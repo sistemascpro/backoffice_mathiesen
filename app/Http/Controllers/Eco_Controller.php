@@ -20,7 +20,7 @@ use Mail;
 
 class Eco_Controller extends BaseController
 {
-    public function GetSinCorreo(Request $req) { 
+    public function GetSinCorreo(Request $req) {
         $DatosGen = app('App\Http\Controllers\Home_Controller')->DatosGen($req);
         $Pedido = EcoModel::GetSinCorreo($DatosGen['NombreEmpresa'][0]->bd, $DatosGen['NombreEmpresa'][0]->bdbackoffice);
 
@@ -33,17 +33,17 @@ class Eco_Controller extends BaseController
     }
 
     public function RealizarPago(Request $req) { if( !$req->session()->get('nombre') || !$req->session()->get('fk_rol') ) { $req->session()->flush();  return redirect('login'); } else {
-        
+
         $data = $req->input();
         $DatosGen = app('App\Http\Controllers\Home_Controller')->DatosGen($req);
 
         $Pedido = EcoModel::getPedidoTemporal($req->session()->get('cliente_codigo'), $DatosGen['NombreEmpresa'][0]->bdbackoffice);
         $ClienteInfo = EcoModel::getInfoClienteCotizacion($DatosGen['NombreEmpresa'][0]->bd, $req->session()->get('id'));
-        
+
         if(count($Pedido)<=0){
             return "ERROR_SinPedido";
         }else{
-            
+
             $Productos = EcoModel::getDetalleBolsa($Pedido[0]->id, $DatosGen['NombreEmpresa'][0]->bdbackoffice);
 
             if( count($Productos)<=0 ){
@@ -78,12 +78,11 @@ class Eco_Controller extends BaseController
                 return "OK";
 
             }
-            
         }
     }}
 
     public function UpdateComentario(Request $req) { if( !$req->session()->get('nombre') || !$req->session()->get('fk_rol') ) { $req->session()->flush();  return redirect('login'); } else {
-        
+
         $data = $req->input();
         $DatosGen = app('App\Http\Controllers\Home_Controller')->DatosGen($req);
         $Pedido = EcoModel::getPedidoTemporal($req->session()->get('cliente_codigo'), $DatosGen['NombreEmpresa'][0]->bdbackoffice);
@@ -101,7 +100,7 @@ class Eco_Controller extends BaseController
     }}
 
     public function UpdateDireccionDespacho(Request $req) { if( !$req->session()->get('nombre') || !$req->session()->get('fk_rol') ) { $req->session()->flush();  return redirect('login'); } else {
-        
+
         $data = $req->input();
         $DatosGen = app('App\Http\Controllers\Home_Controller')->DatosGen($req);
         $Pedido = EcoModel::getPedidoTemporal($req->session()->get('cliente_codigo'), $DatosGen['NombreEmpresa'][0]->bdbackoffice);
@@ -120,11 +119,11 @@ class Eco_Controller extends BaseController
     }}
 
     public function UpdateOpcionDespacho(Request $req) { if( !$req->session()->get('nombre') || !$req->session()->get('fk_rol') ) { $req->session()->flush();  return redirect('login'); } else {
-        
+
         $data = $req->input();
         $DatosGen = app('App\Http\Controllers\Home_Controller')->DatosGen($req);
         $Pedido = EcoModel::getPedidoTemporal($req->session()->get('cliente_codigo'), $DatosGen['NombreEmpresa'][0]->bdbackoffice);
-        
+
         if(count($Pedido)<=0){
             return "ERROR_SinPedido";
         }else{
@@ -142,7 +141,7 @@ class Eco_Controller extends BaseController
         $DatosGen = app('App\Http\Controllers\Home_Controller')->DatosGen($req);
         $ExisteDescuento = EcoModel::ValidarCodigoDescuento($data['codigo'],$req->session()->get('cliente_codigo'), $DatosGen['NombreEmpresa'][0]->bdbackoffice);
         $Pedido = EcoModel::getPedidoTemporal($req->session()->get('cliente_codigo'), $DatosGen['NombreEmpresa'][0]->bdbackoffice);
-        
+
         if(count($ExisteDescuento)<=0){
             if(count($Pedido)>0){
                 $Pedido = $Pedido[0]->id;
@@ -193,11 +192,14 @@ class Eco_Controller extends BaseController
         $Actual = EcoModel::getLineaProductoActual($data['id'], $DatosGen['NombreEmpresa'][0]->bdbackoffice);
         $CantVenta = ($Actual[0]->cant_venta*1)+$data['cant'];
 
-        if($CantVenta<=0){
+        if($CantVenta<=0)
+        {
             EcoModel::deleteLineaProductoRegalo($data['id']);
             EcoModel::deleteLineaProductoActual($data['id']);
-        }else{
-            $Condicion = " prod.CodProd='".$Actual[0]->codigo."'";
+        }
+        else
+        {
+            $Condicion = " prod.codprod='".$Actual[0]->codigo."'";
             $AuxCondicionCaracOpcion = '';
             $ProductoInfo = EcoModel::getProductosActivos($Condicion, $ClienteCobrador, $DatosGen['NombreEmpresa'][0]->bd, $DatosGen['NombreEmpresa'][0]->bdbackoffice, $AuxCondicionCaracOpcion);
 
@@ -216,9 +218,9 @@ class Eco_Controller extends BaseController
                 $PrecioLista    =   $ProductoInfo[0]->PrecioVta;
                 $Descuento      =   0;
                 $PrecioVenta    =   $ProductoInfo[0]->PrecioVta;
-                if( 
-                    $ProductoInfo[0]->soft_promodescuento1!=null 
-                    && $ProductoInfo[0]->soft_promodescuento1_dcto!=null 
+                if(
+                    $ProductoInfo[0]->soft_promodescuento1!=null
+                    && $ProductoInfo[0]->soft_promodescuento1_dcto!=null
                     && $ProductoInfo[0]->soft_promodescuento1_cant!=null
                     && $ProductoInfo[0]->soft_promodescuento1>0
                     && $ProductoInfo[0]->soft_promodescuento1_dcto>0
@@ -226,9 +228,9 @@ class Eco_Controller extends BaseController
                     && $CantVenta>=$ProductoInfo[0]->soft_promodescuento1_cant)
                 {
                     $Descuento = $ProductoInfo[0]->soft_promodescuento1_dcto;
-                    $PrecioVenta = round($ProductoInfo[0]->PrecioVta-round(($ProductoInfo[0]->PrecioVta/$ProductoInfo[0]->soft_promodescuento1_dcto)/100)); 
+                    $PrecioVenta = round($ProductoInfo[0]->PrecioVta-round(($ProductoInfo[0]->PrecioVta/$ProductoInfo[0]->soft_promodescuento1_dcto)/100));
                 }
-                
+
                 try {
                     $DataModel = [
                         'fk_pedido'         => $Actual[0]->fk_pedido
@@ -247,7 +249,7 @@ class Eco_Controller extends BaseController
                         ,'padre_id'          => 0
                         ,'regalo'            => 'NO'
                         ,'cant_venta'        => $CantVenta
-                        ,'codigo'            => $ProductoInfo[0]->CodProd
+                        ,'codigo'            => $ProductoInfo[0]->codprod
                         ,'descripcion'       => $ProductoInfo[0]->DesProd
                         ,'ing_fecha'         => app('App\Http\Controllers\Home_Controller')->GetDateTime()
                         ,'ing_id'            => $req->session()->get('id')
@@ -288,7 +290,7 @@ class Eco_Controller extends BaseController
                                 ,'padre_id'          => $data['id']
                                 ,'regalo'            => 'SI'
                                 ,'cant_venta'        => $CantidadRegalo
-                                ,'codigo'            => $ProductoInfo[0]->CodProd
+                                ,'codigo'            => $ProductoInfo[0]->codprod
                                 ,'descripcion'       => $ProductoInfo[0]->DesProd
                                 ,'ing_fecha'         => app('App\Http\Controllers\Home_Controller')->GetDateTime()
                                 ,'ing_id'            => $req->session()->get('id')
@@ -305,7 +307,6 @@ class Eco_Controller extends BaseController
                             } else {
                                 EcoModel::addProducto($DataModel, $data['id']);
                             }
-                            
 
                         } catch (Exception $e) { $ErrorProducto=1; return "ERROR_GuardarProductoRegalo"; }
                     }
@@ -314,34 +315,40 @@ class Eco_Controller extends BaseController
             }
         }
     }}
-   
+
     public function getSubTotalBolsa(Request $req) {
         $DatosGen = app('App\Http\Controllers\Home_Controller')->DatosGen($req);
 
         return EcoModel::getSubtotalTemporal($req->session()->get('cliente_codigo'), $DatosGen['NombreEmpresa'][0]->bdbackoffice);
     }
 
-    public function addProducto(Request $req) { if( !$req->session()->get('nombre') || !$req->session()->get('fk_rol') ) { $req->session()->flush();  return redirect('login'); } else {
+    public function addProducto(Request $req) {
         $data = $req->input();
         $DatosGen = app('App\Http\Controllers\Home_Controller')->DatosGen($req);
-        
+
         $Condicion = " prod.id='".$data['codigo']."'";
         $AuxCondicionCaracOpcion='';
         $ProductoInfo = EcoModel::getProductosActivos($Condicion, $DatosGen['NombreEmpresa'][0]->bd, $DatosGen['NombreEmpresa'][0]->bdbackoffice,$AuxCondicionCaracOpcion);
         $ClienteInfo = EcoModel::getInfoCliente($DatosGen['NombreEmpresa'][0]->bd, $req->session()->get('cliente_codigo'));
 
-        if( $req->session()->get('cliente_codigo')=='0' ) {
+        if( $req->session()->get('cliente_codigo')=='0' ) 
+        {
             return "ERROR_ClienteActivo";
-        } else if( count($ClienteInfo)<=0 ){
-            return "ERROR_InfoCliente";           
-        } else if( count($ProductoInfo)<=0 ){
+        }
+        else if( count($ClienteInfo)<=0 )
+        {
+            return "ERROR_InfoCliente";
+        }
+        else if( count($ProductoInfo)<=0 )
+        {
             return "ERROR_InfoProducto";
-        } else {
-
+        }
+        else
+        {
             $Pedido = EcoModel::getPedidoTemporal($req->session()->get('cliente_codigo'), $DatosGen['NombreEmpresa'][0]->bdbackoffice);
 
             if(count($Pedido)<=0){
-                
+
                 try {
                     $DataModel = [
                         'estado_terminado'          => 'NO'
@@ -364,7 +371,7 @@ class Eco_Controller extends BaseController
                         , 'cliente_nombre'          => $ClienteInfo[0]->nombre
                         , 'cliente_credito'         => 0
                         , 'cliente_deuda'           => 0
-                        , 'cliente_listaprecio'     => ''
+                        , 'cliente_listaprecio'     => 0
                         , 'cliente_condventa'       => ''
                         , 'cliente_contacto'        => ''
                         , 'cliente_moneda'          => ''
@@ -391,12 +398,12 @@ class Eco_Controller extends BaseController
             if( $Pedido==0 || strlen($Pedido)==0 ){
                 return "ERROR_Pedido";
             }else{
-                
+
                 $ErrorProducto  =   0;
                 $PrecioLista    =   0;
                 $Descuento      =   0;
                 $PrecioVenta    =   0;
-                
+
                 try {
                     $DataModel = [
                         'fk_pedido'         => $Pedido
@@ -429,13 +436,13 @@ class Eco_Controller extends BaseController
                     $ProductoId = EcoModel::addProducto($DataModel);
                 } catch (Exception $e) { $ErrorProducto=1; return "ERROR_GuardarProducto"; }
 
-                if($ErrorProducto==0) { 
-                    return "OK"; 
+                if($ErrorProducto==0) {
+                    return "OK";
                 }
 
             }
         }
-    }}
+    }
 
     public function getProductosDetalle(Request $req) {
 
@@ -513,14 +520,14 @@ class Eco_Controller extends BaseController
             $Salida .= "
             <div class=\"container contPdp\">
         <div class=\"row\">
-          <div class=\"col-xl-12 \">
-          <div class=\"col-xl-12 col-md-12\" style=\"border-bottom: solid 1px #c3c3c3; margin-bottom: 24px; padding-bottom: 24px;\">
+            <div class=\"col-xl-12 \">
+                <div class=\"col-xl-12 col-md-12\" style=\"border-bottom: solid 1px #c3c3c3; margin-bottom: 24px; padding-bottom: 24px;\">
             <div class=\"row\">
     <div class=\"col-xl-4 col-md-4 col-sm-12 imgPlp-modal\">
         <div id=\"ImgDetalleProducto\">
             <img src=\"".$imagen1."\">
         </div>
-        <div class=\"row\">
+        <div class=\"row mt-3\">
             <div class=\"col-2\" style=\"cursor:pointer\" onclick=\"SetImagenProducto('".$imagen1."')\"><img src=\"".$imagen1."\"></div>
             <div class=\"col-2\" style=\"cursor:pointer\" onclick=\"SetImagenProducto('".$imagen2."')\"><img src=\"".$imagen2."\"></div>
             <div class=\"col-2\" style=\"cursor:pointer\" onclick=\"SetImagenProducto('".$imagen3."')\"><img src=\"".$imagen3."\"></div>
@@ -565,7 +572,7 @@ class Eco_Controller extends BaseController
 
     $Salida .="
     </div>
-              <div class=\"col-xl-8 col-md-8 col-sm-12\" style=\" float:left;\">
+            <div class=\"col-xl-8 col-md-8 col-sm-12\" style=\" float:left;\">
                 <div class=\"row\">
                     <div class=\"col-6\">
                         <h2>".strtoupper($Productos[$i]->descripcion)."</h2>
@@ -580,7 +587,7 @@ class Eco_Controller extends BaseController
                         }
                         $Salida .="</div>
                 </div>
-          ";
+            ";
 
                 $Salida .="<div class=\"row mt-3\">";
 
@@ -596,8 +603,8 @@ class Eco_Controller extends BaseController
                         {
                             $CaractVal = EcoModel::GetCaracteristicasValoresFamiliasProducto($DatosGen['NombreEmpresa'][0]->bdbackoffice, $lsRow->caract_id, $Productos[$i]->id);
                             if(count($CaractVal)>0){ $Valor = $CaractVal[0]->valor; } else { $Valor=''; }
-                            $Salida .="<div 
-                            style=\"padding: 1px!important; width:30% !important; margin-right:8px !important; font-size:10px !important\" 
+                            $Salida .="<div
+                            style=\"padding: 1px!important; width:30% !important; margin-right:8px !important; font-size:10px !important\"
                             class=\"mt-2 productItem-inner\"
                             role=\"alert\">
                             <span>".$lsRow->caract_nombre."</span>".$Valor."</div>";
@@ -606,8 +613,8 @@ class Eco_Controller extends BaseController
                         {
                             $CaractVal = EcoModel::GetCaracteristicasValoresFamiliasProducto($DatosGen['NombreEmpresa'][0]->bdbackoffice, $lsRow->caract_id, $Productos[$i]->id);
                             if(count($CaractVal)>0){ $Valor = $CaractVal[0]->valor; } else { $Valor=''; }
-                            $Salida .="<div 
-                            style=\"padding: 1px!important; width:30% !important; margin-right:8px !important; font-size:10px !important\" 
+                            $Salida .="<div
+                            style=\"padding: 1px!important; width:30% !important; margin-right:8px !important; font-size:10px !important\"
                             class=\"mt-2 productItem-inner\"
                             role=\"alert\">
                             <span>".$lsRow->caract_nombre."</span>".$Valor."</div>";
@@ -616,8 +623,8 @@ class Eco_Controller extends BaseController
                         {
                             $CaractVal = EcoModel::GetCaracteristicasValoresFamiliasProducto($DatosGen['NombreEmpresa'][0]->bdbackoffice, $lsRow->caract_id, $Productos[$i]->id);
                             if(count($CaractVal)>0){ $Valor = $CaractVal[0]->valor; } else { $Valor=''; }
-                            $Salida .="<div 
-                            style=\"padding: 1px!important; width:30% !important; margin-right:8px !important; font-size:10px !important\" 
+                            $Salida .="<div
+                            style=\"padding: 1px!important; width:30% !important; margin-right:8px !important; font-size:10px !important\"
                             class=\"mt-2 productItem-inner\"
                             role=\"alert\">
                             <span>".$lsRow->caract_nombre."</span>".$Valor."</div>";
@@ -625,8 +632,8 @@ class Eco_Controller extends BaseController
                         else if( $lsRow->caract_tipo_id==5 )
                         {
                             $Opciones = EcoModel::CargarCaracteristicasFamiliaProductosOpciones($DatosGen['NombreEmpresa'][0]->bdbackoffice, $lsRow->caract_id, $Productos[$i]->id);
-                            $Salida .="<div 
-                            style=\"padding: 1px!important; width:30% !important; margin-right:8px !important; font-size:10px !important\" 
+                            $Salida .="<div
+                            style=\"padding: 1px!important; width:30% !important; margin-right:8px !important; font-size:10px !important\"
                             class=\"mt-2 productItem-inner\"
                             role=\"alert\">
                             <span>".$lsRow->caract_nombre."</span>";
@@ -640,8 +647,8 @@ class Eco_Controller extends BaseController
 
                 $Paises = EcoModel::GetPaisesProducto($DatosGen['NombreEmpresa'][0]->bdbackoffice, $Productos[$i]->id);
                 if( count($Paises)>0 ){
-                    $Salida .="<div 
-                    style=\"padding: 1px!important; width:30% !important; margin-right:8px !important; font-size:10px !important\" 
+                    $Salida .="<div
+                    style=\"padding: 1px!important; width:30% !important; margin-right:8px !important; font-size:10px !important\"
                     class=\"mt-2 productItem-inner\"
                     role=\"alert\">
                     <span>PAISES</span>";
@@ -649,8 +656,8 @@ class Eco_Controller extends BaseController
                     $Salida .=" </div>";
                 }
 
-                $Salida .="<div 
-                style=\"padding: 1px!important; width:30% !important; margin-right:8px !important; font-size:10px !important\" 
+                $Salida .="<div
+                style=\"padding: 1px!important; width:30% !important; margin-right:8px !important; font-size:10px !important\"
                 class=\"mt-2 productItem-inner\"
                 role=\"alert\">
                 <span>MARCA</span>";
@@ -659,8 +666,8 @@ class Eco_Controller extends BaseController
 
                 $Familias = EcoModel::GetSubFamiliasProducto($DatosGen['NombreEmpresa'][0]->bdbackoffice, $Productos[$i]->id);
                 if( count($Familias)>0 ){
-                    $Salida .="<div 
-                    style=\"padding: 1px!important; width:30% !important; margin-right:8px !important; font-size:10px !important\" 
+                    $Salida .="<div
+                    style=\"padding: 1px!important; width:30% !important; margin-right:8px !important; font-size:10px !important\"
                     class=\"mt-2 productItem-inner\"
                     role=\"alert\">
                     <span>FAMILIAS</span>";
@@ -670,8 +677,8 @@ class Eco_Controller extends BaseController
 
                 $Proveedores = EcoModel::GetProveedoresProducto($DatosGen['NombreEmpresa'][0]->bdbackoffice, $Productos[$i]->id);
                 if( count($Proveedores)>0 ){
-                    $Salida .="<div 
-                    style=\"padding: 1px!important; width:30% !important; margin-right:8px !important; font-size:10px !important\" 
+                    $Salida .="<div
+                    style=\"padding: 1px!important; width:30% !important; margin-right:8px !important; font-size:10px !important\"
                     class=\"mt-2 productItem-inner\"
                     role=\"alert\">
                     <span>PROVEEDORES</span>";
@@ -685,22 +692,22 @@ class Eco_Controller extends BaseController
 
             $Salida .="
                 <button type=\"button\" class=\"btn btn-primar btn-primary-mat btn-primary-matInModal\" onclick=\"AgregarProducto('".$Productos[$i]->id."')\">Solicitar una cotización</button>
-              </div>
+</div>
             </div>
-          </div>
+</div>
         </div>
         </div>
         <div class=\"row\">
-          <div class=\"col-xl-12\" style=\"padding-left: 30px; padding-right: 30px; box-sizing: border-box;\">
+<div class=\"col-xl-12\" style=\"padding-left: 30px; padding-right: 30px; box-sizing: border-box;\">
             <h2>Product Description</h2>
-            <p>".nl2br($Productos[$i]->DesExtra)."...</p>
-    
-          </div>
+            <p>".nl2br($Productos[$i]->desextra)."...</p>
+
+</div>
         </div>
-      </div>";
+</div>";
         }
         return $Salida;
-        
+
     }
 
     public function getProductosActivos(Request $req) {
@@ -715,10 +722,10 @@ class Eco_Controller extends BaseController
         $Pais       = $data['Pais'];
         $Imagen = '';
 
-        $Condicion = " prod.estado=1 ";
-        
-        $FiltroExtra = null;
+        $Condicion = " prod.estado =true ";
 
+        $FiltroExtra = null;
+        $SalidaFiltroExtra = '';
         if( $Type=='banner' )
         {
             if($Condicion != " ") { $Condicion .= " and bann.banner=".$Codigo." "; }
@@ -730,13 +737,13 @@ class Eco_Controller extends BaseController
         }
         else if( $Type=='Familia' )
         {
-            if($Condicion != " ") 
-            { 
-                $Condicion .= " and prod.fk_familia=".$Codigo." "; 
+            if($Condicion != " ")
+            {
+                $Condicion .= " and prod.fk_familia=".$Codigo." ";
             }
-            else 
-            { 
-                $Condicion .= " prod.fk_familia=".$Codigo." "; 
+            else
+            {
+                $Condicion .= " prod.fk_familia=".$Codigo." ";
             }
             $NombreProductos = EcoModel::getNombreGrupo($DatosGen['NombreEmpresa'][0]->bd, $Codigo);
             if(count($NombreProductos)>0)
@@ -745,7 +752,6 @@ class Eco_Controller extends BaseController
             }
 
             $FiltroExtra = EcoModel::CargarCaracteristicasFamilias($DatosGen['NombreEmpresa'][0]->bdbackoffice, $Codigo);
-            $SalidaFiltroExtra = '';
             foreach($FiltroExtra as $lsRow)
             {
                 if( $lsRow->es_filtro=='SI')
@@ -754,12 +760,12 @@ class Eco_Controller extends BaseController
                     {
                         $Opciones = EcoModel::CargarCaracteristicasFamilia($DatosGen['NombreEmpresa'][0]->bdbackoffice, $lsRow->fk_caracteristica);
                         if(count($CaractVal)>0)
-                        { 
-                            $Valor = $CaractVal[0]->valor; 
-                        } 
-                        else 
-                        { 
-                            $Valor=''; 
+                        {
+                            $Valor = $CaractVal[0]->valor;
+                        }
+                        else
+                        {
+                            $Valor='';
                         }
 
                         $SalidaFiltroExtra .="
@@ -777,7 +783,7 @@ class Eco_Controller extends BaseController
                                         foreach ($ProductosProveedores as $lsRow)
                                         {
                                             $SalidaFiltroExtra .="
-                                            <label class=\"control control--checkbox\">".$Valor." <input value=\"".$Valor."\" type=\"checkbox\" id=\"ChkProdProveedores[]\" name=\"ChkProdProveedores[]\">
+                                            <label class=\"control control--checkbox\">".$Valor." <input value=\"".$Valor."\" type=\"checkbox\" id=\"ChkProdProveedores[]\" name=\"ChkProdProveedores[]\" >
                                                 <div class=\"control__indicator\"></div>
                                             </label>
                                             ";
@@ -792,12 +798,12 @@ class Eco_Controller extends BaseController
                     {
                         $Opciones = EcoModel::CargarCaracteristicasFamilia($DatosGen['NombreEmpresa'][0]->bdbackoffice, $lsRow->fk_caracteristica);
                         if(count($CaractVal)>0)
-                        { 
-                            $Valor = $CaractVal[0]->valor; 
-                        } 
-                        else 
-                        { 
-                            $Valor=''; 
+                        {
+                            $Valor = $CaractVal[0]->valor;
+                        }
+                        else
+                        {
+                            $Valor='';
                         }
 
                         $SalidaFiltroExtra .="
@@ -825,18 +831,17 @@ class Eco_Controller extends BaseController
                                 </div>
                             </div>
                         </div>";
-                        
                     }
                     else if( $lsRow->tipo==39999)
                     {
                         $Opciones = EcoModel::CargarCaracteristicasFamilia($DatosGen['NombreEmpresa'][0]->bdbackoffice, $lsRow->fk_caracteristica);
                         if(count($CaractVal)>0)
-                        { 
-                            $Valor = $CaractVal[0]->valor; 
-                        } 
-                        else 
-                        { 
-                            $Valor=''; 
+                        {
+                            $Valor = $CaractVal[0]->valor;
+                        }
+                        else
+                        {
+                            $Valor='';
                         }
                         $SalidaFiltroExtra .="
                         <div class=\"accordion\" id=\"accordionPanelsStayOpenExample\" style=\"margin:0px !important;\">
@@ -864,7 +869,7 @@ class Eco_Controller extends BaseController
                             </div>
                         </div>";
                     }
-                    else if( $lsRow->tipo==5 )
+                    else if( $lsRow->tipo==3 )
                     {
                         $Opciones = EcoModel::CargarCaracteristicasFamiliaOpciones($DatosGen['NombreEmpresa'][0]->bdbackoffice, $lsRow->fk_caracteristica);
                         $SalidaFiltroExtra .="
@@ -925,38 +930,34 @@ class Eco_Controller extends BaseController
         else if( $Type=='Buscador' )
         {
             $Codigo = strtoupper($Codigo);
-            if($Condicion != " ") {
-                $Condicion .= " and
-                (
-                    upper(ISNULL(CAST((
-                        SELECT (STR(caract.valor))+'/'
-                        FROM backoffice_mathiesen_new.dbo.productos_caracteristicas AS caract
-                        WHERE prod.id=caract.fk_producto
-                        FOR XML PATH('')
-                    )as varchar(300)),'')) like '%".$Codigo."%'
-                    or upper(prod.codigo) like '%".$Codigo."%'
-                    or upper(prod.descripcion) like '%".$Codigo."%'
-                    or upper(prod.descripcion2) like '%".$Codigo."%'
-                    or upper(fam.nombre) like '%".$Codigo."%'
-                    or upper(marc.nombre) like '%".$Codigo."%'
-                )";
+
+            if($Condicion != " ")
+            {
+                $Condicion .= " and ";
             }
-            else {
-                $Condicion .= "
-                (
-                    upper(ISNULL(CAST((
-                        SELECT (STR(caract.valor))+'/'
-                        FROM backoffice_mathiesen_new.dbo.productos_caracteristicas AS caract
-                        WHERE prod.id=caract.fk_producto
-                        FOR XML PATH('')
-                    )as varchar(300)),'')) like '%".$Codigo."%'
-                    or upper(prod.codigo) like '%".$Codigo."%'
-                    or upper(prod.descripcion) like '%".$Codigo."%'
-                    or upper(prod.descripcion2) like '%".$Codigo."%'
-                    or upper(fam.nombre) like '%".$Codigo."%'
-                    or upper(marc.nombre) like '%".$Codigo."%'
-                )";
-            }
+
+            $Condicion .= "
+            (
+                UPPER(prod.codigo) like UPPER('%".$Codigo."%')
+                or UPPER(prod.descripcion) like UPPER('%".$Codigo."%')
+                or UPPER(prod.descripcion2) like UPPER('%".$Codigo."%')
+                or UPPER(fam.nombre) like UPPER('%".$Codigo."%')
+                or UPPER(marc.nombre) like UPPER('%".$Codigo."%')
+                or prod.id IN (
+                    SELECT
+                    tempprod.fk_producto
+                    FROM public.productos_caracteristicas as tempprod
+                    inner join public.caracteristicas_productos as caract on tempprod.fk_caracteristica=caract.id and tempprod.fk_producto=prod.id
+                    left join public.caracteristicas_productos_opciones as opt on caract.id=opt.fk_caracteristica and tempprod.valor=cast(opt.id as varchar)
+                    where
+                    case
+                    when caract.tipo=1 then unaccent(UPPER(cast(tempprod.valor as varchar)))
+                    when caract.tipo=2 then unaccent(UPPER(cast(tempprod.valor as varchar)))
+                    when caract.tipo=3 then unaccent(UPPER(cast(opt.opcion as varchar)))
+                    when caract.tipo=4 then unaccent(UPPER(cast(tempprod.valor as varchar)))
+                    end like unaccent(UPPER('%".$Codigo."%'))
+                )
+            )";
 
             $NombreProductos = "BUSQUEDA: ".$Codigo;
         }
@@ -1094,19 +1095,19 @@ class Eco_Controller extends BaseController
                 if($i==0)
                 {
                     $AuxCondicionCaracOpcion .= " 
-                    inner join backoffice_mathiesen_new.dbo.productos_caracteristicas as car on car.fk_producto=prod.id and car.fk_caracteristica=".$AuxProdCarcOpcion[0]." and ( car.valor=".$AuxProdCarcOpcion[1]."
+                    inner join backoffice_mathiesen_edo.public.productos_caracteristicas as car on car.fk_producto=prod.id and car.fk_caracteristica=".$AuxProdCarcOpcion[0]." and ( car.valor=cast(".$AuxProdCarcOpcion[1]." as varchar)
                     ";
                 }
                 else
                 {
-                    $AuxCondicionCaracOpcion .= " or car.valor=".$AuxProdCarcOpcion[1]." ";
+                    $AuxCondicionCaracOpcion .= " or car.valor='".$AuxProdCarcOpcion[1]."' ";
                 }
 
             }
 
             $AuxCondicionCaracOpcion .= " ) ";
         }
-        
+
         $Productos = EcoModel::getProductosActivos($Condicion, $DatosGen['NombreEmpresa'][0]->bd, $DatosGen['NombreEmpresa'][0]->bdbackoffice, $AuxCondicionCaracOpcion);
 
         if($Order==1) {
@@ -1128,7 +1129,7 @@ class Eco_Controller extends BaseController
         $TotPaginator = ceil(count($Productos)/$OrderCant);
 
         $Salida .="
-        <nav aria-label=\"breadcrumb\" style=\"margin-left: 28px;\">
+        <nav aria-label=\"breadcrumb\" style=\"margin-left: 28px; margin-top:110px !important\">
             <ol class=\"breadcrumb\">
                 <li class=\"breadcrumb-item\"><a href=\"/\">Página de inicio</a></li>
                 <li class=\"breadcrumb-item active\" aria-current=\"page\">Página de productos</li>
@@ -1170,8 +1171,8 @@ class Eco_Controller extends BaseController
         $Salida .="</div>
         <div class=\"container\">
             <div class=\"cat-sumary col-12 mb-3\">
-                <h1>".$NombreProductos."</h1>
-                ".$Descripcion.".</p>
+                <h1>".mb_strtoupper($NombreProductos)."</h1>
+                ".mb_strtoupper($Descripcion).".</p>
             </div>
         ";
 
@@ -1211,8 +1212,19 @@ class Eco_Controller extends BaseController
                                                     ";
                                                     foreach ($ProductosProveedores as $lsRow)
                                                     {
+                                                        $Checked = '';
+                                                        if(isset($data['ChkProdProveedores']))
+                                                        {
+                                                            for( $i=0; $i<count($data['ChkProdProveedores']); $i++)
+                                                            {
+                                                                if( $lsRow->id==$data['ChkProdProveedores'][$i] )
+                                                                {
+                                                                    $Checked = ' checked ';
+                                                                }
+                                                            }
+                                                        }
                                                         $Salida .="
-                                                        <label class=\"control control--checkbox\">".$lsRow->nombre." <input value=\"".$lsRow->id."\" type=\"checkbox\" id=\"ChkProdProveedores[]\" name=\"ChkProdProveedores[]\">
+                                                        <label class=\"control control--checkbox\">".$lsRow->nombre." <input value=\"".$lsRow->id."\" type=\"checkbox\" id=\"ChkProdProveedores[]\" name=\"ChkProdProveedores[]\" ".$Checked.">
                                                             <div class=\"control__indicator\"></div>
                                                         </label>
                                                         ";
@@ -1239,8 +1251,19 @@ class Eco_Controller extends BaseController
                                                     ";
                                                     foreach ($ProductosMarcas as $lsRow)
                                                     {
+                                                        $Checked = '';
+                                                        if(isset($data['ChkProdMarcas']))
+                                                        {
+                                                            for( $i=0; $i<count($data['ChkProdMarcas']); $i++)
+                                                            {
+                                                                if( $lsRow->id==$data['ChkProdMarcas'][$i] )
+                                                                {
+                                                                    $Checked = ' checked ';
+                                                                }
+                                                            }
+                                                        }
                                                         $Salida .="
-                                                        <label class=\"control control--checkbox\">".$lsRow->nombre." <input value=\"".$lsRow->id."\" type=\"checkbox\" id=\"ChkProdMarcas[]\" name=\"ChkProdMarcas[]\">
+                                                        <label class=\"control control--checkbox\">".$lsRow->nombre." <input value=\"".$lsRow->id."\" type=\"checkbox\" id=\"ChkProdMarcas[]\" name=\"ChkProdMarcas[]\" ".$Checked.">
                                                             <div class=\"control__indicator\"></div>
                                                         </label>
                                                         ";
@@ -1267,8 +1290,19 @@ class Eco_Controller extends BaseController
                                                     ";
                                                     foreach ($ProductosFamilias as $lsRow)
                                                     {
+                                                        $Checked = '';
+                                                        if(isset($data['ChkFamilias']))
+                                                        {
+                                                            for( $i=0; $i<count($data['ChkFamilias']); $i++)
+                                                            {
+                                                                if( $lsRow->id==$data['ChkFamilias'][$i] )
+                                                                {
+                                                                    $Checked = ' checked ';
+                                                                }
+                                                            }
+                                                        }
                                                         $Salida .="
-                                                        <label class=\"control control--checkbox\">".$lsRow->nombre." <input value=\"".$lsRow->id."\" type=\"checkbox\" id=\"ChkFamilias[]\" name=\"ChkFamilias[]\">
+                                                        <label class=\"control control--checkbox\">".$lsRow->nombre." <input value=\"".$lsRow->id."\" type=\"checkbox\" id=\"ChkFamilias[]\" name=\"ChkFamilias[]\" ".$Checked.">
                                                             <div class=\"control__indicator\"></div>
                                                         </label>
                                                         ";
@@ -1358,8 +1392,8 @@ class Eco_Controller extends BaseController
                     <div class=\"cont-textInfo\">
                         <span class=\"pdpCat\">".$NombreProductos."</span>
                         <h2>".$Productos[$i]->descripcion."</h2>
-                        <span class=\"idPlp\">COD: ".$Productos[$i]->codigo."</span> 
-                        <div class=\"descriptionPlp\">".substr(nl2br($Productos[$i]->DesExtra),0,250)."...</div>
+                        <span class=\"idPlp\">COD: ".$Productos[$i]->id." -- ".$Productos[$i]->codigo."</span>
+                        <div class=\"descriptionPlp\">".substr(nl2br($Productos[$i]->desextra),0,250)."...</div>
                     </div>
                 </div>";
 
@@ -1387,14 +1421,14 @@ class Eco_Controller extends BaseController
                                 if(count($CaractVal)>0){ $Valor = $CaractVal[0]->valor; } else { $Valor=''; }
                                 $Salida .="<div class=\"col-3 productItem\"><div class=\"productItem-inner\"><span>".strtoupper($lsRow->caract_nombre)."</span> ".$Valor."</div></div>";
                             }
-                            else if( $lsRow->caract_tipo_id==3)
+                            else if( $lsRow->caract_tipo_id==4)
                             {
                                 $CaractVal = EcoModel::GetCaracteristicasValoresFamiliasProducto($DatosGen['NombreEmpresa'][0]->bdbackoffice, $lsRow->caract_id, $Productos[$i]->id);
                                 if(count($CaractVal)>0){ $Valor = $CaractVal[0]->valor; } else { $Valor=''; }
                                 $Salida .="<div class=\"col-3 productItem\"><div class=\"productItem-inner\"><span>".strtoupper($lsRow->caract_nombre)."</span> ".$Valor."</div></div>";
 
                             }
-                            else if( $lsRow->caract_tipo_id==5 )
+                            else if( $lsRow->caract_tipo_id==3 )
                             {
                                 $Opciones = EcoModel::CargarCaracteristicasFamiliaProductosOpciones($DatosGen['NombreEmpresa'][0]->bdbackoffice, $lsRow->caract_id, $Productos[$i]->id);
                                 $Salida .="<div class=\"col-3 productItem\"><div class=\"productItem-inner\"><span>".strtoupper($lsRow->caract_nombre)."</span> ";
@@ -1411,7 +1445,7 @@ class Eco_Controller extends BaseController
                     </div>
                     <div class=\"row text-rigth\">
                         <div class=\"col-4\"><button type=\"button\" class=\"btn btn-primar btn-primary-mat\" onclick=\"AgregarProducto('".$Productos[$i]->id."')\">Solicitar una cotización</button></div>
-                        <div class=\"col-4\"><button type=\"button\" class=\"btn btn-primary soft-button\" onclick=\"CargarModalProducto('".$Productos[$i]->codigo."');\">Ver<br>Más</button></div>
+                        <div class=\"col-4\"><button type=\"button\" class=\"btn btn-primary soft-button\" onclick=\"CargarModalProducto('".$Productos[$i]->codigo."');\">Ver Más</button></div>
                     </div>
                     ";
 
@@ -1456,7 +1490,6 @@ class Eco_Controller extends BaseController
     public function carrito(Request $req) {
         $data = $req->input();
         $DatosGen = app('App\Http\Controllers\Home_Controller')->DatosGen($req);
-        $Limites = EcoModel::getLimitesDespachos($DatosGen['NombreEmpresa'][0]->bdbackoffice);
 
         $Salida = '';
         if( $req->session()->get('cliente_codigo')!='0' ){
@@ -1468,9 +1501,9 @@ class Eco_Controller extends BaseController
             }else{
                 $Pedido = -1;
             }
-            
+
             $Productos = EcoModel::getDetalleBolsa($Pedido, $DatosGen['NombreEmpresa'][0]->bdbackoffice);
-            
+
             if(count($Productos)>0){
             $Salida .="
             <!-- evidal
@@ -1497,13 +1530,13 @@ class Eco_Controller extends BaseController
 
                         $SubTotal = 0;
                         for($i=0; $i<count($Productos); $i++){
-                            
+
                             if(file_exists('../public/'.$Productos[$i]->imagen1)){
                                 $imagen = '../'.$Productos[$i]->imagen1.'?'.date("YmdHms");
                             }else{
                                 $imagen = '../img/productos/SinImagen.jpg?'.date("YmdHms");
                             }
-    
+
                             $Salida .= "
                             <div class=\"card mb-3\">
                                 <div class=\"card-body row\">
@@ -1525,11 +1558,10 @@ class Eco_Controller extends BaseController
                                     <div class=\"col-3 mr-0 ml-0 p-0 my-auto\">
                                         <h5 class=\"card-title font-weight-bold text-dark mb-2\">DOCUMENTOS</h5>";
                                         if ($Productos[$i]->fichatecnica!=null ){ $Salida .= "<a class=\"text-primary\" href=\"".$Productos[$i]->fichatecnica."\" target=\"_blank\" download><h6>FICHA TÉCNICAInformación De Productos</h6></a>"; }
-                                
                                         if ($Productos[$i]->fichatecnica!=null ){ $Salida .= "<a class=\"text-primary\" href=\"".$Productos[$i]->hojaseguridad."\" target=\"_blank\" download><h6>HOJA DE SEGURIDAD</h6></a>"; }
                                     $Salida .="</div>
                                 </div>
-                            </div>         
+                            </div>
                             ";
                         }
 
@@ -1543,7 +1575,14 @@ class Eco_Controller extends BaseController
                 </div>
                 ";
                 }else{
-                    $Salida .="<div class=\"container\"><div class=\"alert alert-danger mt-5\" role=\"alert\"><h6 class=\"text-danger\">SIN PRODUCTOS AGREGADOS</h6></div></div>";
+                    $Salida .="
+                    <nav aria-label=\"breadcrumb\" style=\"margin-left: 28px; margin-top: 110px !important;\">
+                    <ol class=\"breadcrumb\">
+                        <li class=\"breadcrumb-item\"><a href=\"/\">Página de inicio</a></li>
+                        <li class=\"breadcrumb-item active\" aria-current=\"page\">Página de cotizador</li>
+                    </ol>
+                    </nav>
+                    <div class=\"container\"><div class=\"alert alert-danger mt-5\" role=\"alert\"><h6 class=\"text-danger\">SIN PRODUCTOS AGREGADOS</h6></div></div>";
                 }
 
         }
@@ -1573,7 +1612,6 @@ class Eco_Controller extends BaseController
         }
     }
 
-    
     public function CerrarFeria(Request $req) {
         $data = $req->input();
         $DatosGen = app('App\Http\Controllers\Home_Controller')->DatosGen($req);
@@ -1602,7 +1640,7 @@ class Eco_Controller extends BaseController
         $Type = $_GET['Type'];
         $Texto = '';
         $OrderCant = $_GET['OrderCant'];
-        
+
         return view('eco_categoryFeria.index', [
             'DatosGen'  => app('App\Http\Controllers\Home_Controller')->DatosGen($req)
             , 'Codigo'  => $Codigo
@@ -1612,7 +1650,7 @@ class Eco_Controller extends BaseController
             , 'OrderCant'   => $OrderCant
         ]);
     }
-    
+
     public function category(Request $req) {
 
         $data = $req->input();
@@ -1623,14 +1661,14 @@ class Eco_Controller extends BaseController
 
         if( isset($data['Order']) ) { $Order = $data['Order']; }
         else{ $Order = 1; }
-        
+
         if( isset($data['Type']) ) { $Type = $data['Type']; }
         else{ $Type = 'Asc'; }
 
         if( isset($data['texto']) ) { $Texto = $data['texto']; }
         else{ $Texto = ''; }
 
-        if( isset($data['texto']) ) { $OrderCant = $data['OrderCant']; }
+        if( isset($data['OrderCant']) ) { $OrderCant = $data['OrderCant']; }
         else{ $OrderCant = 12; }
 
         return view('eco_category.index', [
@@ -1689,7 +1727,6 @@ class Eco_Controller extends BaseController
                 'fk_usuario'       => $lsRow->id,
             ];
             MantClientes::GuardarRelacionUsuario($DataModel);
-            
         }
         */
         return view('eco_index.index', [

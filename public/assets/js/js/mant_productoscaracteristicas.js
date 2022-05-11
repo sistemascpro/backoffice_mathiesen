@@ -21,14 +21,17 @@ function EliminarOpcion(id)
                 },
                 success:function(data)
                 {
-                    if( data=='OK' ){ CargarOpcionesCaracteristicas(); }
-                    else {
+                    if( data=='OK' )
+                    {
+                        CargarOpcionesCaracteristicas();
+                    }
+                    else
+                    {
                         QuitarFondoToast();
                         $('#ToastBody').html(data);
                         $("#Toaster").addClass("bg-danger").addClass("text-white");
                         $('#Toaster').toast("show");
                     }
-                    
                 },error:function(XMLHttpRequest,textStatus,errorThrown){
                     ToastSessionExpirada();
                 }
@@ -53,7 +56,7 @@ function Caracteristicas_AgregarOpcion(Contenido, id) {
         {
             $('#ContenidoOpciones').find('tbody').append(`
             <tr>
-                <td><input type='hidden' class="ClassContenidoSeleccion" id="ContenidoOpcion[]" name="ContenidoOpcion[]" value="`+Contenido+`">`+Contenido+`</td>
+                <td><input type='hidden' class="ClassContenidoSeleccion" id="ContenidoOpcionExiste[]" name="ContenidoOpcionExiste[]" value="`+Contenido+`">`+Contenido+`</td>
                 <td><input type="button" class="QuitarLinea btn btn-danger px-4" value="QUITAR" onclick="EliminarOpcion(`+id+`);"/></td>
             </tr>
             `);
@@ -76,9 +79,12 @@ function Caracteristicas_AgregarOpcion(Contenido, id) {
 
 function CargarFormaCaracteristica() {
 
-    if($('#tipo').val()==0){
+    if($('#tipo').val()==0)
+    {
         var Salida = '';
-    }else if($('#tipo').val()==1){
+    }
+    else if($('#tipo').val()==1)
+    {
         var Salida =`
         <div class="row mb-3">
             <div class="col-sm-3">
@@ -96,7 +102,9 @@ function CargarFormaCaracteristica() {
             </div>
         </div>
         `;
-    }else if($('#tipo').val()==2){
+    }
+    else if($('#tipo').val()==2)
+    {
         var Salida =`
         <div class="row mb-3">
             <div class="col-sm-3">
@@ -114,7 +122,9 @@ function CargarFormaCaracteristica() {
             </div>
         </div>
         `;
-    }else if($('#tipo').val()==3){
+    }
+    else if($('#tipo').val()==4)
+    {
         var Salida =`
         <div class="row mb-3">
             <div class="col-sm-3">
@@ -132,7 +142,9 @@ function CargarFormaCaracteristica() {
             </div>
         </div>
         `;
-    }else if($('#tipo').val()==4 || $('#tipo').val()==5){
+    }
+    else if($('#tipo').val()==3)
+    {
         var Salida =`
         <div class="row mb-3">
             <div class="col-sm-3">
@@ -162,8 +174,8 @@ function CargarFormaCaracteristica() {
     }
     $('#DetalleCaracteristica').html(Salida);
 
-    if( ($('#tipo').val()==4 || $('#tipo').val()) && $('#id').val()!=0 ){
-
+    if( ($('#tipo').val()==3 || $('#tipo').val()) && $('#id').val()!=0 )
+    {
         CargarOpcionesCaracteristicas()
     }
 }
@@ -210,7 +222,6 @@ function Caracteristicas_GuardarCambios()
 
     var Requeridos = ValidarRequeridos($('#InputNombreRequired').val());
 
-
     if(Requeridos>0) { }
     else if( $('#tipo').val()==1 && $('#libre').val()=='NO' && ( typeof $('#solonumero').val()=='undefined' || $('#solonumero').val().length<=0 ) )
     {
@@ -229,26 +240,26 @@ function Caracteristicas_GuardarCambios()
         $('#ToastBody').html('DEBE INGRESAR UN VALOR EN EL CAMPO AREA DE TEXTO')
         $("#Toaster").addClass("bg-danger").addClass("text-white");
         $('#Toaster').toast("show");
-    } 
+    }
     else if( $('#tipo').val()==2 && $('#libre').val()=='SI' && ( typeof $('#areadetexto').val()=='undefined' ) )
     {
         $('#ToastBody').html('EL CAMPO AREA DE TEXTO NO ESTA CREADO')
         $("#Toaster").addClass("bg-danger").addClass("text-white");
         $('#Toaster').toast("show");
-    }  
-    else if( $('#tipo').val()==3 && $('#libre').val()=='NO' && ( typeof $('#campodetexto').val()=='undefined' || $('#campodetexto').val().length<=0 ) )
+    }
+    else if( $('#tipo').val()==4 && $('#libre').val()=='NO' && ( typeof $('#campodetexto').val()=='undefined' || $('#campodetexto').val().length<=0 ) )
     {
         $('#ToastBody').html('DEBE INGRESAR UN VALOR EN EL CAMPO DE TEXTO')
         $("#Toaster").addClass("bg-danger").addClass("text-white");
         $('#Toaster').toast("show");
-    }        
-    else if( $('#tipo').val()==3 && $('#libre').val()=='NO' && ( typeof $('#campodetexto').val()=='undefined' ) )
+    }
+    else if( $('#tipo').val()==4 && $('#libre').val()=='NO' && ( typeof $('#campodetexto').val()=='undefined' ) )
     {
         $('#ToastBody').html('EL CAMPO DE TEXTO NO ESTA CREADO')
         $("#Toaster").addClass("bg-danger").addClass("text-white");
         $('#Toaster').toast("show");
     }
-    else if( ( $('#tipo').val()==4 && CantidadOpciones==0 ) || ( $('#tipo').val()==5 && CantidadOpciones==0 ) )
+    else if( $('#tipo').val()==3 && CantidadOpciones==0 )
     {
         $('#ToastBody').html('DEBE INGRESAR MINIMO UNA OPCION')
         $("#Toaster").addClass("bg-danger").addClass("text-white");
@@ -256,8 +267,8 @@ function Caracteristicas_GuardarCambios()
     }
     else
     {
-
-        if(Requeridos<=0){
+        if(Requeridos<=0)
+        {
             var formInfo = new FormData($("#Caracteristicas_FormGuardar")[0]);
             $.ajax({
                 url: $('#InputNombreRuta').val()+'Guardar',
@@ -366,12 +377,12 @@ function Caracteristicas_UpdateEstado(id, estado)
     })
 }
 
-$(document).ready(function() {
+$(document).ready(function()
+{
     $('#Tabla_Listado').DataTable( );
 
     if( $('#id').val()!=0 )
     {
-        $('#tipo').attr("disabled", true);
         CargarFormaCaracteristica();
     }
 });

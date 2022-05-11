@@ -31,29 +31,68 @@ class MantPaises_Controller extends BaseController
             $codigo = app('App\Http\Controllers\Home_Controller')->LimpiarTexto($data['codigo']);
             $estado = $data['estado'];
 
-            if( MantPaises::ExisteNombre($DatosGen['NombreEmpresa'][0]->bdbackoffice, $nombre, $data['id']) ){
+            if( MantPaises::ExisteNombre($DatosGen['NombreEmpresa'][0]->bdbackoffice, $nombre, $data['id']) )
+            {
                 return "EL NOMBRE YA ESTA EN USO";
-            }else if( MantPaises::ExisteCodigo($DatosGen['NombreEmpresa'][0]->bdbackoffice, $codigo, $data['id']) ){
+            }
+            else if( MantPaises::ExisteCodigo($DatosGen['NombreEmpresa'][0]->bdbackoffice, $codigo, $data['id']) )
+            {
                 return "EL CODIGO YA ESTA EN USO";
-            }else{
-                if( $data['id']==0){
+            }
+            else
+            {
+                $NombreBandera   = null;
+                if( empty($req->bandera)!='1' )
+                {
+                    $TempName       = date("YmdHisu");
+                    $nombreTemp     = $_SERVER['DOCUMENT_ROOT']."\img\paises\\".$TempName.".".$req->bandera->extension();
+                    $NombreBandera    = "img/paises/".$TempName.".".$req->bandera->extension();
+                    $tempFile       = $req->bandera;
+                    $Bandera        = move_uploaded_file($tempFile, $nombreTemp);
+                }
+
+                if( $data['id']==0)
+                {
                     $DataModel = [
                         'nombre'    => $nombre,
                         'codigo'    => $codigo,
                         'estado'    => $estado,
+                        'bandera'    => $NombreBandera,
                     ];
                     MantPaises::Guardar($DatosGen['NombreEmpresa'][0]->bdbackoffice, $DataModel);
-                }else{
-                    $DataModel = [
-                        'nombre'    => $nombre,
-                        'codigo'    => $codigo,
-                        'estado'    => $estado,
-                    ];
-                    MantPaises::MakeUpdate($DatosGen['NombreEmpresa'][0]->bdbackoffice, $DataModel, $data['id']);
+                }
+                else
+                {
+                    if( $NombreBandera==null )
+                    {
+                        $DataModel = [
+                            'nombre'    => $nombre,
+                            'codigo'    => $codigo,
+                            'estado'    => $estado,
+                        ];
+                        MantPaises::MakeUpdate($DatosGen['NombreEmpresa'][0]->bdbackoffice, $DataModel, $data['id']);
+                    }
+                    else
+                    {
+                        $Detalle = MantPaises::GetDetalle($DatosGen['NombreEmpresa'][0]->bdbackoffice, $data['id']);
+
+                        if( $Detalle[0]->bandera!=null && file_exists($_SERVER['DOCUMENT_ROOT']."\\".str_replace("/","\\",$Detalle[0]->bandera) )) 
+                        {
+                            unlink( $_SERVER['DOCUMENT_ROOT']."\\".str_replace("/","\\",$Detalle[0]->bandera) );
+                        }
+
+                        $DataModel = [
+                            'nombre'    => $nombre,
+                            'codigo'    => $codigo,
+                            'estado'    => $estado,
+                            'bandera'    => $NombreBandera,
+                        ];
+                        MantPaises::MakeUpdate($DatosGen['NombreEmpresa'][0]->bdbackoffice, $DataModel, $data['id']);
+                    }
+
                 }
                 return "OK";
             }
-            
         }
     }}
 

@@ -78,8 +78,8 @@ return [
             'sslmode' => 'prefer',
         ],
 
-        'sqlsrv' => [
-            'driver' => 'sqlsrv',
+        'pgsql' => [
+            'driver' => 'pgsql',
             'url' => env('DATABASE_URL'),
             'host' => env('DB_HOST', 'localhost'),
             'port' => env('DB_PORT', '1433'),
@@ -91,14 +91,14 @@ return [
             'prefix_indexes' => true,
         ],
 
-        'backoffice_mathiesen_new' => [
-            'driver' => 'sqlsrv',
+        'backoffice_mathiesen_edo' => [
+            'driver' => 'pgsql',
             'url' => env('DATABASE_URL'),
             'host' => env('DB_HOST', 'localhost'),
             'port' => env('DB_PORT', '1433'),
-            'database' => 'backoffice_mathiesen_new',
-            'username' => 'sa',
-            'password' => '4l13nW4r3.',
+            'database' => 'backoffice_mathiesen_edo',
+            'username' => 'postgres',
+            'password' => 'p0stgr3s.n0djs.r00t',
             'charset' => 'utf8',
             'prefix' => '',
             'prefix_indexes' => true,

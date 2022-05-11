@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class MantProductosFamilias extends Model
 {
-    
     public static function DeleteCaracteristica($BDBACK, $id)
     {
         return DB::connection($BDBACK)->table('familias_caracteristicas')->where('id', $id)->delete();
@@ -16,19 +15,19 @@ class MantProductosFamilias extends Model
     public static function CargarCaracteristicasFamilias($BDBACK, $id)
     {
         return DB::select("
-        SELECT 
+        SELECT
         cfam.id
         , cfam.fk_caracteristica
         , cfam.fk_familia
-        , ISNULL(cfam.es_filtro,'NO') as es_filtro
+        , coalesce(cfam.es_filtro,'NO') as es_filtro
         , tip.nombre as caract_tipo
         , carac.nombre as caract_nombre
         , cfam.valor
-        FROM ".$BDBACK.".dbo.familias_caracteristicas as cfam 
-        inner join ".$BDBACK.".dbo.caracteristicas_productos as carac on cfam.fk_caracteristica=carac.id 
-        inner join ".$BDBACK.".dbo.caracteristicas_productos_tipos as tip on carac.tipo=tip.id
-        where 
-        cfam.estado=1
+        FROM ".$BDBACK.".public.familias_caracteristicas as cfam
+        inner join ".$BDBACK.".public.caracteristicas_productos as carac on cfam.fk_caracteristica=carac.id
+        inner join ".$BDBACK.".public.caracteristicas_productos_tipos as tip on carac.tipo=tip.id
+        where
+        cfam.estado =true
         and cfam.fk_familia=".$id."
         ");
     }
@@ -41,7 +40,7 @@ class MantProductosFamilias extends Model
     public static function GetTipoCaracteristica($BDBACK, $id)
     {
         return DB::select("
-        SELECT 
+        SELECT
         caract.id
         , caract.nombre
         , caract.estado
@@ -50,11 +49,11 @@ class MantProductosFamilias extends Model
         , caract.obligatorio
         , caract.libre
         , caract.valor
-        FROM ".$BDBACK.".dbo.caracteristicas_productos as caract
-        inner join ".$BDBACK.".dbo. caracteristicas_productos_tipos as tip on caract.tipo=tip.id
-        where caract.estado=1 and caract.id=".$id."
-        order by 
-        tip.nombre, caract.nombre 
+        FROM ".$BDBACK.".public.caracteristicas_productos as caract
+        inner join ".$BDBACK.".public. caracteristicas_productos_tipos as tip on caract.tipo=tip.id
+        where caract.estado =true and caract.id=".$id."
+        order by
+        tip.nombre, caract.nombre
         asc
         ");
     }
@@ -62,7 +61,7 @@ class MantProductosFamilias extends Model
     public static function CargarFormaCaracteristica($BDBACK, $id)
     {
         return DB::select("
-        SELECT 
+        SELECT
         caract.id
         , caract.nombre
         , caract.estado
@@ -72,9 +71,9 @@ class MantProductosFamilias extends Model
         , caract.valor
         , opc.id
         , opc.opcion
-        FROM ".$BDBACK.".dbo.caracteristicas_productos AS caract
-        left join ".$BDBACK.".dbo.caracteristicas_productos_opciones as opc on caract.id=opc.fk_caracteristica and opc.estado=1
-        where 
+        FROM ".$BDBACK.".public.caracteristicas_productos AS caract
+        left join ".$BDBACK.".public.caracteristicas_productos_opciones as opc on caract.id=opc.fk_caracteristica and opc.estado =true
+        where
         caract.id=".$id."
         ");
     }
@@ -121,7 +120,7 @@ class MantProductosFamilias extends Model
         return DB::select("
         SELECT
         *
-        FROM dbo.familias
+        FROM public.familias
         where
         id='".$id."'
         ");
@@ -132,7 +131,7 @@ class MantProductosFamilias extends Model
         return DB::select("
         SELECT
         *
-        FROM dbo.familias
+        FROM public.familias
         where
         id!='".$id."'
         and upper(codigo)=upper('".$dato."')
@@ -144,7 +143,7 @@ class MantProductosFamilias extends Model
         return DB::select("
         SELECT
         *
-        FROM dbo.familias
+        FROM public.familias
         where
         id!=".$id."
         and upper(nombre)=upper('".$dato."')
@@ -162,7 +161,7 @@ class MantProductosFamilias extends Model
         , estado
         , ruta
         , ruta2
-        FROM dbo.familias
+        FROM public.familias
         where id=".$id."
         ");
     }
@@ -170,7 +169,7 @@ class MantProductosFamilias extends Model
     public static function GetCaracteristicas($BDBACK)
     {
         return DB::select("
-        SELECT 
+        SELECT
         caract.id
         , caract.nombre
         , caract.estado
@@ -179,11 +178,11 @@ class MantProductosFamilias extends Model
         , caract.obligatorio
         , caract.libre
         , caract.valor
-        FROM ".$BDBACK.".dbo.caracteristicas_productos as caract
-        inner join ".$BDBACK.".dbo. caracteristicas_productos_tipos as tip on caract.tipo=tip.id
-        where caract.estado=1
-        order by 
-        tip.nombre, caract.nombre 
+        FROM ".$BDBACK.".public.caracteristicas_productos as caract
+        inner join ".$BDBACK.".public. caracteristicas_productos_tipos as tip on caract.tipo=tip.id
+        where caract.estado =true
+        order by
+        tip.nombre, caract.nombre
         asc
         ");
     }
@@ -204,11 +203,10 @@ class MantProductosFamilias extends Model
         , estado
         , ruta
         , ruta2
-        FROM ".$BDBACK.".dbo.familias as pfamilia
+        FROM ".$BDBACK.".public.familias as pfamilia
         order by
         nombre
         asc
         ");
     }
-
 }

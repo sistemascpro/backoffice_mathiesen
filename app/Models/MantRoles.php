@@ -18,7 +18,7 @@ class MantRoles extends Model
         return DB::select("
         SELECT
         *
-        FROM dbo.usuarios
+        FROM public.usuarios
         where
         fk_rol=".$Rol."
         ");
@@ -29,45 +29,45 @@ class MantRoles extends Model
         return DB::select("
         SELECT
         *
-        FROM dbo.roles
+        FROM public.roles
         where
-        CONVERT(NVARCHAR(32),HashBytes('MD5',   CONVERT(NVARCHAR(32),HashBytes('MD5', cast(id as varchar(max))),2) ),2)='".$id."'
+        id=".$id."
         ");
     }
 
     public static function DeleteSubClasesMd5($RolId)
     {
-        return DB::table('roles_clases')->where(DB::raw("CONVERT(NVARCHAR(32),HashBytes('MD5',   CONVERT(NVARCHAR(32),HashBytes('MD5', cast(fk_rol as varchar(max))),2) ),2)"), $RolId)->delete();
+        return DB::table('roles_clases')->where('fk_rol', $RolId)->delete();
     }
 
     public static function DeleteVendedoresMd5($RolId)
     {
-        return DB::table('roles_vendedores')->where(DB::raw("CONVERT(NVARCHAR(32),HashBytes('MD5',   CONVERT(NVARCHAR(32),HashBytes('MD5', cast(fk_rol as varchar(max))),2) ),2)"), $RolId)->delete();
+        return DB::table('roles_vendedores')->where('fk_rol', $RolId)->delete();
     }
 
     public static function DeletePermisosMd5($RolId)
     {
-        return DB::table('roles_permisos')->where(DB::raw("CONVERT(NVARCHAR(32),HashBytes('MD5',   CONVERT(NVARCHAR(32),HashBytes('MD5', cast(fk_rol as varchar(max))),2) ),2)"), $RolId)->delete();
+        return DB::table('roles_permisos')->where('fk_rol', $RolId)->delete();
     }
 
     public static function UpdateRol($DataModel, $RolId)
     {
-        return DB::table('roles')->where(DB::raw("CONVERT(NVARCHAR(32),HashBytes('MD5',   CONVERT(NVARCHAR(32),HashBytes('MD5', cast(id as varchar(max))),2) ),2)"), $RolId)->update($DataModel);
+        return DB::table('roles')->where('id', $RolId)->update($DataModel);
     }
 
     public static function GuardarSubClase($DataModel)
     {
-        return DB::connection('sqlsrv')->table('roles_clases')->insertGetId($DataModel);
+        return DB::connection('pgsql')->table('roles_clases')->insertGetId($DataModel);
     }
 
     public static function GuardarVendedor($DataModel)
     {
-        return DB::connection('sqlsrv')->table('roles_vendedores')->insertGetId($DataModel);
+        return DB::connection('pgsql')->table('roles_vendedores')->insertGetId($DataModel);
     }
 
     public static function GuardarPermisos($DataModel)
     {
-        return DB::connection('sqlsrv')->table('roles_permisos')->insertGetId($DataModel);
+        return DB::connection('pgsql')->table('roles_permisos')->insertGetId($DataModel);
     }
 
     public static function DeleteSubClase($RolId)
@@ -87,7 +87,7 @@ class MantRoles extends Model
 
     public static function GuardarRol($DataModel)
     {
-        return DB::connection('sqlsrv')->table('roles')->insertGetId($DataModel);
+        return DB::connection('pgsql')->table('roles')->insertGetId($DataModel);
     }
 
     public static function ExisteId($id)
@@ -95,9 +95,9 @@ class MantRoles extends Model
         return DB::select("
         SELECT
         *
-        FROM dbo.roles
+        FROM public.roles
         where
-        CONVERT(NVARCHAR(32),HashBytes('MD5',   CONVERT(NVARCHAR(32),HashBytes('MD5', cast(id as varchar(max))),2) ),2)!='".$id."'
+        id!='".$id."'
         ");
     }
 
@@ -106,9 +106,9 @@ class MantRoles extends Model
         return DB::select("
         SELECT
         *
-        FROM dbo.roles
+        FROM public.roles
         where
-        CONVERT(NVARCHAR(32),HashBytes('MD5',   CONVERT(NVARCHAR(32),HashBytes('MD5', cast(id as varchar(max))),2) ),2)!='".$id."'
+        id!='".$id."'
         and upper(nombre)=upper('".$dato."')
         ");
     }
@@ -125,9 +125,9 @@ class MantRoles extends Model
         , psclass.codigo as subclasecodigo
         , psclass.nombre as subclasenombre
         , case when rolcass.id is not null then 'checked' else '' end as checked
-        FROM dbo.productos_clases as pclass
-        INNER join dbo.productos_sub_clases as psclass on pclass.id=psclass.fk_clase
-        left join dbo.roles_clases as rolcass on psclass.id=rolcass.fk_subclase and rolcass.fk_rol=".$id."
+        FROM public.productos_clases as pclass
+        INNER join public.productos_sub_clases as psclass on pclass.id=psclass.fk_clase
+        left join public.roles_clases as rolcass on psclass.id=rolcass.fk_subclase and rolcass.fk_rol=".$id."
         ORDER BY
         pclass.codigo
         , pclass.nombre
@@ -151,15 +151,14 @@ class MantRoles extends Model
         , usu.telefono2
         , usu.email
         , usu.contrasenia
-        , usu.\"fechaCreacion\"
-        , usu.\"fechaActualizacion\"
+        , usu.\"fechacreacion\"
+        , usu.\"fechaactualizacion\"
         , usu.fk_rol
         , usu.usuario
-        , usu.avatar
         , usu.fk_responsable
         , case when rol.id is not null then 'checked' else '' end as checked
-        FROM dbo.usuarios as usu
-        left join dbo.roles_vendedores as rol on usu.id=rol.fk_vendedor and rol.fk_rol=".$id."
+        FROM public.usuarios as usu
+        left join public.roles_vendedores as rol on usu.id=rol.fk_vendedor and rol.fk_rol=".$id."
         where
         usu.fk_rol=2
         group by
@@ -172,11 +171,10 @@ class MantRoles extends Model
         , usu.telefono2
         , usu.email
         , usu.contrasenia
-        , usu.\"fechaCreacion\"
-        , usu.\"fechaActualizacion\"
+        , usu.\"fechacreacion\"
+        , usu.\"fechaactualizacion\"
         , usu.fk_rol
         , usu.usuario
-        , usu.avatar
         , usu.fk_responsable
         , case when rol.id is not null then 'checked' else '' end
         order by concat(usu.nombres,' ',usu.apellidos) asc
@@ -196,8 +194,8 @@ class MantRoles extends Model
         , men.alt
         , men.icono
         , case when per.fk_rol is not null then 'checked' else '' end as checked
-        FROM dbo.menu as men
-        left join dbo.roles_permisos as per on men.id=per.fk_menu and per.fk_rol=".$id."
+        FROM public.menu as men
+        left join public.roles_permisos as per on men.id=per.fk_menu and per.fk_rol=".$id."
         group by
         men.id
         , men.nombre
@@ -216,10 +214,10 @@ class MantRoles extends Model
     {
         return DB::select("
         SELECT
-        CONVERT(NVARCHAR(32),HashBytes('MD5',   CONVERT(NVARCHAR(32),HashBytes('MD5', cast(id as varchar(max))),2) ),2) as rolid
+        id
         , estado
         , nombre
-        FROM dbo.roles
+        FROM public.roles
         where id=".$id."
         ");
     }
@@ -237,8 +235,8 @@ class MantRoles extends Model
         , rol.estado
         , rol.nombre
         , count(per.id) as cantidad
-        FROM dbo.roles as rol
-        left join dbo.roles_permisos as per on rol.id=per.fk_rol
+        FROM public.roles as rol
+        left join public.roles_permisos as per on rol.id=per.fk_rol
         group by
         rol.id
         , rol.estado

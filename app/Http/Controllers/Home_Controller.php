@@ -64,7 +64,7 @@ class Home_Controller extends BaseController
 
     public function DatosGen($req) {
         
-        $DatosGen['NombreEmpresa']  = GeneralModel::GetNombreEmpresa('backoffice_mathiesen_new');
+        $DatosGen['NombreEmpresa']  = GeneralModel::GetNombreEmpresa('backoffice_mathiesen_edo');
         $Banners                    = GeneralModel::GetBanners($DatosGen['NombreEmpresa'][0]->bdbackoffice);
         $DatosGen['Sliders']        = GeneralModel::GetSliders($DatosGen['NombreEmpresa'][0]->bdbackoffice);
         $DatosGen['Familias']       = GeneralModel::GetFamiliasHome($DatosGen['NombreEmpresa'][0]->bdbackoffice);

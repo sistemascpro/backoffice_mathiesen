@@ -23,8 +23,8 @@ class usuarios extends Migration
             $table->string('telefono2');
             $table->string('email')->unique();
             $table->string('contrasenia');
-            $table->timestamp('fechaCreacion');
-            $table->timestamp('fechaActualizacion');
+            $table->timestamp('fechacreacion');
+            $table->timestamp('fechaactualizacion');
 
         });
     }

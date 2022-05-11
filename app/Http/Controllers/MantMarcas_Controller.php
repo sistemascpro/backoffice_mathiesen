@@ -21,13 +21,12 @@ class MantMarcas_Controller extends BaseController
 
         $data = $req->input();
 
-        if(
-            !isset($data['nombre']) || strlen(trim($data['nombre']))==0
-            ){
+        if( !isset($data['nombre']) || strlen(trim($data['nombre']))==0 )
+        {
             return "FALTA INFORMACION";
         }
-        else{
-
+        else
+        {
             $nombre = limpiar_texto($data['nombre']);
             $estado = $data['estado'];
 
@@ -41,10 +40,8 @@ class MantMarcas_Controller extends BaseController
             }
             else
             {
-
                 $nombreFinal    = null;
                 $nombreFinal2   = null;
-
                 if( empty($req->archivo)!='1' )
                 {
                     $TempName       = date("YmdHisu");
@@ -66,18 +63,21 @@ class MantMarcas_Controller extends BaseController
                 if( $data['id']==0)
                 {
                     $DataModel = [
-                        'nombre'    => $data['nombre'],
-                        'posicion'    => $data['posicion'],
-                        'ruta'      => $nombreFinal,
-                        'estado'      => $estado,
+                        'nombre'        => $data['nombre'],
+                        'posicion'      => $data['posicion'],
+                        'ruta'          => $nombreFinal,
+                        'cabecera'      => $nombreFinal2,
+                        'estado'        => $estado,
                     ];
-                    return MantMarcas::GuardarMarca($DataModel);
+                    MantMarcas::GuardarMarca($DataModel);
+                    return "OK";
                 }
                 else
                 {
+                    $DataModelArchivos = '';
                     if($nombreFinal!=null && $nombreFinal2!=null)
                     {
-                        $DataModel = [
+                        $DataModelArchivos = [
                             'nombre'        => $data['nombre'],
                             'posicion'      => $data['posicion'],
                             'ruta'          => $nombreFinal,
@@ -87,7 +87,7 @@ class MantMarcas_Controller extends BaseController
                     }
                     else if($nombreFinal!=null && $nombreFinal2==null)
                     {
-                        $DataModel = [
+                        $DataModelArchivos = [
                             'nombre'        => $data['nombre'],
                             'posicion'      => $data['posicion'],
                             'ruta'          => $nombreFinal,
@@ -96,18 +96,25 @@ class MantMarcas_Controller extends BaseController
                     }
                     else if($nombreFinal==null && $nombreFinal2!=null)
                     {
-                        $DataModel = [
+                        $DataModelArchivos = [
                             'nombre'        => $data['nombre'],
                             'posicion'      => $data['posicion'],
                             'cabecera'      => $nombreFinal2,
                             'estado'        => $estado,
                         ];
                     }
+                    else if($nombreFinal==null && $nombreFinal2==null)
+                    {
+                        $DataModelArchivos = [
+                            'nombre'        => $data['nombre'],
+                            'posicion'      => $data['posicion'],
+                            'estado'        => $estado,
+                        ];
+                    }
 
-                    MantMarcas::UpdateMarca($DataModel, $data['id']);
+                    MantMarcas::UpdateMarca($DataModelArchivos, $data['id']);
                     return "OK";
                 }
-
             }
         }
     }}

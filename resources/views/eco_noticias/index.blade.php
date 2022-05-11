@@ -3,7 +3,7 @@
     <!-- evidal
         <nav aria-label="breadcrumb" style="margin-top:95px; margin-left: 28px;">
     -->
-    <nav aria-label="breadcrumb" style="margin-left: 28px;">
+    <nav aria-label="breadcrumb" style="margin-left: 28px; margin-top: 110px !important;">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="/">Página de inicio</a></li>
         <li class="breadcrumb-item active" aria-current="page">Página de noticias</li>
@@ -19,7 +19,7 @@
             <?php 
             for($i=0; $i<count($DatosGen['Noticias']); $i++ ){ 
 
-                if($DatosGen['Noticias'][$i]->tipo=='Imagen'){ ?>
+            ?>
                     <div class="col-xl-3 col-md-6 col-xs-12" style="padding:24px; ">
                       <div class="card" style="width:100%">
                         <img src="<?=$DatosGen['Noticias'][$i]->imagen?>" class="card-img-top" alt="...">
@@ -31,9 +31,7 @@
                       </div>
                     </div>
                 <?php
-                } 
-                ?>
-            <?php } ?>
+            } ?>
         </div>
     </div>
 </div>

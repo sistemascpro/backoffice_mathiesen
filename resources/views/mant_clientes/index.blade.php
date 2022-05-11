@@ -1,6 +1,6 @@
 		@extends("layouts.app")
         @section("script")
-        <script src="{{ asset('assets/js/js/mant_clientes.obfuscated.js') }}"></script>
+        <script src="{{ asset('assets/js/js/mant_clientes.js') }}"></script>
         @endsection
 		@section("wrapper")
             <div class="page-wrapper">

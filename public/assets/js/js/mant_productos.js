@@ -159,8 +159,7 @@ function GuardarCambios()
             {
                 if(data=='OK')
                 {
-                    alert("OK");
-                    //ToastInformacionGuardada();
+                    ToastInformacionGuardada();
                 }
                 else
                 {

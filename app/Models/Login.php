@@ -12,9 +12,9 @@ class Login extends Model
         return DB::select("
         SELECT
         *
-        FROM dbo.roles_permisos as rol
-        inner join dbo.menu as men on rol.fk_menu=men.id
-        inner join dbo.roles as rols on rol.fk_rol=rols.id
+        FROM public.roles_permisos as rol
+        inner join public.menu as men on rol.fk_menu=men.id
+        inner join public.roles as rols on rol.fk_rol=rols.id
 
         where
         rols.nombre='".$Rol."'
@@ -35,9 +35,9 @@ class Login extends Model
         , men.alt
         , men.icono
         , men.posicion
-        FROM ".$BDBACK.".dbo.roles_permisos as per
-        inner join ".$BDBACK.".dbo.menu as men on per.fk_menu=men.id
-        inner join ".$BDBACK.".dbo.roles as rol on per.fk_rol=rol.id
+        FROM ".$BDBACK.".public.roles_permisos as per
+        inner join ".$BDBACK.".public.menu as men on per.fk_menu=men.id
+        inner join ".$BDBACK.".public.roles as rol on per.fk_rol=rol.id
         where
         rol.nombre='".$id."'
         group by
@@ -72,13 +72,12 @@ class Login extends Model
         , rol.nombre as fk_rol
         , usu.usuario
         , rol.nombre as rol_nombre
-        , coalesce(usu.avatar,'img/usuarios/NoneUser.jpg') as avatar
-        FROM ".$BDBACK.".dbo.usuarios as usu
-        inner join ".$BDBACK.".dbo.roles as rol on usu.fk_rol=rol.id and rol.estado=1
+        FROM ".$BDBACK.".public.usuarios as usu
+        inner join ".$BDBACK.".public.roles as rol on usu.fk_rol=rol.id and rol.estado =true
         where
         usu.usuario='".$user."'
-        and usu.contrasenia=UPPER(CONVERT(NVARCHAR(32),HashBytes('MD5', '".$password."'),2))        
-        and usu.estado=1
+        and usu.contrasenia='".$password."'
+        and usu.estado =true
         and usu.habilitado='SI'
         ");
     }

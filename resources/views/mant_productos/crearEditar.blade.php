@@ -153,7 +153,7 @@
                                     id="DesExtra"
                                     name="DesExtra"
                                     rows="10"
-                                    ><?=$Producto[0]->DesExtra?></textarea>
+                                    ><?=$Producto[0]->desextra?></textarea>
                                 </div>
                             </div>
                             <div class="row mb-3">

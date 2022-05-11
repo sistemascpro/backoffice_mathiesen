@@ -35,23 +35,27 @@ class MantRoles_Controller extends BaseController
 
         $data = $req->input();
 
-        if( !isset($data['nombre']) || strlen(trim($data['nombre']))==0 ){
+        if( !isset($data['nombre']) || strlen(trim($data['nombre']))==0 )
+        {
             return "FALTA INFORMACION";
         }
-        else{
-
+        else
+        {
             $RolId = $data['RolId'];
             $estado = $data['estado'];
             $nombre = limpiar_texto($data['nombre']);
 
-            if ( MantRoles::ExisteNombre($nombre, $RolId) ) {
+            if ( MantRoles::ExisteNombre($nombre, $RolId) )
+            {
                 return "EL NOMBRE YA ESTÁ REGISTRADO";
             }
-            else {
+            else
+            {
 
-                if( md5(md5('0'))==$data['RolId'] ){
-                    try {
-
+                if( '0'==$data['RolId'] )
+                {
+                    try
+                    {
                         $DataModel = [
                             'estado'        => $estado,
                             'nombre'       => $nombre,
@@ -61,7 +65,8 @@ class MantRoles_Controller extends BaseController
                         MantRoles::DeletePermisos($LastId);
                         MantRoles::DeleteVendedores($LastId);
 
-                        if(isset($data['chkRol'])){
+                        if(isset($data['chkRol']))
+                        {
                             for( $i=0; $i<count($data['chkRol']); $i++)
                             {
                                 $DataModel = [
@@ -72,7 +77,8 @@ class MantRoles_Controller extends BaseController
                             }
                         }
 
-                        if(isset($data['chkVend'])){
+                        if(isset($data['chkVend']))
+                        {
                             for( $i=0; $i<count($data['chkVend']); $i++)
                             {
                                 $DataModel = [
@@ -84,20 +90,26 @@ class MantRoles_Controller extends BaseController
                         }
 
                         return "OK";
-                    } catch (Exception $e) {
+                    }
+                    catch (Exception $e)
+                    {
                         return "ERROR";
                     }
                 }
-                else {
-                    if(!MantRoles::ExisteId($RolId)){
+                else
+                {
+                    if(!MantRoles::ExisteId($RolId))
+                    {
                         return "NO EXISTE EL ID A ACTUALIZAR";
                     }
-                    else if ( MantRoles::ExisteNombre($nombre, $RolId) ) {
+                    else if ( MantRoles::ExisteNombre($nombre, $RolId) )
+                    {
                         return "EL NOMBRE YA ESTÁ REGISTRADO";
                     }
-                    else {
-                        try {
-
+                    else
+                    {
+                        try
+                        {
                             $DataModel = [
                                 'estado'        => $estado,
                                 'nombre'       => $nombre,
@@ -107,14 +119,13 @@ class MantRoles_Controller extends BaseController
                             MantRoles::DeletePermisosMd5($RolId);
                             MantRoles::DeleteVendedoresMd5($RolId);
 
-                            $LastId = MantRoles::DecryptMd5Rol($RolId);
-
-                            if(isset($data['chkRol'])){
+                            if(isset($data['chkRol']))
+                            {
                                 for( $i=0; $i<count($data['chkRol']); $i++)
                                 {
                                     $DataModel = [
                                         'fk_menu'       => $data['chkRol'][$i],
-                                        'fk_rol'        => $LastId[0]->id,
+                                        'fk_rol'        => $RolId,
                                     ];
                                     MantRoles::GuardarPermisos($DataModel);
                                 }
@@ -125,7 +136,7 @@ class MantRoles_Controller extends BaseController
                                 {
                                     $DataModel = [
                                         'fk_vendedor'   => $data['chkVend'][$i],
-                                        'fk_rol'        => $LastId[0]->id,
+                                        'fk_rol'        => $RolId,
                                     ];
                                     MantRoles::GuardarVendedor($DataModel);
                                 }
@@ -133,7 +144,9 @@ class MantRoles_Controller extends BaseController
 
                             return "OK";
 
-                        } catch (Exception $e) {
+                        }
+                        catch (Exception $e)
+                        {
                             return "ERROR";
                         }
                     }
@@ -149,7 +162,7 @@ class MantRoles_Controller extends BaseController
         if( count($Rol)<=0 ){
 
             $Rol[0] = (object)array(
-                'rolid'=>md5(md5('0'))
+                'id'=>'0'
                 , 'estado'=>true
                 , 'nombre'=>''
             );
@@ -163,7 +176,7 @@ class MantRoles_Controller extends BaseController
 
     }}
 
-    public function updateEstado(Request $req) { if(!$req->session()->get('nombre') || !Login::ValidatePermiso(session()->get('fk_rol'),'mant_roles' || session()->get('fk_rol')==3)) { $req->session()->flush();  return redirect('login'); } else {
+    public function updateEstado(Request $req) { if(!$req->session()->get('nombre') || !Login::ValidatePermiso(session()->get('fk_rol'),'mant_roles') || session()->get('fk_rol')==3) { $req->session()->flush();  return redirect('login'); } else {
 
         $data = $req->input();
 

@@ -79,8 +79,6 @@ function ActuaizarInformacion()
                 if(data!='[]' || data!='error')
                 {
                     var datos=JSON.parse(data);
-                    $('#AvatarUsuario').html('<img src="'+datos[0]['avatar']+'" alt="Admin" class="rounded-circle p-1 bg-primary" width="110">');
-                    $('#AvatarUsuarioHeader').html('<img src="'+datos[0]['avatar']+'" class="user-img" alt="user avatar">');
 
                     QuitarFondoToast();
                     $('#ToastBody').html('INFORMACIÓN ACTUALIZADA')

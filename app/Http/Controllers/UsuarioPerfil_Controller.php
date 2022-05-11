@@ -18,7 +18,7 @@ class UsuarioPerfil_Controller extends BaseController
     public function index(Request $req) { if(!$req->session()->get('nombre') || session()->get('fk_rol')==3) { $req->session()->flush();  return redirect('login'); } else {
 
         return view('usuarioPerfil.index', [
-            'NombreEmpresa' => GeneralModel::GetNombreEmpresa('backoffice_mathiesen_new')
+            'NombreEmpresa' => GeneralModel::GetNombreEmpresa('backoffice_mathiesen_edo')
             , 'usuario' =>  UsuarioPerfil::GetUsuario($req->session()->get('id'))
         ]);
 
@@ -85,37 +85,14 @@ class UsuarioPerfil_Controller extends BaseController
             $email      = strtoupper(trim($data['email']));
             if( !isset($data['telefono2']) || strlen(trim($data['telefono2']))==0 ) { $telefono2 = ''; } else { $telefono2  = strtoupper(trim($data['telefono2'])); }
 
-
-            if($req->file()) {
-
-                $nombreTemp = $_SERVER['DOCUMENT_ROOT']."\img\usuarios\\".$req->session()->get('id').".".$req->avatar->extension();
-                $nombreFinal = "img/usuarios/".$req->session()->get('id').".".$req->avatar->extension();
-                $tempFile = $req->avatar;
-
-                $Arvhivo = move_uploaded_file($tempFile, $nombreTemp);
-                $req->session()->put('avatar',$nombreFinal);
-
-                $DataModel = [
-                    'rut'           => $rut,
-                    'nombres'       => $nombres,
-                    'apellidos'     => $apellidos,
-                    'telefono1'     => $telefono1,
-                    'telefono2'     => $telefono2,
-                    'email'         => $email,
-                    'avatar'        => $nombreFinal,
-                ];
-            }
-            else
-            {
-                $DataModel = [
-                    'rut'           => $rut,
-                    'nombres'       => $nombres,
-                    'apellidos'     => $apellidos,
-                    'telefono1'     => $telefono1,
-                    'telefono2'     => $telefono2,
-                    'email'         => $email,
-                ];
-            }
+            $DataModel = [
+                'rut'           => $rut,
+                'nombres'       => $nombres,
+                'apellidos'     => $apellidos,
+                'telefono1'     => $telefono1,
+                'telefono2'     => $telefono2,
+                'email'         => $email,
+            ];
 
             if ( UsuarioPerfil::UpdateInformacion($DataModel, $req->session()->get('id')) )
             {

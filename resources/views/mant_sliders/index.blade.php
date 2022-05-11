@@ -63,7 +63,7 @@
                                     ?>
                                     <tr class="table-hover">
                                         <td>
-                                            <span class="pointer badge badge-pill bg-danger" onclick="EliminarSlider('<?=$lsRows->id?>')">ELIMINAR</span>
+                                            <span class="pointer badge badge-pill bg-danger" onclick="EliminarSlider('<?=$lsRows->id?>', '<?=$lsRows->ruta?>')">ELIMINAR</span>
                                         </td>
                                         <td><img src="<?=$lsRows->ruta?>" width="400px"></td>
                                     </tr>

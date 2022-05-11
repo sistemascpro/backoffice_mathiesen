@@ -300,12 +300,12 @@
               <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 Producto e Industrias <i style="font-weight:bold;" class="icon icon-chevron-down"></i>
               </a>
-              <ul class="dropdown-menu dropdown-menu-dark subMenuFullContent" aria-labelledby="navbarDarkDropdownMenuLink">
+              <ul class="dropdown-menu dropdown-menu-dark subMenuFullContent" aria-labelledby="navbarDarkDropdownMenuLink" style="margin-top:-7px !important;">
                 <div class="col-12 row">
                     <?php
                     foreach ($DatosGen['MenuWebPadres'] as $lsPadre){
                         ?>
-                            <div class="col-lg-4 col-md-12 submenu" onclick="CargarProductos('Familia', '<?=$lsPadre->id?>')"><a class="dropdown-item" href="#"><?=$lsPadre->nombre?></a></div>
+                            <div class="col-lg-4 col-md-12 submenu" onclick="CargarProductos('Familia', '<?=$lsPadre->id?>')"><a class="dropdown-item" href="#"><?=mb_strtoupper($lsPadre->nombre)?></a></div>
                         <?php
                     }
                     ?>

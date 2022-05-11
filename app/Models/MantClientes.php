@@ -12,21 +12,21 @@ class MantClientes extends Model
         return DB::select("
         SELECT
         *
-        FROM ".$DB.".dbo.usuarios
+        FROM ".$DB.".public.usuarios
         where RTRIM(LTRIM(UPPER(email)))=RTRIM(LTRIM(UPPER('".$Email."')))
         ");
     }
 
     public static function UpdateUsuario($DataModel, $UsuarioId)
     {
-        return DB::table('usuarios')->where(DB::raw("CONVERT(NVARCHAR(32),HashBytes('MD5',   CONVERT(NVARCHAR(32),HashBytes('MD5', cast(id as varchar(max))),2) ),2)"), $UsuarioId)->update($DataModel);
+        return DB::table('usuarios')->where('id', $UsuarioId)->update($DataModel);
     }
 
     public static function GetUsuarioMd5($id)
     {
         return DB::select("
         SELECT
-        CONVERT(NVARCHAR(32),HashBytes('MD5',   CONVERT(NVARCHAR(32),HashBytes('MD5', cast(usu.id as varchar(max))),2) ),2) as id_md5
+        usu.id as id_md5
         , usu.id
         , usu.estado
         , usu.rut
@@ -36,19 +36,18 @@ class MantClientes extends Model
         , coalesce(usu.telefono2,'') as telefono2
         , usu.email
         , usu.contrasenia
-        , LEFT(CONVERT(VARCHAR, usu.fechaCreacion, 120), 10) as fecha_creacion
-        , LEFT(CONVERT(VARCHAR, usu.fechaActualizacion, 120), 10) as fecha_actualizacion
+        , usu.fechacreacion as fecha_creacion
+        , usu.fechaactualizacion as fecha_actualizacion
         , usu.usuario
-        , usu.avatar
-        FROM dbo.usuarios as usu
+        FROM public.usuarios as usu
         where
-        CONVERT(NVARCHAR(32),HashBytes('MD5',   CONVERT(NVARCHAR(32),HashBytes('MD5', cast(usu.id as varchar(max))),2) ),2)='".$id."'
+        usu.id='".$id."'
         ");
     }
 
     public static function GuardarRelacionUsuario($DataModel)
     {
-        return DB::connection('sqlsrv')->table('clientes_usuarios')->insertGetId($DataModel);
+        return DB::connection('pgsql')->table('clientes_usuarios')->insertGetId($DataModel);
     }
 
     public static function GetUsuarioRut($Rut)
@@ -56,14 +55,24 @@ class MantClientes extends Model
         return DB::select("
         SELECT
         *
-        FROM dbo.usuarios
+        FROM public.usuarios
         where rut='".$Rut."'
         ");
     }
 
+    public static function GuardarRelacionCliente($DataModel)
+    {
+        return DB::connection('pgsql')->table('clientes_usuarios')->insertGetId($DataModel);
+    }
+
+    public static function GuardarCliente($DataModel)
+    {
+        return DB::connection('pgsql')->table('clientes')->insertGetId($DataModel);
+    }
+
     public static function GuardarUsuario($DataModel)
     {
-        return DB::connection('sqlsrv')->table('usuarios')->insertGetId($DataModel);
+        return DB::connection('pgsql')->table('usuarios')->insertGetId($DataModel);
     }
 
     public static function ExisteId($id)
@@ -71,9 +80,9 @@ class MantClientes extends Model
         return DB::select("
         SELECT
         *
-        FROM dbo.usuarios
+        FROM public.usuarios
         where
-        CONVERT(NVARCHAR(32),HashBytes('MD5',   CONVERT(NVARCHAR(32),HashBytes('MD5', cast(id as varchar(max))),2) ),2)!='".$id."'
+        id!='".$id."'
         ");
     }
 
@@ -82,9 +91,9 @@ class MantClientes extends Model
         return DB::select("
         SELECT
         *
-        FROM dbo.usuarios
+        FROM public.usuarios
         where
-        CONVERT(NVARCHAR(32),HashBytes('MD5',   CONVERT(NVARCHAR(32),HashBytes('MD5', cast(id as varchar(max))),2) ),2)!='".$id."'
+        id!='".$id."'
         and upper(rut)=upper('".$dato."')
         ");
     }
@@ -94,9 +103,9 @@ class MantClientes extends Model
         return DB::select("
         SELECT
         *
-        FROM dbo.usuarios
+        FROM public.usuarios
         where
-        CONVERT(NVARCHAR(32),HashBytes('MD5',   CONVERT(NVARCHAR(32),HashBytes('MD5', cast(id as varchar(max))),2) ),2)!='".$id."'
+        id!='".$id."'
         and upper(email)=upper('".$dato."')
         ");
     }
@@ -106,9 +115,9 @@ class MantClientes extends Model
         return DB::select("
         SELECT
         *
-        FROM dbo.usuarios
+        FROM public.usuarios
         where
-        CONVERT(NVARCHAR(32),HashBytes('MD5',   CONVERT(NVARCHAR(32),HashBytes('MD5', cast(id as varchar(max))),2) ),2)!='".$id."'
+        id!='".$id."'
         and upper(usuario)=upper('".$dato."')
         ");
     }
@@ -117,8 +126,7 @@ class MantClientes extends Model
     {
         return DB::select("
         SELECT
-        CONVERT(NVARCHAR(32),HashBytes('MD5',   CONVERT(NVARCHAR(32),HashBytes('MD5', cast(usu.id as varchar(max))),2) ),2) as id_md5
-        , usu.id
+        usu.id
         , usu.estado
         , usu.rut
         , usu.nombres
@@ -127,15 +135,14 @@ class MantClientes extends Model
         , coalesce(usu.telefono2,'') as telefono2
         , usu.email
         , usu.contrasenia
-        , LEFT(CONVERT(VARCHAR, usu.fechaCreacion, 120), 10) as fecha_creacion
-        , LEFT(CONVERT(VARCHAR, usu.fechaActualizacion, 120), 10) as fecha_actualizacion
+        , usu.fechacreacion as fecha_creacion
+        , usu.fechaactualizacion as fecha_actualizacion
         , usu.fk_rol
         , rol.nombre as rol_nombre
         , usu.usuario
-        , usu.avatar
-        FROM dbo.usuarios as usu
-        left join dbo.clientes_usuarios as cli_usu on cli_usu.fk_cliente='".$id."' and usu.id=cli_usu.fk_usuario
-        left join dbo.roles as rol on usu.fk_rol=rol.id
+        FROM public.usuarios as usu
+        left join public.clientes_usuarios as cli_usu on cli_usu.fk_cliente='".$id."' and usu.id=cli_usu.fk_usuario
+        left join public.roles as rol on usu.fk_rol=rol.id
         where
         cli_usu.id is null and usu.fk_rol=3
         ");
@@ -145,8 +152,7 @@ class MantClientes extends Model
     {
         return DB::select("
         SELECT
-        CONVERT(NVARCHAR(32),HashBytes('MD5',   CONVERT(NVARCHAR(32),HashBytes('MD5', cast(usu.id as varchar(max))),2) ),2) as id_md5
-        , usu.id
+        usu.id
         , usu.estado
         , usu.rut
         , usu.nombres
@@ -158,21 +164,31 @@ class MantClientes extends Model
         , usu.fk_rol
         , rol.nombre as rol_nombre
         , usu.usuario
-        , usu.avatar
-        FROM dbo.clientes_usuarios as cli_usu
-        inner join dbo.usuarios as usu on cli_usu.fk_usuario=usu.id
-        inner join dbo.roles as rol on usu.fk_rol=rol.id
+        FROM public.clientes_usuarios as cli_usu
+        inner join public.usuarios as usu on cli_usu.fk_usuario=usu.id
+        inner join public.roles as rol on usu.fk_rol=rol.id
         where cli_usu.fk_cliente='".$id."'
         ");
     }
 
+    public static function GetRolCliente($Bd)
+    {
+        return DB::select("
+        SELECT
+        id
+        FROM
+        ".$Bd.".public.roles
+        where
+        UPPER(nombre)='CLIENTE'
+        ");
+    }
     public static function GetCliente($Bd, $id)
     {
         return DB::select("
         SELECT
         *
         FROM
-        ".$Bd.".dbo.clientes
+        ".$Bd.".public.clientes
         where
         codigo='".$id."'
         ");
@@ -191,7 +207,7 @@ class MantClientes extends Model
         , nombre
         , email
         , telefono
-        FROM ".$Bd.".dbo.clientes
+        FROM ".$Bd.".public.clientes
         order by nombre asc
         ");
     }

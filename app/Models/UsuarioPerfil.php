@@ -22,7 +22,7 @@ class UsuarioPerfil extends Model
         return DB::select("
         SELECT
         *
-        FROM dbo.usuarios as usu
+        FROM public.usuarios as usu
         where
         usu.id=".$id."
         ");

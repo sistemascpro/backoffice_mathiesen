@@ -33,7 +33,7 @@ class MantProductosCaracteristicas_Controller extends BaseController
         return json_encode(MantProductosCaracteristicas::GetOpciones($DatosGen['NombreEmpresa'][0]->bdbackoffice, $data['id']));
 
     }}
-    
+
     public function Guardar(Request $req) { if(!$req->session()->get('nombre') || !Login::ValidatePermiso(session()->get('fk_rol'),'mant_productoscaracteristicas') || session()->get('fk_rol')==3) { $req->session()->flush();  return redirect('login'); } else {
         $DatosGen = app('App\Http\Controllers\Home_Controller')->DatosGen($req);
 
@@ -42,14 +42,14 @@ class MantProductosCaracteristicas_Controller extends BaseController
         $id             = $data['id'];
 
 
-        if ( MantProductosCaracteristicas::ExisteNombre($DatosGen['NombreEmpresa'][0]->bdbackoffice, $nombre, $id) ) 
+        if ( MantProductosCaracteristicas::ExisteNombre($DatosGen['NombreEmpresa'][0]->bdbackoffice, $nombre, $id) )
         {
             return "EL NOMBRE YA ESTÁ REGISTRADO";
         }
-        else if( !isset($data['tipo']) || strlen(trim($data['tipo']))==0 || !isset($data['libre']) || strlen(trim($data['libre']))==0 || !isset($data['tipo']) || strlen(trim($data['tipo']))==0 )
+        else if( !isset($data['tipo']) || strlen(trim($data['tipo']))==0 || !isset($data['libre']) || strlen(trim($data['libre']))==0 )
         {
             return "FALTA INFORMACION";
-        } 
+        }
         else if( $data['tipo']==1 && $data['libre']=='NO' && ( !isset($data['solonumero']) || strlen($data['solonumero'])<=0 ) )
         {
             return "FALTA INGRESAR EL VALOR DEL NUMERO";
@@ -58,11 +58,11 @@ class MantProductosCaracteristicas_Controller extends BaseController
         {
             return "DEBE INGRESAR UN VALOR EN EL CAMPO AREA DE TEXTO";
         }
-        else if( $data['tipo']==3 && $data['libre']=='NO' && ( !isset($data['campodetexto']) || strlen($data['campodetexto'])<=0 ) )
+        else if( $data['tipo']==4 && $data['libre']=='NO' && ( !isset($data['campodetexto']) || strlen($data['campodetexto'])<=0 ) )
         {
             return "DEBE INGRESAR UN VALOR EN EL CAMPO DE TEXTO";
         }
-        else if( ( $data['tipo']==4 || $data['tipo']==5 ) && !isset($data['ContenidoOpcion']) )
+        else if( ( $data['tipo']==3 ) && !isset($data['ContenidoOpcion']) )
         {
             return "DEBE INGRESAR MINIMO UNA OPCION";
         }
@@ -93,7 +93,18 @@ class MantProductosCaracteristicas_Controller extends BaseController
                     'libre'             => $libre,
                     'tipo'              => $tipo,
                     'valor'             => app('App\Http\Controllers\Home_Controller')->LimpiarTexto($data['areadetexto']),
-                ];               
+                ];
+            }
+            else if( $tipo==4 )
+            {
+                $DataModel = [
+                    'estado'            => $estado,
+                    'nombre'            => $nombre,
+                    'obligatorio'       => $obligatorio,
+                    'libre'             => $libre,
+                    'tipo'              => $tipo,
+                    'valor'             => app('App\Http\Controllers\Home_Controller')->LimpiarTexto($data['campodetexto']),
+                ];
             }
             else if( $tipo==3 )
             {
@@ -103,20 +114,9 @@ class MantProductosCaracteristicas_Controller extends BaseController
                     'obligatorio'       => $obligatorio,
                     'libre'             => $libre,
                     'tipo'              => $tipo,
-                    'valor'             => app('App\Http\Controllers\Home_Controller')->LimpiarTexto($data['campodetexto']),
-                ];               
-            }            
-            else if( $tipo==5 )
-            {
-                $DataModel = [
-                    'estado'            => $estado,
-                    'nombre'            => $nombre,
-                    'obligatorio'       => $obligatorio,
-                    'libre'             => $libre,
-                    'tipo'              => $tipo,
                     'valor'             => '',
-                ];               
-            }    
+                ];
+            }
 
             if($id==0)
             {
@@ -127,7 +127,7 @@ class MantProductosCaracteristicas_Controller extends BaseController
                 MantProductosCaracteristicas::Actualizar($DatosGen['NombreEmpresa'][0]->bdbackoffice, $DataModel, $id);
             }
 
-            if( $tipo==5 )
+            if( $tipo==3 )
             {
                 $ContenidoOpcion = $data['ContenidoOpcion'];
 
@@ -137,7 +137,7 @@ class MantProductosCaracteristicas_Controller extends BaseController
                         'estado'            => 1,
                         'opcion'            => app('App\Http\Controllers\Home_Controller')->LimpiarTexto($ContenidoOpcion[$i]),
                         'fk_caracteristica' => $id,
-                    ];    
+                    ];
                     MantProductosCaracteristicas::GuardarOpcion($DatosGen['NombreEmpresa'][0]->bdbackoffice, $DataModel);
                 }
             }
@@ -169,7 +169,8 @@ class MantProductosCaracteristicas_Controller extends BaseController
 
         $data = $req->input();
         $Caracteristica = MantProductosCaracteristicas::GetDetalle($DatosGen['NombreEmpresa'][0]->bdbackoffice, $data['id']);
-        if( count($Caracteristica)<=0 ){
+        if( count($Caracteristica)<=0 )
+        {
             $Caracteristica[0] = (object)array(
                 'id'=>0
                 , 'nombre'=>''
@@ -187,10 +188,11 @@ class MantProductosCaracteristicas_Controller extends BaseController
             , 'ModuloTitulo1' => 'MANTENEDOR DE PRODUCTOS CARACTERISTICAS'
             , 'ModuloTitulo2' => 'CREAR/EDITAR PRODUCTOS CARACTERISTICAS'
             , 'ModuloRuta' => 'mant_productoscaracteristicas'
-            , 'ModuloRequired' => 'CaracteristicasRequired'              
+            , 'ModuloRequired' => 'CaracteristicasRequired'
         ]);
+    }}
 
-    }}    
+
     public function index(Request $req) { if(!$req->session()->get('nombre') || !Login::ValidatePermiso(session()->get('fk_rol'),'mant_productoscaracteristicas') || session()->get('fk_rol')==3) { $req->session()->flush();  return redirect('login'); } else {
         $DatosGen = app('App\Http\Controllers\Home_Controller')->DatosGen($req);
 
@@ -202,7 +204,7 @@ class MantProductosCaracteristicas_Controller extends BaseController
             , 'ModuloTitulo1' => 'MANTENEDOR DE PRODUCTOS CARACTERISTICAS'
             , 'ModuloTitulo2' => 'PRODUCTOS CARACTERISTICAS'
             , 'ModuloRuta' => 'mant_productoscaracteristicas'
-            , 'ModuloRequired' => 'CaracteristicasRequired'            
+            , 'ModuloRequired' => 'CaracteristicasRequired'
         ]);
 
     }}

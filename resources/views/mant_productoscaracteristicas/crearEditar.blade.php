@@ -99,7 +99,7 @@
                                     value="<?=$Caracteristica[0]->nombre?>"
                                     />
                                 </div>
-                            </div>                            
+                            </div>
                             <div class="row mb-3">
                                 <div class="col-sm-3">
                                     <p class="mb-0">TIPO</p>
@@ -111,13 +111,26 @@
                                     name="tipo"
                                     onChange="CargarFormaCaracteristica();"
                                     >
-                                        <option value="" <?php if($Caracteristica[0]->tipo==0){ ?>selected<?php }?>>Seleccionar...</option>
-                                        <?php for($i=0; $i<count($Tipos); $i++){ ?> 
-                                        <option value="<?=$Tipos[$i]->id?>" <?php if($Tipos[$i]->id==$Caracteristica[0]->tipo){ ?>selected<?php }?>><?=$Tipos[$i]->nombre?></option>
-                                        <?php } ?>
+                                        <?php
+                                            if( $Caracteristica[0]->id==0 )
+                                            {
+                                                ?><option value="" <?php if($Caracteristica[0]->tipo==0){ ?>selected<?php }?>>Seleccionar...</option><?php
+                                            }
+                                            for($i=0; $i<count($Tipos); $i++)
+                                            {
+                                                if( $Caracteristica[0]->id!=0 && $Caracteristica[0]->tipo==$Tipos[$i]->id)
+                                                {
+                                                    ?><option value="<?=$Tipos[$i]->id?>" <?php if($Tipos[$i]->id==$Caracteristica[0]->tipo){ ?>selected<?php }?>><?=$Tipos[$i]->nombre?></option><?php
+                                                }
+                                                else if( $Caracteristica[0]->id==0 )
+                                                {
+                                                    ?><option value="<?=$Tipos[$i]->id?>" <?php if($Tipos[$i]->id==$Caracteristica[0]->tipo){ ?>selected<?php }?>><?=$Tipos[$i]->nombre?></option><?php
+                                                }
+                                            }
+                                        ?>
                                     </select>
                                 </div>
-                            </div>    
+                            </div>
                             <div id="DetalleCaracteristica">
                             </div>
                             <br>

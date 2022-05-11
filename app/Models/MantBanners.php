@@ -29,8 +29,8 @@ class MantBanners extends Model
         bann.id
         , bann.CodProd
         , prod.descripcion
-        FROM ".$BDBACK.".dbo.banners_detalles as bann
-        INNER JOIN ".$BDBACK.".dbo.productos as prod on bann.CodProd = prod.codigo
+        FROM ".$BDBACK.".public.banners_detalles as bann
+        INNER JOIN ".$BDBACK.".public.productos as prod on bann.CodProd = prod.codigo
         where bann.banner=".$Id."
         ");
     }
@@ -45,7 +45,7 @@ class MantBanners extends Model
         return DB::select("
         SELECT
         *
-        FROM ".$BDBACK.".dbo.banners_detalles
+        FROM ".$BDBACK.".public.banners_detalles
         where banner=".$Id." and CodProd='".$CodProd."'
         ");
     }
@@ -60,7 +60,7 @@ class MantBanners extends Model
         return DB::select("
         SELECT
         *
-        FROM ".$BDBACK.".dbo.banners
+        FROM ".$BDBACK.".public.banners
         where posicion=".$Posicion." and id!=".$id."
         ");
     }
@@ -78,7 +78,7 @@ class MantBanners extends Model
         , nombre
         , ruta
         , posicion
-        FROM ".$BDBACK.".dbo.banners
+        FROM ".$BDBACK.".public.banners
         where id=".$id."
         ");
     }
@@ -94,8 +94,8 @@ class MantBanners extends Model
         , count(deta.id) as cantidad
 
         FROM 
-        ".$BDBACK.".dbo.banners as bann
-        left join ".$BDBACK.".dbo.banners_detalles as deta on bann.id=deta.banner
+        ".$BDBACK.".public.banners as bann
+        left join ".$BDBACK.".public.banners_detalles as deta on bann.id=deta.banner
 
         group by 
         bann.id
