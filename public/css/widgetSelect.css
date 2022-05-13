@@ -13,6 +13,13 @@ box-sizing: border-box;
     margin-left: 15px;
 }
 
+@media screen and (max-width: 991px) {
+
+  .contenedor-corp {
+    float: right!important;
+}
+}
+
 .selectbox {
   width: 175px;
   margin: auto;
