@@ -1047,6 +1047,14 @@ width: 100%;
  
 }
 
+@media screen and (max-width: 800px){
+
+  .contTopBar {
+    width: 100%;
+    height: 30px!important;
+  }
+}
+
 .nav-link:focus, .nav-link:hover {
   color: var(--acent-500);
 }
