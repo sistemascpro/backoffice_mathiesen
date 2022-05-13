@@ -237,10 +237,10 @@
             <li class="nav-item dropdown"><a class="nav-link" href="https://www.grupomathiesen.com/nosotros/" target="_blank">Nosotros</a></li>
 
             <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle show" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="true">
+              <a class="nav-link dropdown-toggle " href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 Producto e Industrias <i style="font-weight:bold;" class="icon icon-chevron-down"></i>
               </a>
-              <ul class="dropdown-menu dropdown-menu-dark subMenuFullContent " aria-labelledby="navbarDarkDropdownMenuLink" data-bs-popper="none">
+              <ul class="dropdown-menu dropdown-menu-dark subMenuFullContent " aria-labelledby="navbarDarkDropdownMenuLink">
                 <?php
                 $Cont=0;
                 for( $i=0; $i<count($DatosGen['MenuWebPadres']); $i++)

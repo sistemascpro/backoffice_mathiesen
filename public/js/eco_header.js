@@ -960,6 +960,17 @@ function CargarRegistro(Tipo)
 
 $(document).ready(function() {
     //$(".subMenuFullContent").toggleClass( "show" );
+
+    $( "#navbarDarkDropdownMenuLink" ).click(function() {
+       // $(".subMenuFullContent").toggle("show");
+      // $(".subMenuFullContent").toggleClass("show");
+       /*if($('.dropdown-menu-dark').hasClass('show')){
+        $('.dropdown-menu-dark').removeClass('show')
+     }else{
+       $('.dropdown-menu-dark').addClass('show')
+     }*/
+      });
+
     if(typeof  $('#BuscadorCategorias').val() !== 'undefined' )
     {
         var input = document.getElementById("BuscadorCategorias");

@@ -1043,7 +1043,8 @@ width: 100%;
   padding: 20px;
   box-sizing: border-box;
   background-color: var(--gray-50);
-  top: 75px!important;
+  top: 66px!important;
+ 
 }
 
 .nav-link:focus, .nav-link:hover {
