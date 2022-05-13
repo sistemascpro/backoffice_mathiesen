@@ -1506,9 +1506,6 @@ class Eco_Controller extends BaseController
 
             if(count($Productos)>0){
             $Salida .="
-            <!-- evidal
-            <nav aria-label=\"breadcrumb\" style=\"margin-top:95px; margin-left: 28px;\">
-        -->
         <nav aria-label=\"breadcrumb\" style=\"margin-left: 28px;\">
         <ol class=\"breadcrumb\">
             <li class=\"breadcrumb-item\"><a href=\"/\">Página de inicio</a></li>

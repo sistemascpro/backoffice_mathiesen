@@ -1,8 +1,5 @@
 @include("eco_templates.eco_template_01")
 <div id="eco_productos">
-    <!-- evidal
-        <nav aria-label="breadcrumb" style="margin-top:95px; margin-left: 28px;">
-    -->
     <nav aria-label="breadcrumb" style="margin-left: 28px; margin-top: 110px !important;">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="/">Página de inicio</a></li>
@@ -10,7 +7,6 @@
     </ol>
     </nav>
     <div class="container-flow fullBanner-sm  "  style="background-image: url('img/headernoticias.jpg'); background-repeat: no-repeat; background-size: cover; background-position:top center" >
-    <!--<img src="images/contacto.png" alt="..."/>-->
     </div>
 
     <div class="container contContact" style="position:relative; top:-100px">
