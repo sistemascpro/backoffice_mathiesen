@@ -219,7 +219,7 @@
     </div>
 </div>
 
- 
+
      
       
     </div>
@@ -240,7 +240,7 @@
               <a class="nav-link dropdown-toggle show" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="true">
                 Producto e Industrias <i style="font-weight:bold;" class="icon icon-chevron-down"></i>
               </a>
-              <ul class="dropdown-menu dropdown-menu-dark subMenuFullContent show" aria-labelledby="navbarDarkDropdownMenuLink" data-bs-popper="none">
+              <ul class="dropdown-menu dropdown-menu-dark subMenuFullContent " aria-labelledby="navbarDarkDropdownMenuLink" data-bs-popper="none">
                 <?php
                 $Cont=0;
                 for( $i=0; $i<count($DatosGen['MenuWebPadres']); $i++)

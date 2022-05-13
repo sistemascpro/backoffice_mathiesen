@@ -959,7 +959,7 @@ function CargarRegistro(Tipo)
    
 
 $(document).ready(function() {
-
+    //$(".subMenuFullContent").toggleClass( "show" );
     if(typeof  $('#BuscadorCategorias').val() !== 'undefined' )
     {
         var input = document.getElementById("BuscadorCategorias");
@@ -983,7 +983,7 @@ $(document).ready(function() {
     {
         LoadGrillaProductos();
     }
-
+var condition="";
     $('#slider').nivoSlider({
         manualAdvance: true,
         beforeChange: function(){
@@ -1042,5 +1042,7 @@ $(document).ready(function() {
      opciones.classList.toggle('active');
      navButton.classList.toggle('active');
    });
-
+   
 });
+
+

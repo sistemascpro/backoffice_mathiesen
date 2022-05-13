@@ -7,7 +7,7 @@
             </ol>
         </nav>
         <?php for($i=0; $i<count($DetalleNocitia); $i++ ) { ?>
-        <div class="container-flow fullBanner-sm  ">
+        <div class="container-flow fullBanner-sm2  ">
           <img src="<?=$DetalleNocitia[$i]->imagen?>" alt="Mathiesen Argentina Recertifica Norma de Inocuidad Alimentaria">
         </div>
         <div class="container contNoticia" style="padding-top:34px">

@@ -6,7 +6,7 @@
                 <li class="breadcrumb-item active" aria-current="page">Registro</li>
             </ol>
         </nav>
-        <div class="container-flow fullBanner-sm  "  style="background-image: url('img/headerregistro.jpg'); background-repeat: no-repeat; background-size: cover; background-position:top center" >
+        <div class="container-flow fullBanner-sm2 "  style="background-image: url('img/headerregistro.jpg'); background-repeat: no-repeat; background-size: cover; background-position:top center" >
         </div>
 
 <div class="container contContact" style="position:relative; top:-100px">

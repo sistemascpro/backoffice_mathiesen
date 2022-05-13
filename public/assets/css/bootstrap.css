@@ -4250,8 +4250,8 @@ textarea.form-control-lg {
   border-radius: 0.25rem;
 }
 
-.card img{
-  height:200px;
+.card img {
+  height:200px!important;
 }
 .card > hr {
   margin-right: 0;
