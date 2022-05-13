@@ -17,18 +17,18 @@ class MantProductosCaracteristicas extends Model
         return DB::select("
         SELECT
         *
-        FROM ".$DBBACK.".dbo.caracteristicas_productos_opciones
+        FROM ".$DBBACK.".public.caracteristicas_productos_opciones
         where
         fk_caracteristica=".$id."
         ");
     }
-        
+
     public static function ExisteNombre($DBBACK, $dato, $id)
     {
         return DB::select("
         SELECT
         *
-        FROM ".$DBBACK.".dbo.caracteristicas_productos
+        FROM ".$DBBACK.".public.caracteristicas_productos
         where
         id!=".$id."
         and upper(nombre)=upper('".$dato."')
@@ -55,7 +55,7 @@ class MantProductosCaracteristicas extends Model
         return DB::select("
         SELECT
         *
-        FROM ".$DBBACK.".dbo.caracteristicas_productos_tipos
+        FROM ".$DBBACK.".public.caracteristicas_productos_tipos
         order by
         nombre
         asc
@@ -67,7 +67,7 @@ class MantProductosCaracteristicas extends Model
         return DB::select("
         SELECT
         *
-        FROM ".$DBBACK.".dbo.caracteristicas_productos
+        FROM ".$DBBACK.".public.caracteristicas_productos
         WHERE
         id=".$id."
         ");
@@ -81,8 +81,8 @@ class MantProductosCaracteristicas extends Model
         , temp2.nombre as tipo_nombre
         , temp1.nombre
         , temp1.estado
-        FROM ".$DBBACK.".dbo.caracteristicas_productos as temp1
-        inner join ".$DBBACK.".dbo.caracteristicas_productos_tipos  as temp2 on temp1.tipo=temp2.id
+        FROM ".$DBBACK.".public.caracteristicas_productos as temp1
+        inner join ".$DBBACK.".public.caracteristicas_productos_tipos  as temp2 on temp1.tipo=temp2.id
         order by
         temp1.nombre
         asc

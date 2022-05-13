@@ -1,6 +1,6 @@
 		@extends("layouts.app")
         @section("script")
-        <script src="{{ asset('assets/js/js/mant_clientes.obfuscated.js') }}"></script>
+        <script src="{{ asset('assets/js/js/mant_clientes.js') }}"></script>
         @endsection
 		@section("wrapper")
             <div class="page-wrapper">
@@ -40,7 +40,7 @@
                                         {
                                             ?>
                                             <tr class="table-hover">
-                                                <td><span class="pointer badge badge-pill bg-success" onclick="crearEditar(<?=$Rows->codigo?>)">VER</span></td>
+                                                <td><span class="pointer badge badge-pill bg-success" onclick="crearEditar(<?=$Rows->id?>)">VER</span></td>
                                                 <td><?php if(isset($Rows->codigo)){ echo $Rows->codigo; }?></td>
                                                 <td><?php if(isset($Rows->nombre)){ echo $Rows->nombre; }?></td>
                                                 <td><?php if(isset($Rows->email)){ echo $Rows->email; }?></td>

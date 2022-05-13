@@ -40,13 +40,34 @@ class MantProductos_Controller extends BaseController
         {
             foreach($Caracteristicas as $lsRow)
             {
-                if($lsRow->prod_caract!=null) { $checked=' checked '; } else { $checked = ''; }
+                if($lsRow->prod_caract!=null)
+                {
+                    $checked=' checked ';
+                }
+                else
+                {
+                    $checked = '';
+                }
 
                 if( $lsRow->caract_tipo_id==1)
                 {
                     $CaractVal = MantProductos::GetCaracteristicasValores($DatosGen['NombreEmpresa'][0]->bdbackoffice, $lsRow->caract_id, $data['fk_producto']);
-                    if(count($CaractVal)>0){ $Valor = $CaractVal[0]->valor; } else { $Valor=''; }
-                    if( $lsRow->libre=="NO" ) { $ReadOnly=' readonly '; } else { $ReadOnly=' '; }
+                    if(count($CaractVal)>0)
+                    {
+                        $Valor = $CaractVal[0]->valor;
+                    }
+                    else
+                    {
+                        $Valor='';
+                    }
+                    if( $lsRow->libre=="NO" )
+                    {
+                        $ReadOnly=' readonly ';
+                    }
+                    else
+                    {
+                        $ReadOnly=' ';
+                    }
                     $Salida .="
                     <div class=\"col-12 row mb-3\">
                         <div class=\"mr-5\" style=\"width:20px!important\"><input class=\"form-check-input chbk-20\" type=\"checkbox\" id=\"chkCaracteristica[]\" name=\"chkCaracteristica[]\" value=\"".$lsRow->caract_id."\" ".$checked."></div>
@@ -66,7 +87,7 @@ class MantProductos_Controller extends BaseController
                         <div class=\"col-sm-8 text-secondary\"><textarea class=\"ProdRequired form-control\" maxlength=\"250\" id=\"CaractVal[".$lsRow->caract_id."]\" name=\"CaractVal[".$lsRow->caract_id."]\" ".$ReadOnly.">".$Valor."</textarea></div>
                     </div>";
                 }
-                else if( $lsRow->caract_tipo_id==3)
+                else if( $lsRow->caract_tipo_id==4)
                 {
                     $CaractVal = MantProductos::GetCaracteristicasValores($DatosGen['NombreEmpresa'][0]->bdbackoffice, $lsRow->caract_id, $data['fk_producto']);
                     if(count($CaractVal)>0){ $Valor = $CaractVal[0]->valor; } else { $Valor=''; }
@@ -78,19 +99,37 @@ class MantProductos_Controller extends BaseController
                         <div class=\"col-sm-8 text-secondary\"><input type=\"text\" class=\"ProdRequired form-control\" maxlength=\"250\" id=\"CaractVal[".$lsRow->caract_id."]\" name=\"CaractVal[".$lsRow->caract_id."]\" value=\"".$Valor."\" ".$ReadOnly."></div>
                     </div>";
                 }
-                else if( $lsRow->caract_tipo_id==5 )
+                else if( $lsRow->caract_tipo_id==3 )
                 {
-                    if( $lsRow->caract_tipo_id==5 ) { $Multiple = 'multiple'; $MultipleMensaje = '<p>PARA SELECCIONAR MAS DE UNA CARACTERISTICA MANTENGA PRESIONADA LA TECLA CTRL</p>'; } else { $Multiple = ''; $MultipleMensaje = ''; }
+                    if( $lsRow->caract_tipo_id==3 )
+                    {
+                        $Multiple = 'multiple'; $MultipleMensaje = '<p>PARA SELECCIONAR MAS DE UNA CARACTERISTICA MANTENGA PRESIONADA LA TECLA CTRL</p>'; } else { $Multiple = ''; $MultipleMensaje = '';
+                    }
                     $Opciones = MantProductos::CargarCaracteristicasFamiliaOpciones($DatosGen['NombreEmpresa'][0]->bdbackoffice, $lsRow->caract_id, $data['fk_producto']);
-                    if( $lsRow->libre=="NO" ) { $ReadOnly=' readonly '; } else { $ReadOnly=' '; }
+                    if( $lsRow->libre=="NO" )
+                    {
+                        $ReadOnly=' readonly ';
+                    }
+                    else
+                    {
+                        $ReadOnly=' ';
+                    }
                     $Salida .="
                     <div class=\"col-12 row mb-3\">
                     <div class=\"mr-5\" style=\"width:20px!important\"><input class=\"form-check-input chbk-20\" type=\"checkbox\" id=\"chkCaracteristica[]\" name=\"chkCaracteristica[]\" value=\"".$lsRow->caract_id."\" ".$checked."></div>
                         <div class=\"col-sm-2 text-secondary\">".$lsRow->caract_nombre."</div>
                         <div class=\"col-sm-8 text-secondary\">
                             <select class=\"ProdRequired form-select\" maxlength=\"30\" id=\"SelectVal[".$lsRow->caract_id."]\" name=\"SelectVal[]\" multiple>";
-                            foreach($Opciones as $lsOpt){
-                                if( $lsOpt->fk_producto!=null ) { $selected = ' selected '; } else { $selected = ''; }
+                            foreach($Opciones as $lsOpt)
+                            {
+                                if( $lsOpt->fk_producto!=null )
+                                {
+                                    $selected = ' selected ';
+                                }
+                                else
+                                {
+                                    $selected = '';
+                                }
                                 $Salida .="<option value=\"opSelect_".$lsOpt->id."\" ".$selected.">".$lsOpt->opcion."</option>";
                             }
                     $Salida .="</select>
@@ -224,7 +263,7 @@ class MantProductos_Controller extends BaseController
             $CodProd        = limpiar_texto1($data['CodProd']);
             $DesProd        = limpiar_texto2($data['DesProd']);
             $DesProd2       = limpiar_texto2($data['DesProd2']);
-            $DesExtra       = limpiar_texto2($data['DesExtra']);
+            $desextra       = limpiar_texto2($data['DesExtra']);
             $archivoextranombre       = limpiar_texto2($data['archivoextranombre']);
 
             if ( MantProductos::ExisteCodigo($DatosGen['NombreEmpresa'][0]->bdbackoffice, $data['CodProd'], $productoid) ) {
@@ -239,7 +278,7 @@ class MantProductos_Controller extends BaseController
                     'fk_marca'          => $data['fk_marca'],
                     'estado'            => $estado,
                     'descripcion2'      => $DesProd2,
-                    'DesExtra'          => $DesExtra,
+                    'desextra'          => $desextra,
                     'vista'             => $vista,
                 ];
 
@@ -303,8 +342,10 @@ class MantProductos_Controller extends BaseController
                         {
                             for($Aux=0; $Aux<count($OpcionesSelect); $Aux++){
 
-                                for($x=0; $x<count($data['SelectVal']); $x++){
-                                    if($data['SelectVal'][$x]=="opSelect_".$OpcionesSelect[$Aux]->id){
+                                for($x=0; $x<count($data['SelectVal']); $x++)
+                                {
+                                    if($data['SelectVal'][$x]=="opSelect_".$OpcionesSelect[$Aux]->id)
+                                    {
                                         $DataModel = [
                                             'fk_producto'       =>  $productoid,
                                             'fk_caracteristica' =>  $data['chkCaracteristica'][$i],
@@ -519,7 +560,7 @@ class MantProductos_Controller extends BaseController
                 , 'vista'=>'PUBLICO'
                 , 'descripcion'=>''
                 , 'descripcion2'=>''
-                , 'DesExtra'=>''
+                , 'desextra'=>''
                 , 'estado'=>1
                 , 'fk_familia'=>0
                 , 'fichatecnica'=>null

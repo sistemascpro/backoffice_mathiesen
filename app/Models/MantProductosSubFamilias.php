@@ -18,7 +18,7 @@ class MantProductosSubFamilias extends Model
         return DB::select("
         SELECT
         *
-        FROM dbo.sub_familias
+        FROM public.sub_familias
         where
         fk_rol=".$id."
         ");
@@ -42,7 +42,7 @@ class MantProductosSubFamilias extends Model
 
     public static function GuardarSubFamilia($DataModel)
     {
-        return DB::connection('sqlsrv')->table('sub_familias')->insertGetId($DataModel);
+        return DB::connection('pgsql')->table('sub_familias')->insertGetId($DataModel);
     }
 
     public static function ExisteId($id)
@@ -50,7 +50,7 @@ class MantProductosSubFamilias extends Model
         return DB::select("
         SELECT
         *
-        FROM dbo.sub_familias
+        FROM public.sub_familias
         where
         id=".$id."
         ");
@@ -61,7 +61,7 @@ class MantProductosSubFamilias extends Model
         return DB::select("
         SELECT
         *
-        FROM dbo.sub_familias
+        FROM public.sub_familias
         where
         id!=".$id."
         and upper(codigo)=upper('".$dato."')
@@ -73,7 +73,7 @@ class MantProductosSubFamilias extends Model
         return DB::select("
         SELECT
         *
-        FROM dbo.sub_familias
+        FROM public.sub_familias
         where
         id!=".$id."
         and upper(nombre)=upper('".$dato."')
@@ -89,10 +89,10 @@ class MantProductosSubFamilias extends Model
         , familia.nombre
         , familia.estado
         , case when sfamilia.id is not null then 'selected' else '' end as selected
-        FROM dbo.familias as familia
-        left join dbo.sub_familias as sfamilia on familia.id=sfamilia.fk_familia and sfamilia.id=".$id."
+        FROM public.familias as familia
+        left join public.sub_familias as sfamilia on familia.id=sfamilia.fk_familia and sfamilia.id=".$id."
         WHERE
-        familia.estado=1
+        familia.estado =true
         group by
         familia.id
         , familia.codigo
@@ -117,8 +117,8 @@ class MantProductosSubFamilias extends Model
         , sfamilia.estado
         , familia.id as familiaid
         , familia.nombre as familianombre
-        FROM dbo.sub_familias as sfamilia
-        left join dbo.familias as familia on sfamilia.fk_familia=familia.id
+        FROM public.sub_familias as sfamilia
+        left join public.familias as familia on sfamilia.fk_familia=familia.id
         where sfamilia.id=".$id."
         ");
     }
@@ -140,8 +140,8 @@ class MantProductosSubFamilias extends Model
         , sfamilia.estado
         , familia.id as familiaid
         , familia.nombre as familianombre
-        FROM dbo.sub_familias as sfamilia
-        left join dbo.familias as familia on sfamilia.fk_familia=familia.id
+        FROM public.sub_familias as sfamilia
+        left join public.familias as familia on sfamilia.fk_familia=familia.id
         group by
         sfamilia.id
         , sfamilia.codigo

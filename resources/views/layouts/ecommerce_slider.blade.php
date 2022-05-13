@@ -1,50 +1,35 @@
-
-<div class="slider-home">
-    <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+<div class="slider-home" style="margin-top: 114px;">
+    <div id="carouselExampleCaptions" class="carousel slide pointer-event" data-bs-ride="carousel">
         <div class="carousel-indicators">
             <?php
-            $i=0;
-            foreach($DatosGen['Sliders'] as $lsRow)
+            for($i=0; $i<count($DatosGen['Sliders']); $i++)
             {
+                $Active = " ";
                 if($i==0)
                 {
-                    ?>
-                        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="<?=$i?>" class="active" aria-current="true" aria-label="Slide <?=($i+1)?>"></button>
-                    <?php
+                    $Active = " active ";
                 }
-                else
-                {
-                    ?>
-                        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="<?=$i?>" aria-current="true" aria-label="Slide <?=($i+1)?>"></button>
-                    <?php
-                }
+                ?>
+                    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="<?=$i?>" class="<?=$Active?>" aria-label="Slide <?=$i?>"></button>
+                <?php
             }
             ?>
         </div>
         <div class="carousel-inner">
             <?php
-            $i=0;
-            foreach($DatosGen['Sliders'] as $lsRow)
+            for($i=0; $i<count($DatosGen['Sliders']); $i++)
             {
+                $Active = " ";
                 if($i==0)
                 {
-                    ?>
-                        <div class="carousel-item active">
-                            <img src="<?=$lsRow->ruta?>" class="d-block w-100" alt="...">
-                            <div class="carousel-caption d-none d-md-block"></div>
-                        </div>
-                    <?php
+                    $Active = " active ";
                 }
-                else
-                {
-                    ?>
-                        <div class="carousel-item">
-                            <img src="<?=$lsRow->ruta?>" class="d-block w-100" alt="...">
-                            <div class="carousel-caption d-none d-md-block"></div>
-                        </div>
-                    <?php
-                }
-                $i++;
+                ?>
+                    <div class="carousel-item <?=$Active?>">
+                        <img src="<?=$DatosGen['Sliders'][$i]->ruta?>" class="d-block w-100" alt="...">
+                        <div class="carousel-caption d-none d-md-block"></div>
+                    </div>
+                <?php
             }
             ?>
         </div>

@@ -7,23 +7,24 @@ use Illuminate\Database\Eloquent\Model;
 
 class MantSliders extends Model
 {
-    public static function Eliminar($BDBACK, $id)
+    public static function Eliminar($id)
     {
-        return DB::connection($BDBACK)->table('sliders')->where('id', $id)->delete();
+        return DB::connection('pgsql')->table('sliders')->where('id', $id)->delete();
     }
 
-    public static function Guardar($BDBACK, $DataModel)
+    public static function Guardar($DataModel)
     {
-        return DB::connection($BDBACK)->table('sliders')->insertGetId($DataModel);
+        return DB::connection('pgsql')->table('sliders')->insertGetId($DataModel);
     }
+
 
     public static function GetList($BDBACK)
     {
         return DB::select("
-        SELECT 
+        SELECT
         *
-        FROM 
-        ".$BDBACK.".dbo.sliders
+        FROM
+        ".$BDBACK.".public.sliders
         order by id desc
         ");
     }

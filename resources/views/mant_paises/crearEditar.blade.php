@@ -50,7 +50,7 @@
                                         <option value=0 <?php if($Detalle[0]->estado==0){ ?>selected<?php }?>>BLOQUEADO</option>
                                     </select>
                                 </div>
-                                </div>
+                            </div>
                             <div class="row mb-3">
                                 <div class="col-sm-3">
                                     <p class="mb-0">CODIGO</p>
@@ -65,7 +65,7 @@
                                     value="<?=$Detalle[0]->codigo?>"
                                     />
                                 </div>
-                                </div>
+                            </div>
                             <div class="row mb-3">
                                 <div class="col-sm-3">
                                     <p class="mb-0">NOMBRE</p>
@@ -81,6 +81,19 @@
                                     />
                                 </div>
                             </div>
+                            <div class="row mb-3">
+                                <div class="col-sm-3">
+                                    <p class="mb-0">BANDERA</p>
+                                </div>
+                                <div class="col-sm-6 text-secondary">
+                                    <input
+                                    type="file"
+                                    class="<?=$ModuloRequired?> form-control"
+                                    maxlength="250"
+                                    id="bandera"
+                                    name="bandera"
+                                    />
+                                </div>
                             </div>
                             <br>
                             <span  class="row">

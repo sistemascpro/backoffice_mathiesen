@@ -17,7 +17,7 @@ class MantPopup extends Model
         return DB::select("
         SELECT
         *
-        FROM dbo.popup
+        FROM public.popup
         ");
     }
 

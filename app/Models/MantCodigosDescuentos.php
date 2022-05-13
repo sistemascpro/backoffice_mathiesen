@@ -9,12 +9,12 @@ class MantCodigosDescuentos extends Model
 {
     public static function EliminarCliente($Id)
     {
-        return DB::connection('sqlsrv')->table('codigosdescuentos_detalles')->where('id', $Id)->delete();
+        return DB::connection('pgsql')->table('codigosdescuentos_detalles')->where('id', $Id)->delete();
     }
 
     public static function GuardarCliente($DataModel)
     {
-        return DB::connection('sqlsrv')->table('codigosdescuentos_detalles')->insertGetId($DataModel);
+        return DB::connection('pgsql')->table('codigosdescuentos_detalles')->insertGetId($DataModel);
     }
 
     public static function ExisteCliente($codigo, $Id)
@@ -23,7 +23,7 @@ class MantCodigosDescuentos extends Model
         SELECT
         *
         FROM 
-        dbo.codigosdescuentos_detalles 
+        public.codigosdescuentos_detalles 
         where
         fk_cliente='".$codigo."' and fk_codigo=".$Id." and RTRIM(LTRIM(usado))='NO'
         ");
@@ -54,7 +54,7 @@ class MantCodigosDescuentos extends Model
         , deta.usado
         , cli.codigo
         , cli.nombre
-        FROM dbo.codigosdescuentos_detalles as deta
+        FROM public.codigosdescuentos_detalles as deta
         inner join ".$BD.".softland.cwtauxi as cli on deta.fk_cliente collate database_default = cli.codigo collate database_default
         where
         deta.fk_codigo=".$Id."
@@ -70,7 +70,7 @@ class MantCodigosDescuentos extends Model
 
     public static function Guardar($DataModel)
     {
-        return DB::connection('sqlsrv')->table('codigosdescuentos')->insertGetId($DataModel);
+        return DB::connection('pgsql')->table('codigosdescuentos')->insertGetId($DataModel);
     }
 
     public static function ExisteCodigo($Codigo, $Id)
@@ -79,7 +79,7 @@ class MantCodigosDescuentos extends Model
         SELECT
         *
         FROM 
-        dbo.codigosdescuentos 
+        public.codigosdescuentos 
         where
         codigo='".$Codigo."' and id!=".$Id."
         ");
@@ -95,7 +95,7 @@ class MantCodigosDescuentos extends Model
         , valor
         , CONCAT(SUBSTRING(fecha1,7,4),'-',SUBSTRING(fecha1,4,2),'-',SUBSTRING(fecha1,1,2)) as fecha1
         , CONCAT(SUBSTRING(fecha2,7,4),'-',SUBSTRING(fecha2,4,2),'-',SUBSTRING(fecha2,1,2)) as fecha2
-        FROM dbo.codigosdescuentos 
+        FROM public.codigosdescuentos 
         where
         id=".$id."
         ");
@@ -112,8 +112,8 @@ class MantCodigosDescuentos extends Model
         , cdesc.fecha1
         , cdesc.fecha2
         , count(cdet.id) as clientes
-        FROM dbo.codigosdescuentos as cdesc
-        left join dbo.codigosdescuentos_detalles as cdet on cdesc.id=cdet.fk_codigo
+        FROM public.codigosdescuentos as cdesc
+        left join public.codigosdescuentos_detalles as cdet on cdesc.id=cdet.fk_codigo
         group by 
         cdesc.id
         , cdesc.codigo

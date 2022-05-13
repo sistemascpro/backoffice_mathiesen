@@ -9,12 +9,12 @@ class MantProductosBloqueados extends Model
 {
     public static function Eliminar($id)
     {
-        return DB::connection('sqlsrv')->table('productos_bloqueados')->where('id', $id)->delete();
+        return DB::connection('pgsql')->table('productos_bloqueados')->where('id', $id)->delete();
     }
 
     public static function Guardar($DataModel)
     {
-        return DB::connection('sqlsrv')->table('productos_bloqueados')->insertGetId($DataModel);
+        return DB::connection('pgsql')->table('productos_bloqueados')->insertGetId($DataModel);
     }
 
     public static function ExisteProducto($BD, $CodProd)
@@ -23,7 +23,7 @@ class MantProductosBloqueados extends Model
         SELECT
         prod.codigo
         , prod.descripcion
-        FROM ".$BD.".dbo.productos as prod
+        FROM ".$BD.".public.productos as prod
         WHERE
         prod.CodProd='".$CodProd."'
         ");
@@ -34,7 +34,7 @@ class MantProductosBloqueados extends Model
         return DB::select("
         SELECT
         *
-        FROM ".$BDBACK.".dbo.productos_bloqueados
+        FROM ".$BDBACK.".public.productos_bloqueados
         where
         CodProd='".$CodProd."'
         ");
@@ -48,8 +48,8 @@ class MantProductosBloqueados extends Model
         , prod.codigo
         , prod.descripcion
         , bloq.Mensaje
-        FROM ".$BDBACK.".dbo.productos_bloqueados as bloq
-        INNER JOIN ".$BD.".dbo.productos as prod on bloq.CodProd = prod.codigo
+        FROM ".$BDBACK.".public.productos_bloqueados as bloq
+        INNER JOIN ".$BD.".public.productos as prod on bloq.CodProd = prod.codigo
         ");
     }
 

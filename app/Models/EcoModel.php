@@ -14,16 +14,16 @@ class EcoModel extends Model
         cfam.id
         , cfam.fk_caracteristica
         , cfam.fk_familia
-        , ISNULL(cfam.es_filtro,'NO') as es_filtro
+        , coalesce(cfam.es_filtro,'NO') as es_filtro
         , tip.nombre as caract_tipo
         , carac.nombre as caract_nombre
         , cfam.valor
         , carac.tipo
-        FROM ".$BDBACK.".dbo.familias_caracteristicas as cfam 
-        inner join ".$BDBACK.".dbo.caracteristicas_productos as carac on cfam.fk_caracteristica=carac.id 
-        inner join ".$BDBACK.".dbo.caracteristicas_productos_tipos as tip on carac.tipo=tip.id
+        FROM ".$BDBACK.".public.familias_caracteristicas as cfam 
+        inner join ".$BDBACK.".public.caracteristicas_productos as carac on cfam.fk_caracteristica=carac.id 
+        inner join ".$BDBACK.".public.caracteristicas_productos_tipos as tip on carac.tipo=tip.id
         where 
-        cfam.estado=1
+        cfam.estado =true
         and cfam.fk_familia=".$id."
         ");
     }
@@ -34,9 +34,9 @@ class EcoModel extends Model
         SELECT 
         id
         , UPPER(nombre) as nombre
-        FROM ".$BDBACK.".dbo.familias
+        FROM ".$BDBACK.".public.familias
         where
-        estado=1
+        estado =true
         ");
     }
 
@@ -46,9 +46,9 @@ class EcoModel extends Model
         SELECT 
         id
         , UPPER(nombre) as nombre
-        FROM ".$BDBACK.".dbo.marcas
+        FROM ".$BDBACK.".public.marcas
         where
-        estado=1
+        estado =true
         ");
     }
 
@@ -58,9 +58,9 @@ class EcoModel extends Model
         SELECT 
         id
         , UPPER(nombre) as nombre
-        FROM ".$BDBACK.".dbo.proveedores
+        FROM ".$BDBACK.".public.proveedores
         where
-        estado=1
+        estado =true
         ");
     }
 
@@ -70,9 +70,9 @@ class EcoModel extends Model
         SELECT 
         id
         , UPPER(nombre) as nombre
-        FROM ".$BDBACK.".dbo.paises
+        FROM ".$BDBACK.".public.paises
         where
-        estado=1
+        estado =true
         ");
     }
 
@@ -81,8 +81,8 @@ class EcoModel extends Model
         return DB::select("
         SELECT 
         UPPER(prov.nombre) as nombre
-        FROM ".$BDBACK.".dbo.productos_proveedores as prodprov
-        INNER join ".$BDBACK.".dbo.proveedores as prov on prodprov.fk_proveedor=prov.id
+        FROM ".$BDBACK.".public.productos_proveedores as prodprov
+        INNER join ".$BDBACK.".public.proveedores as prov on prodprov.fk_proveedor=prov.id
         where
         prodprov.fk_producto=".$fk_producto."
         ");
@@ -93,8 +93,8 @@ class EcoModel extends Model
         return DB::select("
         SELECT 
         UPPER(fam.nombre) as nombre
-        FROM ".$BDBACK.".dbo.productos_familias as prodfam
-        INNER join ".$BDBACK.".dbo.familias as fam on prodfam.fk_familia=fam.id
+        FROM ".$BDBACK.".public.productos_familias as prodfam
+        INNER join ".$BDBACK.".public.familias as fam on prodfam.fk_familia=fam.id
         where
         prodfam.fk_producto=".$fk_producto."
         ");
@@ -105,8 +105,8 @@ class EcoModel extends Model
         return DB::select("
         SELECT 
         UPPER(pais.nombre) as nombre
-        FROM ".$BDBACK.".dbo.productos_paises as prodpais
-        INNER join ".$BDBACK.".dbo.paises as pais on prodpais.fk_pais=pais.id
+        FROM ".$BDBACK.".public.productos_paises as prodpais
+        INNER join ".$BDBACK.".public.paises as pais on prodpais.fk_pais=pais.id
         where
         prodpais.fk_producto=".$fk_producto."
         ");
@@ -120,27 +120,27 @@ class EcoModel extends Model
         , caract.opcion
         , caract.estado
         , caract.fk_caracteristica
-        FROM ".$BDBACK.".dbo.caracteristicas_productos_opciones as caract
+        FROM ".$BDBACK.".public.caracteristicas_productos_opciones as caract
         where
         caract.fk_caracteristica=".$id."
-        and caract.estado=1
+        and caract.estado =true
         ");
     }
 
     public static function CargarCaracteristicasFamiliaProductosOpciones($BDBACK, $id, $fk_producto)
     {
         return DB::select("
-        SELECT 
+        SELECT
         caract.id
         , caract.opcion
         , caract.estado
         , caract.fk_caracteristica
-        , prod.fk_producto 
-        FROM ".$BDBACK.".dbo.caracteristicas_productos_opciones as caract
-        INNER join ".$BDBACK.".dbo.productos_caracteristicas as prod on caract.fk_caracteristica=prod.fk_caracteristica and caract.id=prod.valor and prod.fk_producto=".$fk_producto."
+        , prod.fk_producto
+        FROM ".$BDBACK.".public.caracteristicas_productos_opciones as caract
+        INNER join ".$BDBACK.".public.productos_caracteristicas as prod on caract.fk_caracteristica=prod.fk_caracteristica and caract.id=CAST(prod.valor as INT) and prod.fk_producto=".$fk_producto."
         where
         caract.fk_caracteristica=".$id."
-        and caract.estado=1
+        and caract.estado =true
         ");
     }
 
@@ -153,7 +153,7 @@ class EcoModel extends Model
         ,valor
         ,estado
         ,fk_producto
-        FROM ".$BDBACK.".dbo.productos_caracteristicas
+        FROM ".$BDBACK.".public.productos_caracteristicas
         where
         fk_caracteristica=".$id."
         ");
@@ -169,7 +169,7 @@ class EcoModel extends Model
         ,valor
         ,estado
         ,fk_producto
-        FROM ".$BDBACK.".dbo.productos_caracteristicas
+        FROM ".$BDBACK.".public.productos_caracteristicas
         where
         fk_producto=".$fk_producto."
         and fk_caracteristica=".$fk_caracteristica."
@@ -190,12 +190,12 @@ class EcoModel extends Model
         , carac.id as caract_id
         , cfam.valor
         , prod.fk_caracteristica as prod_caract
-        FROM ".$BDBACK.".dbo.familias_caracteristicas as cfam 
-        inner join ".$BDBACK.".dbo.caracteristicas_productos as carac on cfam.fk_caracteristica=carac.id 
-        inner join ".$BDBACK.".dbo.caracteristicas_productos_tipos as tip on carac.tipo=tip.id
-        inner join ".$BDBACK.".dbo.productos_caracteristicas as prod on cfam.fk_caracteristica=prod.fk_caracteristica and prod.fk_producto=".$fk_producto."
+        FROM ".$BDBACK.".public.familias_caracteristicas as cfam 
+        inner join ".$BDBACK.".public.caracteristicas_productos as carac on cfam.fk_caracteristica=carac.id 
+        inner join ".$BDBACK.".public.caracteristicas_productos_tipos as tip on carac.tipo=tip.id
+        inner join ".$BDBACK.".public.productos_caracteristicas as prod on cfam.fk_caracteristica=prod.fk_caracteristica and prod.fk_producto=".$fk_producto."
         where 
-        cfam.estado=1
+        cfam.estado =true
         and cfam.fk_familia=".$id."
         group by 
         cfam.id
@@ -218,16 +218,16 @@ class EcoModel extends Model
         cara.id as cara_id
         ,cara.nombre as cara_nombre
         ,cara.codigo as cara_codigo
-        , isnull(prod.valor,'') as valor
+        , coalesce(prod.valor,'') as valor
         FROM 
-        ".$BD.".dbo.caracteristicas_productos as cara 
-        inner join ".$BD.".dbo.prods_carcs as prod on prod.fk_caracteristica=cara.id and prod.fk_producto=".$id."
+        ".$BD.".public.caracteristicas_productos as cara 
+        inner join ".$BD.".public.prods_carcs as prod on prod.fk_caracteristica=cara.id and prod.fk_producto=".$id."
         ");
     }
 
     public static function UpdatePedidoSoftland($DataModel, $Pedido)
     {
-        return DB::connection('sqlsrv')->table('pedido_softland')->where('fk_pedido', $Pedido)->update($DataModel);
+        return DB::connection('pgsql')->table('pedido_softland')->where('fk_pedido', $Pedido)->update($DataModel);
     }
 
     public static function GetSinCorreo($BD, $BDBACK)
@@ -236,7 +236,7 @@ class EcoModel extends Model
         select 
         soft.fk_pedido
         from ".$BD.".softland.nw_nventa as nvta
-        inner join ".$BDBACK.".dbo.pedido_softland as soft on nvta.Patente=CAST(soft.fk_pedido as VARCHAR) and soft.correo='NO'
+        inner join ".$BDBACK.".public.pedido_softland as soft on nvta.Patente=CAST(soft.fk_pedido as VARCHAR) and soft.correo='NO'
         where
         nvFeAprob between DATEADD(minute, -60, GETDATE()) and DATEADD(minute, -30, GETDATE())
         order by nvFem desc
@@ -255,15 +255,15 @@ class EcoModel extends Model
 
     public static function UpdateProductoTerminado($DataModel, $id)
     {
-        return DB::connection('sqlsrv')->table('pedido_producto')->where('fk_pedido', $id)->where('estado_valido', 'SI')->update($DataModel);
+        return DB::connection('pgsql')->table('pedido_producto')->where('fk_pedido', $id)->where('estado_valido', 'SI')->update($DataModel);
     }
 
     public static function InserPedidoSoftland($DataModel)
     {
-        return DB::connection('sqlsrv')->table('pedido_softland')->insertGetId($DataModel);
+        return DB::connection('pgsql')->table('pedido_softland')->insertGetId($DataModel);
     }
         
-    public static function getDetalleBolsaGroupCodProd($Pedido, $Bodega, $BDBACK)
+    public static function getDetalleBolsaGroupcodprod($Pedido, $Bodega, $BDBACK)
     {
         
 
@@ -277,8 +277,8 @@ class EcoModel extends Model
         , temp1.imagen5
         , temp1.imagen6
         , temp1.descripcion
-        FROM ".$BDBACK.".dbo.pedido_producto as temp1
-        inner join ".$BDBACK.".dbo.GetProductosActivos as prod on temp1.id collate database_default = prod.id collate database_default
+        FROM ".$BDBACK.".public.pedido_producto as temp1
+        inner join ".$BDBACK.".public.GetProductosActivos as prod on temp1.id collate database_default = prod.id collate database_default
         where
         temp1.estado_valido='SI'
         and temp1.estado_terminado='NO'
@@ -293,7 +293,7 @@ class EcoModel extends Model
         return DB::select("
         SELECT 
         *
-        FROM ".$BDBACK.".dbo.limites_despachos
+        FROM ".$BDBACK.".public.limites_despachos
         where
         id=1
         ");
@@ -303,27 +303,27 @@ class EcoModel extends Model
         return DB::select("
         SELECT 
         cab.id
-        , ISNULL(dir.RegionDch,0) as region
-        , ISNULL(descu.valor,0) as descuento
-        , ISNULL(SUM(prod.cant_venta*prod.precio_venta),0) as total
-        FROM ".$BDBACK.".dbo.pedido_cabecera as cab
-        left join ".$BDBACK.".dbo.codigosdescuentos as descu on cab.codigo_descuento=descu.id
-        left join ".$BDBACK.".dbo.pedido_producto as prod on cab.id=prod.fk_pedido and prod.estado_valido='SI' and prod.estado_terminado='NO'
+        , coalesce(dir.RegionDch,0) as region
+        , coalesce(descu.valor,0) as descuento
+        , coalesce(SUM(prod.cant_venta*prod.precio_venta),0) as total
+        FROM ".$BDBACK.".public.pedido_cabecera as cab
+        left join ".$BDBACK.".public.codigosdescuentos as descu on cab.codigo_descuento=descu.id
+        left join ".$BDBACK.".public.pedido_producto as prod on cab.id=prod.fk_pedido and prod.estado_valido='SI' and prod.estado_terminado='NO'
         left join ".$BD.".softland.cwtauxd as dir on dir.NomDch collate database_default = cab.despacho_id collate database_default and dir.CodAxD collate database_default = cab.cliente_id collate database_default
         where
         cab.id=".$Id."
         group by 
         cab.id
         , descu.valor
-        , ISNULL(dir.RegionDch,0)
+        , coalesce(dir.RegionDch,0)
         ");
     }
 
     public static function GetDireccionCliente($BD, $Cliente, $Codigo){
         return DB::select("
         SELECT
-        ISNULL(comu.ComDes,'') AS Comuna
-        , ISNULL(reg.Descripcion,'') as Region
+        coalesce(comu.ComDes,'') AS Comuna
+        , coalesce(reg.Descripcion,'') as Region
         FROM
         ".$BD.".softland.cwtauxd AS A
         left join ".$BD.".softland.cwtcomu as comu on A.ComDch=comu.ComCod
@@ -338,7 +338,7 @@ class EcoModel extends Model
         return DB::select("
         SELECT
         *
-        FROM ".$BDBACK.".dbo.codigosdescuentos as temp1
+        FROM ".$BDBACK.".public.codigosdescuentos as temp1
         where
         temp1.id=".$Id."
         ");
@@ -346,12 +346,12 @@ class EcoModel extends Model
 
     public static function UpdateCodigoDescuento($DataModel, $id)
     {
-        return DB::connection('sqlsrv')->table('codigosdescuentos_detalles')->where('id', $id)->update($DataModel);
+        return DB::connection('pgsql')->table('codigosdescuentos_detalles')->where('id', $id)->update($DataModel);
     }
 
     public static function UpdatePedido($DataModel, $id)
     {
-        return DB::connection('sqlsrv')->table('pedido_cabecera')->where('id', $id)->update($DataModel);
+        return DB::connection('pgsql')->table('pedido_cabecera')->where('id', $id)->update($DataModel);
     }
 
     public static function ValidarCodigoDescuento($Codigo, $Cliente, $BDBACK){
@@ -366,8 +366,8 @@ class EcoModel extends Model
         ,temp2.id AS id_cliente
         ,temp2.fk_cliente
         ,temp2.usado
-        FROM ".$BDBACK.".dbo.codigosdescuentos as temp1
-        inner join ".$BDBACK.".dbo.codigosdescuentos_detalles as temp2 on temp1.id=temp2.fk_codigo
+        FROM ".$BDBACK.".public.codigosdescuentos as temp1
+        inner join ".$BDBACK.".public.codigosdescuentos_detalles as temp2 on temp1.id=temp2.fk_codigo
         where
         temp1.codigo='".$Codigo."'
         and temp2.fk_cliente='".$Cliente."'
@@ -381,8 +381,8 @@ class EcoModel extends Model
         SELECT
         A.NomDch
         , A.DirDch
-        , ISNULL(comu.ComDes,'') AS Comuna
-        , ISNULL(reg.Descripcion,'') as Region
+        , coalesce(comu.ComDes,'') AS Comuna
+        , coalesce(reg.Descripcion,'') as Region
         FROM
         ".$BD.".softland.cwtauxd AS A
         left join ".$BD.".softland.cwtcomu as comu on A.ComDch=comu.ComCod
@@ -396,7 +396,7 @@ class EcoModel extends Model
         return DB::select("
         SELECT
         *
-        FROM ".$BDBACK.".dbo.pedido_producto
+        FROM ".$BDBACK.".public.pedido_producto
         where
         padre_id=".$id."
         ");
@@ -408,7 +408,7 @@ class EcoModel extends Model
         SELECT 
         *
         FROM
-        ".$BD.".dbo.usuarios
+        ".$BD.".public.usuarios
         WHERE
         id=".$Codigo."
         ");
@@ -420,7 +420,7 @@ class EcoModel extends Model
         SELECT 
         *
         FROM
-        ".$BD.".dbo.clientes
+        ".$BD.".public.clientes
         WHERE
         codigo='".$Codigo."'
         ");
@@ -435,7 +435,7 @@ class EcoModel extends Model
         , ruta
         , posicion
         , estado
-        FROM ".$BDBACK.".dbo.banners
+        FROM ".$BDBACK.".public.banners
         where
         id=".$Codigo."
         ");
@@ -450,7 +450,7 @@ class EcoModel extends Model
         , ruta
         , cabecera
         , estado
-        FROM ".$BDBACK.".dbo.marcas
+        FROM ".$BDBACK.".public.marcas
         where
         id=".$Codigo."
         ");
@@ -462,7 +462,7 @@ class EcoModel extends Model
         select
         *
         from
-        ".$BD.".dbo.familias
+        ".$BD.".public.familias
         where
         id=".$Codigo."
         ");
@@ -470,22 +470,22 @@ class EcoModel extends Model
 
     public static function updateProductoRegalo($DataModel, $id)
     {
-        return DB::connection('sqlsrv')->table('pedido_producto')->where('padre_id', $id)->update($DataModel);
+        return DB::connection('pgsql')->table('pedido_producto')->where('padre_id', $id)->update($DataModel);
     }
 
     public static function updateProducto($DataModel, $id)
     {
-        return DB::connection('sqlsrv')->table('pedido_producto')->where('id', $id)->update($DataModel);
+        return DB::connection('pgsql')->table('pedido_producto')->where('id', $id)->update($DataModel);
     }
 
     public static function deleteLineaProductoActual($id)
     {
-        return DB::connection('sqlsrv')->table('pedido_producto')->where('id', $id)->delete();
+        return DB::connection('pgsql')->table('pedido_producto')->where('id', $id)->delete();
     }
 
     public static function deleteLineaProductoRegalo($id)
     {
-        return DB::connection('sqlsrv')->table('pedido_producto')->where('padre_id', $id)->delete();
+        return DB::connection('pgsql')->table('pedido_producto')->where('padre_id', $id)->delete();
     }
 
     public static function getLineaProductoActual($id, $BDBACK)
@@ -493,7 +493,7 @@ class EcoModel extends Model
         return DB::select("
         SELECT
         *
-        FROM ".$BDBACK.".dbo.pedido_producto
+        FROM ".$BDBACK.".public.pedido_producto
         where
         id=".$id."
         ");
@@ -513,11 +513,11 @@ class EcoModel extends Model
         , prod.DesExtra
         , prod.fichatecnica
         , prod.hojaseguridad
-        , isnull(prod.imagen1,'/img/productos/SinImagen.jpg') as imagen1
+        , coalesce(prod.imagen1,'/img/productos/SinImagen.jpg') as imagen1
         
-        FROM ".$BDBACK.".dbo.pedido_producto as temp1 
-        inner join ".$BDBACK.".dbo.productos as Prod 
-        on temp1.codigo = Prod.id
+        FROM ".$BDBACK.".public.pedido_producto as temp1 
+        inner join ".$BDBACK.".public.productos as Prod 
+        on CAST(temp1.codigo as int) = Prod.id
         
         where 
         temp1.estado_valido='SI' 
@@ -534,9 +534,9 @@ class EcoModel extends Model
     {
         return DB::select("
         SELECT
-        ISNULL(count(temp2.id),0) as cantidad
-        FROM ".$BDBACK.".dbo.pedido_cabecera as temp1
-        inner join ".$BDBACK.".dbo.pedido_producto as temp2 on temp1.id=temp2.fk_pedido and temp2.estado_terminado='NO'
+        coalesce(count(temp2.id),0) as cantidad
+        FROM ".$BDBACK.".public.pedido_cabecera as temp1
+        inner join ".$BDBACK.".public.pedido_producto as temp2 on temp1.id=temp2.fk_pedido and temp2.estado_terminado='NO'
         where
         temp1.cliente_id='".$Codigo."'
         and temp1.estado_terminado='NO'
@@ -545,12 +545,12 @@ class EcoModel extends Model
 
     public static function addProducto($DataModel)
     {
-        return DB::connection('sqlsrv')->table('pedido_producto')->insertGetId($DataModel);
+        return DB::connection('pgsql')->table('pedido_producto')->insertGetId($DataModel);
     }
 
     public static function addPedido($DataModel)
     {
-        return DB::connection('sqlsrv')->table('pedido_cabecera')->insertGetId($DataModel);
+        return DB::connection('pgsql')->table('pedido_cabecera')->insertGetId($DataModel);
     }
 
     public static function getPedidoTemporal($Codigo, $BDBACK)
@@ -558,7 +558,7 @@ class EcoModel extends Model
         return DB::select("
         SELECT 
         * 
-        FROM ".$BDBACK.".dbo.pedido_cabecera
+        FROM ".$BDBACK.".public.pedido_cabecera
         where
         estado_terminado='NO' and cliente_id='".$Codigo."'
         ");
@@ -590,21 +590,20 @@ class EcoModel extends Model
         , prod.fk_marca
         , marc.nombre as marca_nombre
         , marc.ruta as marca_ruta
-        , isnull(bann.banner,0) as fk_banner
-        , ISNULL(CAST((
-            SELECT caract.valor+'/'
-            FROM ".$BDBACK.".dbo.productos_caracteristicas AS caract
+        , coalesce(bann.banner,0) as fk_banner
+        , coalesce(CAST((
+            SELECT string_agg(caract.valor, '/')
+            FROM ".$BDBACK.".public.productos_caracteristicas AS caract
             WHERE prod.id=caract.fk_producto
-            FOR XML PATH('')
         )as varchar(300)),'0') AS caracteristicas_valores
-        FROM ".$BDBACK.".dbo.productos as prod
+        FROM ".$BDBACK.".public.productos as prod
         ".$AuxCondicionCaracOpcion."
         inner join familias as fam on prod.fk_familia=fam.id
-        left join ".$BDBACK.".dbo.banners_detalles as bann on prod.codigo=bann.CodProd
-        left join ".$BDBACK.".dbo.marcas as marc on prod.fk_marca=marc.id
+        left join ".$BDBACK.".public.banners_detalles as bann on prod.codigo=bann.codprod
+        left join ".$BDBACK.".public.marcas as marc on prod.fk_marca=marc.id
         where
         ".$Condicion."
-        group by 
+        group by
         prod.id
         , prod.codigo
         , prod.descripcion
@@ -627,19 +626,19 @@ class EcoModel extends Model
         , prod.fk_marca
         , marc.ruta
         , marc.nombre
-        , isnull(bann.banner,0)
+        , coalesce(bann.banner,0)
         ");
     }
 
-    public static function GetCantProductoPedido($Pedido, $CodProd, $BDBACK)
+    public static function GetCantProductoPedido($Pedido, $codprod, $BDBACK)
     {
         return DB::select("
         SELECT 
-        ISNULL(sum(cant_venta),0) AS cantidad
-        FROM ".$BDBACK.".dbo.pedido_producto 
+        coalesce(sum(cant_venta),0) AS cantidad
+        FROM ".$BDBACK.".public.pedido_producto 
         where 
         fk_pedido=".$Pedido."
-        and codigo='".$CodProd."' 
+        and codigo='".$codprod."' 
         and estado_terminado='NO' 
         and estado_valido='SI'
         ");

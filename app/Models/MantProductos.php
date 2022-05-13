@@ -13,11 +13,11 @@ class MantProductos extends Model
         SELECT
         id
         , tipo
-        , isnull(nombre, '') as nombre
+        , coalesce(nombre, '') as nombre
         , archivo
-        , isnull(fecha, '') as fecha
-        , isnull(responsable, '') as responsable
-        FROM ".$BDBACK.".dbo.productos_archivos
+        , coalesce(fecha, '') as fecha
+        , coalesce(responsable, '') as responsable
+        FROM ".$BDBACK.".public.productos_archivos
         where
         fk_producto=".$id."
         order by
@@ -40,10 +40,10 @@ class MantProductos extends Model
         , marc.nombre
         , marc.ruta
         , case when prod.id is not null then 'selected' else '' end as selected
-        FROM ".$BDBACK.".dbo.marcas as marc
-        left join ".$BDBACK.".dbo.productos as prod on marc.id=prod.fk_marca and prod.id=".$id."
+        FROM ".$BDBACK.".public.marcas as marc
+        left join ".$BDBACK.".public.productos as prod on marc.id=prod.fk_marca and prod.id=".$id."
         where
-        marc.estado=1
+        marc.estado =true
         order by
         marc.nombre asc
         ");
@@ -56,10 +56,10 @@ class MantProductos extends Model
         , proov.codigo
         , proov.nombre
         , case when prod.id is not null then 'checked' else '' end as checked
-        FROM ".$BDBACK.".dbo.proveedores as proov
-        left join ".$BDBACK.".dbo.productos_proveedores as prod on proov.id=prod.fk_proveedor and prod.fk_producto=".$id."
+        FROM ".$BDBACK.".public.proveedores as proov
+        left join ".$BDBACK.".public.productos_proveedores as prod on proov.id=prod.fk_proveedor and prod.fk_producto=".$id."
         where
-        proov.estado=1
+        proov.estado =true
         order by
         proov.nombre asc
         ");
@@ -72,10 +72,10 @@ class MantProductos extends Model
         , pais.codigo
         , pais.nombre
         , case when prod.id is not null then 'checked' else '' end as checked
-        FROM ".$BDBACK.".dbo.paises as pais
-        left join ".$BDBACK.".dbo.productos_paises as prod on pais.id=prod.fk_pais and prod.fk_producto=".$id."
+        FROM ".$BDBACK.".public.paises as pais
+        left join ".$BDBACK.".public.productos_paises as prod on pais.id=prod.fk_pais and prod.fk_producto=".$id."
         where
-        pais.estado=1
+        pais.estado =true
         order by
         pais.nombre asc
         ");
@@ -90,7 +90,7 @@ class MantProductos extends Model
         ,valor
         ,estado
         ,fk_producto
-        FROM ".$BDBACK.".dbo.productos_caracteristicas
+        FROM ".$BDBACK.".public.productos_caracteristicas
         where
         fk_producto=".$fk_producto."
         and fk_caracteristica=".$fk_caracteristica."
@@ -100,17 +100,18 @@ class MantProductos extends Model
     public static function CargarCaracteristicasFamiliaOpciones($BDBACK, $id, $fk_producto)
     {
         return DB::select("
-        SELECT 
-        caract.id
-        , caract.opcion
-        , caract.estado
-        , caract.fk_caracteristica
-        , prod.fk_producto 
-        FROM ".$BDBACK.".dbo.caracteristicas_productos_opciones as caract
-        left join ".$BDBACK.".dbo.productos_caracteristicas as prod on caract.fk_caracteristica=prod.fk_caracteristica and caract.id=prod.valor and prod.fk_producto=".$fk_producto."
+        SELECT
+        opciones.id
+        , opciones.opcion
+        , opciones.estado
+        , opciones.fk_caracteristica
+        , prod.fk_producto
+        FROM ".$BDBACK.".public.caracteristicas_productos_opciones as opciones
+        inner join ".$BDBACK.".public.caracteristicas_productos as caract on opciones.fk_caracteristica=caract.id
+        left join ".$BDBACK.".public.productos_caracteristicas as prod on caract.id=prod.fk_caracteristica and cast(prod.valor as int)=opciones.id and prod.fk_producto=".$fk_producto."
         where
-        caract.fk_caracteristica=".$id."
-        and caract.estado=1
+        caract.id=".$id."
+        and caract.estado =true
         ");
     }
 
@@ -128,12 +129,12 @@ class MantProductos extends Model
         , carac.id as caract_id
         , cfam.valor
         , prod.fk_caracteristica as prod_caract
-        FROM ".$BDBACK.".dbo.familias_caracteristicas as cfam 
-        inner join ".$BDBACK.".dbo.caracteristicas_productos as carac on cfam.fk_caracteristica=carac.id 
-        inner join ".$BDBACK.".dbo.caracteristicas_productos_tipos as tip on carac.tipo=tip.id
-        left join ".$BDBACK.".dbo.productos_caracteristicas as prod on cfam.fk_caracteristica=prod.fk_caracteristica and prod.fk_producto=".$fk_producto."
+        FROM ".$BDBACK.".public.familias_caracteristicas as cfam 
+        inner join ".$BDBACK.".public.caracteristicas_productos as carac on cfam.fk_caracteristica=carac.id 
+        inner join ".$BDBACK.".public.caracteristicas_productos_tipos as tip on carac.tipo=tip.id
+        left join ".$BDBACK.".public.productos_caracteristicas as prod on cfam.fk_caracteristica=prod.fk_caracteristica and prod.fk_producto=".$fk_producto."
         where 
-        cfam.estado=1
+        cfam.estado =true
         and cfam.fk_familia=".$id."
         group by 
         cfam.id
@@ -176,10 +177,10 @@ class MantProductos extends Model
         , fam.codigo
         , fam.nombre
         , case when prod.id is null then '' else 'checked' end as checked
-        FROM ".$BDBACK.".dbo.familias as fam
-        left join ".$BDBACK.".dbo.productos_familias as prod on prod.fk_familia=fam.id and prod.fk_producto=".$producto."
+        FROM ".$BDBACK.".public.familias as fam
+        left join ".$BDBACK.".public.productos_familias as prod on prod.fk_familia=fam.id and prod.fk_producto=".$producto."
         where
-        fam.estado=1
+        fam.estado =true
         and fam.id!=".$id."
         order by
         fam.codigo
@@ -222,11 +223,11 @@ class MantProductos extends Model
         SELECT
         opt.id
         , opt.fk_caracteristica
-        FROM ".$BDBACK.".dbo.caracteristicas_productos as caract
-        inner join ".$BDBACK.".dbo.caracteristicas_productos_opciones as opt on caract.id=opt.fk_caracteristica
+        FROM ".$BDBACK.".public.caracteristicas_productos as caract
+        inner join ".$BDBACK.".public.caracteristicas_productos_opciones as opt on caract.id=opt.fk_caracteristica
         where
-        caract.id=".$id."  
-        and caract.tipo=5
+        caract.id=".$id."
+        and caract.tipo=3
         ");
     }
 
@@ -238,10 +239,10 @@ class MantProductos extends Model
         , fam.nombre
         , fam.estado
         , case when prod.id is not null then 'selected' else '' end as selected
-        FROM ".$BDBACK.".dbo.familias as fam
-        left join ".$BDBACK.".dbo.productos as prod on fam.id=prod.fk_familia and prod.id=".$id."
+        FROM ".$BDBACK.".public.familias as fam
+        left join ".$BDBACK.".public.productos as prod on fam.id=prod.fk_familia and prod.id=".$id."
         where
-        fam.estado=1
+        fam.estado =true
         order by
         fam.codigo asc
         ");
@@ -254,7 +255,7 @@ class MantProductos extends Model
         return DB::select("
         SELECT
         *
-        FROM ".$BDBACK.".dbo.productos_infoextra
+        FROM ".$BDBACK.".public.productos_infoextra
         where
         CONVERT(NVARCHAR(32),HashBytes('MD5', CONVERT(NVARCHAR(32),HashBytes('MD5', cast(CodProd as varchar(max))),2) ),2)='".$id."'
         ");
@@ -265,7 +266,7 @@ class MantProductos extends Model
         return DB::select("
         SELECT
         *
-        FROM dbo.productos
+        FROM public.productos
         where
         id!=".$id."
         and upper(codigo)=upper('".$dato."')
@@ -279,10 +280,10 @@ class MantProductos extends Model
         cara.id as cara_id
         ,cara.nombre as cara_nombre
         , case when prod.id is null then '' else  'checked' end as asignado
-        , isnull(prod.valor,'') as valor
+        , coalesce(prod.valor,'') as valor
         FROM 
-        ".$BD.".dbo.caracteristicas_productos as cara 
-        left join ".$BD.".dbo.prods_carcs as prod on prod.fk_caracteristica=cara.id and prod.fk_producto=".$id."
+        ".$BD.".public.caracteristicas_productos as cara 
+        left join ".$BD.".public.prods_carcs as prod on prod.fk_caracteristica=cara.id and prod.fk_producto=".$id."
         ");
     }
 
@@ -295,8 +296,8 @@ class MantProductos extends Model
         , prod.codigo
         , prod.descripcion
         , prod.vista
-        , isnull(prod.descripcion2,'') as descripcion2
-        , isnull(prod.DesExtra,'') as DesExtra
+        , coalesce(prod.descripcion2,'') as descripcion2
+        , coalesce(prod.DesExtra,'') as DesExtra
         , prod.estado
         , prod.fk_familia
         , prod.fichatecnica
@@ -309,7 +310,7 @@ class MantProductos extends Model
         , prod.imagen6
         , prod.archivoextra
         , prod.archivoextranombre
-        FROM ".$BDBACK.".dbo.productos as prod
+        FROM ".$BDBACK.".public.productos as prod
         where
         prod.id='".$id."'
         order by prod.codigo asc
@@ -325,8 +326,8 @@ class MantProductos extends Model
         , prod.codigo
         , prod.descripcion
         , fam.nombre as familia
-        FROM ".$BDBACK.".dbo.productos as prod
-        inner join ".$BDBACK.".dbo.familias as fam on prod.fk_familia=fam.id
+        FROM ".$BDBACK.".public.productos as prod
+        inner join ".$BDBACK.".public.familias as fam on prod.fk_familia=fam.id
         order by codigo asc
         ");
     }

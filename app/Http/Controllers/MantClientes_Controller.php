@@ -41,7 +41,7 @@ class MantClientes_Controller extends BaseController
 
         try{
 
-            if ( MantClientes::UpdateEstadoUsuario($DataModel, $data['id']) )
+            if ( MantClientes::UpdateUsuario($DataModel, $data['id']) )
             {
                 return "OK";
             }
@@ -78,20 +78,24 @@ class MantClientes_Controller extends BaseController
             || !isset($data['apellidos']) || strlen(trim($data['apellidos']))==0
             || !isset($data['telefono1']) || strlen(trim($data['telefono1']))==0
             || !isset($data['email']) || strlen(trim($data['email']))==0
-        ){
+        )
+        {
             return "FALTA INFORMACION";
         }
-        else if ( md5(md5('0'))!=$data['UsuarioId'] && ( strtolower(trim($data['contrasenia1']))!=strtolower(trim($data['contrasenia2'])) ) ){
+        else if ( '0'!=$data['UsuarioId'] && ( strtolower(trim($data['contrasenia1']))!=strtolower(trim($data['contrasenia2'])) ) )
+        {
             return "LAS CONTRASEÑAS NO COINCIDEN";
         }
-        else if( md5(md5('0'))==$data['UsuarioId'] && ( !isset($data['contrasenia1']) || strlen(trim($data['contrasenia1']))==0 || !isset($data['contrasenia2']) || strlen(trim($data['contrasenia2']))==0) ) {
+        else if( '0'==$data['UsuarioId'] && ( !isset($data['contrasenia1']) || strlen(trim($data['contrasenia1']))==0 || !isset($data['contrasenia2']) || strlen(trim($data['contrasenia2']))==0) ) 
+        {
             return "DEBE INGRESAR LAS CONTRASEÑAS";
         }
-        else if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
+        else if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL))
+        {
             return "EL EMAIL NO ES VÁLIDO";
         }
-        else{
-
+        else
+        {
             $UsuarioId = $data['UsuarioId'];
             $estado = $data['estado'];
             $usuario = limpiar_texto($data['usuario']);
@@ -104,17 +108,18 @@ class MantClientes_Controller extends BaseController
             $telefono2 = limpiar_texto($data['telefono2']);
             $email = strtolower(limpiar_texto($data['email']));
 
-            if ( MantClientes::ExisteUsuario($usuario, $UsuarioId) ) {
+            if ( MantClientes::ExisteUsuario($usuario, $UsuarioId) )
+            {
                 return "EL USUARIO YA ESTÁ REGISTRADO";
             }
-            else if ( MantClientes::ExisteRut($rut, $UsuarioId) ) {
+            else if ( MantClientes::ExisteRut($rut, $UsuarioId) )
+            {
                 return "EL RUT YA ESTÁ REGISTRADO";
             }
-            else {
-
+            else
+            {
                 $nombreFinal = null;
-
-                if( md5(md5('0'))==$data['UsuarioId'] ){
+                if( '0'==$data['UsuarioId'] ){
                     try {
 
                         $DataModel = [
@@ -128,10 +133,9 @@ class MantClientes_Controller extends BaseController
                             'telefono1'     => $telefono1,
                             'telefono2'     => $telefono2,
                             'email'         => $email,
-                            'avatar'        => $nombreFinal,
-                            'fechaCreacion'       => app('App\Http\Controllers\Home_Controller')->GetDateTime(),
-                            'fechaActualizacion'    =>  app('App\Http\Controllers\Home_Controller')->GetDateTime(),
-                            'fk_responsable'    => $req->session()->get('id'),
+                            'fechacreacion'         => app('App\Http\Controllers\Home_Controller')->GetDateTime(),
+                            'fechaactualizacion'    =>  app('App\Http\Controllers\Home_Controller')->GetDateTime(),
+                            'fk_responsable'        => $req->session()->get('id'),
                         ];
 
                         MantClientes::GuardarUsuario($DataModel);
@@ -146,17 +150,21 @@ class MantClientes_Controller extends BaseController
                         MantClientes::GuardarRelacionUsuario($DataModel);
 
                         return "OK";
-                    } catch (Exception $e) {
+                    }
+                    catch (Exception $e)
+                    {
                         return "ERROR";
                     }
                 }
                 else {
-                    if(!MantClientes::ExisteId($UsuarioId)){
+                    if(!MantClientes::ExisteId($UsuarioId))
+                    {
                         return "NO EXISTE EL ID A ACTUALIZAR";
                     }
-                    else {
-                        try {
-
+                    else
+                    {
+                        try
+                        {
                             $DataModel = [
                                 'estado'        => $estado,
                                 'usuario'       => $usuario,
@@ -167,12 +175,13 @@ class MantClientes_Controller extends BaseController
                                 'telefono1'     => $telefono1,
                                 'telefono2'     => $telefono2,
                                 'email'         => $email,
-                                'fechaActualizacion'    =>  app('App\Http\Controllers\Home_Controller')->GetDateTime(),
-                                'fk_responsable'    => $req->session()->get('id'),
+                                'fechaactualizacion'    =>  app('App\Http\Controllers\Home_Controller')->GetDateTime(),
+                                'fk_responsable'        => $req->session()->get('id'),
                             ];
                             MantClientes::UpdateUsuario($DataModel, $UsuarioId);
 
-                            if ( strlen(trim($data['contrasenia1']))>0 ){
+                            if ( strlen(trim($data['contrasenia1']))>0 )
+                            {
                                 $DataModel = [
                                     'contrasenia'   => md5(trim($data['contrasenia1'])),
                                 ];
@@ -180,7 +189,9 @@ class MantClientes_Controller extends BaseController
                             }
 
                             return "OK";
-                        } catch (Exception $e) {
+                        }
+                        catch (Exception $e)
+                        {
                             return "ERROR";
                         }
                     }
@@ -197,9 +208,10 @@ class MantClientes_Controller extends BaseController
         return view('mant_clientes.crearEditar', [
             'DatosGen' => app('App\Http\Controllers\Home_Controller')->DatosGen($req)
             , 'Cliente' =>  MantClientes::GetCliente($DatosGen['NombreEmpresa'][0]->bd, $data['id'])
+            , 'Rol' =>      MantClientes::GetRolCliente($DatosGen['NombreEmpresa'][0]->bd)
             , 'Usuarios_List' =>  MantClientes::GetUsuariosCliente($data['id'])
             , 'UsuariosNo_List' =>  MantClientes::GetUsuariosNoCliente($data['id'])
-            , 'UsuarioId' =>  md5(md5('0'))
+            , 'UsuarioId' =>  '0'
 
         ]);
     }}

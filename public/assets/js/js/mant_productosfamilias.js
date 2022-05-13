@@ -226,7 +226,8 @@ function Caracteristicas_GuardarCaracteristica()
     }
 }
 
-function CargarFormaCaracteristica(){
+function CargarFormaCaracteristica()
+{
     $('#DivFormularioCaracteristica').html('');
     if( $('#IdSelectCaracteristica').val()!='')
     {
@@ -334,7 +335,7 @@ function CargarFormaCaracteristica(){
                         <hr>
                         `;
                     }
-                    else if( datos[0]['tipo']==3)
+                    else if( datos[0]['tipo']==4)
                     {
                         Salida +=`
                         <div class="row mb-3">
@@ -375,7 +376,7 @@ function CargarFormaCaracteristica(){
                         <hr>
                         `;
                     }
-                    else if( datos[0]['tipo']==4 || datos[0]['tipo']==5)
+                    else if( datos[0]['tipo']==3 )
                     {
                         Salida +=`
                         <div class="row mb-3">

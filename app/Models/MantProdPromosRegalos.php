@@ -10,7 +10,7 @@ class MantProdPromosRegalos extends Model
 
     public static function UpdatePromo($BDBACK, $DataModel, $Id)
     {
-        return DB::connection($BDBACK)->table('prodpromosregalos')->where(DB::raw("CONVERT(NVARCHAR(32),HashBytes('MD5',   CONVERT(NVARCHAR(32),HashBytes('MD5', cast(id as varchar(max))),2) ),2)"), $Id)->update($DataModel);
+        return DB::connection($BDBACK)->table('prodpromosregalos')->where('id', $Id)->update($DataModel);
     }
 
     public static function Guardar($BDBACK, $DataModel)
@@ -30,7 +30,7 @@ class MantProdPromosRegalos extends Model
         , promo.fecha1
         , promo.fecha2
         FROM 
-        ".$BDBACK.".dbo.prodpromosregalos as promo
+        ".$BDBACK.".public.prodpromosregalos as promo
         where
         (
             CONVERT(NVARCHAR(32),HashBytes('MD5',   CONVERT(NVARCHAR(32),HashBytes('MD5', cast(promo.id as varchar(max))),2) ),2)!='".$Id."'
@@ -75,7 +75,7 @@ class MantProdPromosRegalos extends Model
         return DB::select("
         SELECT
         prod.descripcion
-        FROM ".$BDBACK.".dbo.productos as prod
+        FROM ".$BDBACK.".public.productos as prod
         WHERE
         UPPER(prod.codigo)=UPPER('".$CodProd."')
         order by prod.codigo asc
@@ -96,9 +96,9 @@ class MantProdPromosRegalos extends Model
         , prod2.DesProd as desc2
         , CONCAT(SUBSTRING(promo.fecha1,7,4),'-',SUBSTRING(promo.fecha1,4,2),'-',SUBSTRING(promo.fecha1,1,2)) as fecha1
         , CONCAT(SUBSTRING(promo.fecha2,7,4),'-',SUBSTRING(promo.fecha2,4,2),'-',SUBSTRING(promo.fecha2,1,2)) as fecha2
-        FROM ".$BDBACK.".dbo.prodpromosregalos as promo
-        inner join ".$BDBACK.".dbo.productos as prod1 on promo.prod1 collate database_default = prod1.CodProd collate database_default
-        inner join ".$BDBACK.".dbo.productos as prod2 on promo.prod2 collate database_default = prod2.CodProd collate database_default
+        FROM ".$BDBACK.".public.prodpromosregalos as promo
+        inner join ".$BDBACK.".public.productos as prod1 on promo.prod1 collate database_default = prod1.CodProd collate database_default
+        inner join ".$BDBACK.".public.productos as prod2 on promo.prod2 collate database_default = prod2.CodProd collate database_default
         where
         CONVERT(NVARCHAR(32),HashBytes('MD5',   CONVERT(NVARCHAR(32),HashBytes('MD5', cast(promo.id as varchar(max))),2) ),2)='".$id."'
         ");
@@ -118,9 +118,9 @@ class MantProdPromosRegalos extends Model
         , prod2.descripcion as desc2
         , promo.fecha1
         , promo.fecha2
-        FROM dbo.prodpromosregalos as promo
-        inner join ".$BDBACK.".dbo.productos as prod1 on promo.prod1 = prod1.codigo
-        inner join ".$BDBACK.".dbo.productos as prod2 on promo.prod2 = prod2.codigo
+        FROM public.prodpromosregalos as promo
+        inner join ".$BDBACK.".public.productos as prod1 on promo.prod1 = prod1.codigo
+        inner join ".$BDBACK.".public.productos as prod2 on promo.prod2 = prod2.codigo
         order by promo.id desc 
         ");
     }

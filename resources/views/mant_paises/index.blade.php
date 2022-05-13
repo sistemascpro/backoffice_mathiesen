@@ -30,6 +30,7 @@
                                             <th>ACCIONES</th>
                                             <th>CODIGO</th>
                                             <th>NOMBRE</th>
+                                            <th>BANDERA</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -51,6 +52,11 @@
                                                 </td>
                                                 <td><?=$lsRows->codigo?></td>
                                                 <td><?=$lsRows->nombre?></td>
+                                                <td><?php
+                                                if($lsRows->bandera!=null){
+                                                    ?><a href="<?=$lsRows->bandera?>" target="_blank"><img style="max-width:30px!important;" src="<?=$lsRows->bandera?>?<?=date("YmdHis")?>" alt="logo icon"></a><?php
+                                                }
+                                                ?></td>
                                             </tr>
                                             <?php
                                         }

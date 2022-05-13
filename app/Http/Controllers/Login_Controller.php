@@ -39,7 +39,7 @@ class Login_Controller extends BaseController
         $DatosGen = app('App\Http\Controllers\Home_Controller')->DatosGen($req);
 
         $data = $req->input();
-        $Datos = Login::ValidateUsuario($DatosGen['NombreEmpresa'][0]->bdbackoffice, $data['user'], md5($data['password']));
+        $Datos = Login::ValidateUsuario($DatosGen['NombreEmpresa'][0]->bdbackoffice, $data['user'], MD5($data['password']));
 
         if( count($Datos)<=0 )
         {
@@ -59,7 +59,6 @@ class Login_Controller extends BaseController
             $req->session()->put('fk_rol',$Datos[0]->fk_rol);
             $req->session()->put('rol',$Datos[0]->rol_nombre);
             $req->session()->put('email',$Datos[0]->email);
-            $req->session()->put('avatar',$Datos[0]->avatar);
             $req->session()->put('permisos',Login::GetPermisos($DatosGen['NombreEmpresa'][0]->bdbackoffice, $Datos[0]->fk_rol));
 
             if($Datos[0]->fk_rol=='6'){
@@ -75,7 +74,7 @@ class Login_Controller extends BaseController
         $DatosGen = app('App\Http\Controllers\Home_Controller')->DatosGen($req);
 
         $data = $req->input();
-        $Datos = Login::ValidateUsuario($DatosGen['NombreEmpresa'][0]->bdbackoffice, $data['user'], $data['password']);
+        $Datos = Login::ValidateUsuario($DatosGen['NombreEmpresa'][0]->bdbackoffice, $data['user'], MD5($data['password']));
 
         if( count($Datos)<=0 )
         {
@@ -98,7 +97,6 @@ class Login_Controller extends BaseController
             $req->session()->put('fk_rol',$Datos[0]->fk_rol);
             $req->session()->put('rol',$Datos[0]->rol_nombre);
             $req->session()->put('email',$Datos[0]->email);
-            $req->session()->put('avatar',$Datos[0]->avatar);
             $req->session()->put('permisos',Login::GetPermisos($DatosGen['NombreEmpresa'][0]->bdbackoffice, $Datos[0]->fk_rol));
 
             if($Datos[0]->fk_rol=='CLIENTE'){
@@ -117,11 +115,10 @@ class Login_Controller extends BaseController
         return redirect('/');
     }
 
-    
     public function LogOutFeria(Request $req)
     {
         $req->session()->flush();
 
         return "OK";
-    }    
+    }
 }

@@ -210,7 +210,7 @@
                                         <input
                                         type="hidden"
                                         class="UsuRequired form-control"
-                                        value="<?php if(isset($Cliente[0]->codigo)){echo $Cliente[0]->codigo;} ?>"
+                                        value="<?php if(isset($Cliente[0]->id)){echo $Cliente[0]->id;} ?>"
                                         id="ClienteId"
                                         name="ClienteId"
                                         readonly
@@ -299,7 +299,7 @@
                                                     id="fk_rol"
                                                     name="fk_rol"
                                                     >
-                                                    <option value="6">CLIENTE</option>
+                                                    <option value="<?=$Rol[0]->id?>">CLIENTE</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -426,7 +426,7 @@
                                             <?php
                                             foreach ($UsuariosNo_List as $lsUsuario)
                                             {
-                                                ?><option value="<?=$lsUsuario->id_md5?>"><?=$lsUsuario->nombres." ".$lsUsuario->apellidos?></option><?php
+                                                ?><option value="<?=$lsUsuario->id?>"><?=$lsUsuario->nombres." ".$lsUsuario->apellidos?></option><?php
                                             }
                                             ?>
                                             </select>
@@ -462,13 +462,13 @@
                                                 ?>
                                                 <tr class="table-hover">
                                                     <td>
-                                                        <span class="pointer badge badge-pill bg-purple" onclick="editarUsuario('<?=$Rows->id_md5?>')">EDITAR</span>
+                                                        <span class="pointer badge badge-pill bg-purple" onclick="editarUsuario('<?=$Rows->id?>')">EDITAR</span>
                                                         <?php
                                                         if($Rows->estado){ ?>
-                                                        <span class="pointer badge badge-pill bg-dark" onclick="bloquearUsuario('<?=$Rows->id_md5?>', false)">BLOQUEAR</span>
+                                                        <span class="pointer badge badge-pill bg-dark" onclick="bloquearUsuario('<?=$Rows->id?>', false)">BLOQUEAR</span>
                                                         <?php }
                                                         else{ ?>
-                                                        <span class="pointer badge badge-pill bg-success" onclick="bloquearUsuario('<?=$Rows->id_md5?>', true)">ACTIVAR</span>
+                                                        <span class="pointer badge badge-pill bg-success" onclick="bloquearUsuario('<?=$Rows->id?>', true)">ACTIVAR</span>
                                                         <?php }
                                                         ?>
                                                     </td>

@@ -223,27 +223,9 @@
                                         />
                                     </div>
                                 </div>
-                                <div class="row mb-3 col-6">
-                                    <div class="col-sm-3">
-                                        <p class="mb-0">IMAGEN</p>
-                                    </div>
-                                    <div class="col-sm-9 text-secondary">
-                                        <input
-                                        type="file"
-                                        class="form-control"
-                                        id="avatar"
-                                        name="avatar"
-                                        />
-                                    </div>
-                                </div>
                             </div>
                             <br>
                             <span  class="row">
-                                <div class="col-lg-4">
-                                    <div class="d-flex flex-column align-items-center text-center">
-                                        <div id="AvatarUsuario"><img src="<?=$Vendedor[0]->avatar?>" alt="Admin" class="rounded-circle p-1 bg-primary" width="110"></div>
-                                    </div>
-                                </div>
                                 <div class="col-sm-4 text-secondary align-middle">
                                     <input type="button" class="btn btn-primary px-4" value="GUARDAR CAMBIOS" onclick="GuardarVendedor();" />
                                 </div>

@@ -31,10 +31,10 @@ class MantUsuarios_Controller extends BaseController
         ){
             return "FALTA INFORMACION";
         }
-        else if ( md5(md5('0'))!=$data['UsuarioId'] && ( strtolower(trim($data['contrasenia1']))!=strtolower(trim($data['contrasenia2'])) ) ){
+        else if ( '0'!=$data['UsuarioId'] && ( strtolower(trim($data['contrasenia1']))!=strtolower(trim($data['contrasenia2'])) ) ){
             return "LAS CONTRASEÑAS NO COINCIDEN";
         }
-        else if( md5(md5('0'))==$data['UsuarioId'] && ( !isset($data['contrasenia1']) || strlen(trim($data['contrasenia1']))==0 || !isset($data['contrasenia2']) || strlen(trim($data['contrasenia2']))==0) ) {
+        else if( '0'==$data['UsuarioId'] && ( !isset($data['contrasenia1']) || strlen(trim($data['contrasenia1']))==0 || !isset($data['contrasenia2']) || strlen(trim($data['contrasenia2']))==0) ) {
             return "DEBE INGRESAR LAS CONTRASEÑAS";
         }
         else if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
@@ -52,32 +52,27 @@ class MantUsuarios_Controller extends BaseController
             $apellidos = limpiar_texto($data['apellidos']);
             $telefono1 = limpiar_texto($data['telefono1']);
             $telefono2 = limpiar_texto($data['telefono2']);
+            $habilitado = limpiar_texto($data['habilitado']);
             $email = strtolower(limpiar_texto($data['email']));
-
-            if ( MantUsuarios::ExisteUsuario($usuario, $UsuarioId) ) {
+            
+            if ( MantUsuarios::ExisteUsuario($usuario, $UsuarioId) )
+            {
                 return "EL USUARIO YA ESTÁ REGISTRADO";
             }
-            else if ( MantUsuarios::ExisteEmail($email, $UsuarioId) ) {
+            else if ( MantUsuarios::ExisteEmail($email, $UsuarioId) )
+            {
                 return "EL EMAIL YA ESTÁ REGISTRADO";
             }
-            else if ( MantUsuarios::ExisteRut($rut, $UsuarioId) ) {
+            else if ( MantUsuarios::ExisteRut($rut, $UsuarioId) )
+            {
                 return "EL RUT YA ESTÁ REGISTRADO";
             }
-            else {
-
-                $nombreFinal = null;
-                if($req->file()) {
-
-                    $nombreTemp = $_SERVER['DOCUMENT_ROOT']."\img\usuarios\\".date("YmdHism").".".$req->avatar->extension();
-                    $nombreFinal = "img/usuarios/".date("YmdHism").".".$req->avatar->extension();
-                    $tempFile = $req->avatar;
-
-                    $Arvhivo = move_uploaded_file($tempFile, $nombreTemp);
-                }
-
-                if( md5(md5('0'))==$data['UsuarioId'] ){
-                    try {
-
+            else
+            {
+                if( '0'==$data['UsuarioId'] )
+                {
+                    try
+                    {
                         $DataModel = [
                             'estado'        => $estado,
                             'usuario'       => $usuario,
@@ -89,23 +84,28 @@ class MantUsuarios_Controller extends BaseController
                             'telefono1'     => $telefono1,
                             'telefono2'     => $telefono2,
                             'email'         => $email,
-                            'avatar'        => $nombreFinal,
-                            'fechaCreacion'       => app('App\Http\Controllers\Home_Controller')->GetDateTime(),
-                            'fechaActualizacion'    => app('App\Http\Controllers\Home_Controller')->GetDateTime(),
-                            'fk_responsable'    => $req->session()->get('id'),
+                            'habilitado'    => $habilitado,
+                            'fechacreacion'         => app('App\Http\Controllers\Home_Controller')->GetDateTime(),
+                            'fechaactualizacion'    => app('App\Http\Controllers\Home_Controller')->GetDateTime(),
+                            'fk_responsable'        => $req->session()->get('id'),
                         ];
 
                         MantUsuarios::GuardarUsuario($DataModel);
                         return "OK";
-                    } catch (Exception $e) {
+                    }
+                    catch (Exception $e)
+                    {
                         return "ERROR";
                     }
                 }
-                else {
-                    if(!MantUsuarios::ExisteId($UsuarioId)){
+                else
+                {
+                    if(!MantUsuarios::ExisteId($UsuarioId))
+                    {
                         return "NO EXISTE EL ID A ACTUALIZAR";
                     }
-                    else {
+                    else
+                    {
                         try {
 
                             $DataModel = [
@@ -118,36 +118,30 @@ class MantUsuarios_Controller extends BaseController
                                 'telefono1'     => $telefono1,
                                 'telefono2'     => $telefono2,
                                 'email'         => $email,
-                                'habiliatdo'         => $email,
-                                'fechaCreacion'       => app('App\Http\Controllers\Home_Controller')->GetDateTime(),
-                                'fechaActualizacion'    => app('App\Http\Controllers\Home_Controller')->GetDateTime(),
+                                'habilitado'    => $habilitado,
+                                'fechacreacion'       => app('App\Http\Controllers\Home_Controller')->GetDateTime(),
+                                'fechaactualizacion'    => app('App\Http\Controllers\Home_Controller')->GetDateTime(),
                                 'fk_responsable'    => $req->session()->get('id'),
                             ];
                             MantUsuarios::UpdateUsuario($DataModel, $UsuarioId);
 
-                            if ( strlen(trim($data['contrasenia1']))>0 ){
+                            if ( strlen(trim($data['contrasenia1']))>0 )
+                            {
                                 $DataModel = [
                                     'contrasenia'   => md5(trim($data['contrasenia1'])),
                                 ];
                                 MantUsuarios::UpdateUsuario($DataModel, $UsuarioId);
                             }
 
-                            if ( $nombreFinal!=null ){
-                                $DataModel = [
-                                    'avatar'   => $nombreFinal,
-                                ];
-                                MantUsuarios::UpdateUsuario($DataModel, $UsuarioId);
-                            }
-
                             return "OK";
-                        } catch (Exception $e) {
+                        }
+                        catch (Exception $e)
+                        {
                             return "ERROR";
                         }
                     }
                 }
-
             }
-
         }
     }}
 
@@ -158,7 +152,7 @@ class MantUsuarios_Controller extends BaseController
         if( count($Usuario)<=0 ){
 
             $Usuario[0] = (object)array(
-                'usuarioid'=>md5(md5('0'))
+                'id'=>'0'
                 , 'estado'=>true
                 , 'rut'=>''
                 , 'nombres'=>''
@@ -170,7 +164,6 @@ class MantUsuarios_Controller extends BaseController
                 , 'fk_rol'=>0
                 , 'usuario'=>''
                 , 'habilitado'=>''
-                , 'avatar'=>'img/usuarios/NoneUser.jpg'
             );
         }
         return view('mant_usuarios.crearEditar', [

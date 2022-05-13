@@ -437,23 +437,29 @@ function AgregarProducto(Codigo){
             , codigo:Codigo
         },
         success:function(data) {
-            
-            if( data=='ERROR_ClienteActivo' ){ 
-                if(Tipo==2){ $('#EstadoAgregar').html('<div class="alert alert-danger" role="alert">NO SE DETECTO UN CLIENTE ACTIVO</div>'); }
-                else{ Swal.fire('', 'NO SE DETECTO UN CLIENTE ACTIVO!', 'error' ); }
-            } else if( data=='ERROR_InfoCliente' ){ 
-                if(Tipo==2){ $('#EstadoAgregar').html('<div class="alert alert-danger" role="alert">NO SE DETECTO INFORMACIÓN DE CLIENTE</div>'); }
-                else{ Swal.fire('', 'NO SE DETECTO INFORMACIÓN DE CLIENTE!', 'error' ); }
-            } else if( data=='ERROR_InfoProducto' ){ 
-                if(Tipo==2){ $('#EstadoAgregar').html('<div class="alert alert-danger" role="alert">NO ENCONTRO INFORMACIÓN DEL PRODUCTO</div>'); }
-                else{ Swal.fire('', 'NO SE ENCONTRO INFORMACIÓN DEL PRODUCTO!', 'error' ); }
-            } else if( data=='ERROR_Pedido' ){ 
-                if(Tipo==2){ $('#EstadoAgregar').html('<div class="alert alert-danger" role="alert">NO SE DETECTO UN PEDIDO TEMPORAL</div>'); }
-                else{ Swal.fire('', 'NO SE DETECTO UN PEDIDO TEMPORAL!', 'error' ); }
-            } else if( data=='ERROR_GuardarProducto' ){ 
-                if(Tipo==2){ $('#EstadoAgregar').html('<div class="alert alert-danger" role="alert">ERROR AL GUARDAR EL PRODUCTO</div>'); }
-                else{ Swal.fire('', 'ERROR AL GUARDAR EL PRODUCTO!', 'error' ); }
-            } else {
+
+            if( data=='ERROR_ClienteActivo' )
+            {
+                Swal.fire('', 'DEBE INGRESAR COMO CLIENTE!', 'error' );
+            }
+            else if( data=='ERROR_InfoCliente' )
+            {
+                Swal.fire('', 'DEBE INGRESAR COMO CLIENTE!', 'error' );
+            }
+            else if( data=='ERROR_InfoProducto' )
+            {
+                Swal.fire('', 'NO SE ENCONTRO INFORMACIÓN DEL PRODUCTO!', 'error' );
+            }
+            else if( data=='ERROR_Pedido' )
+            {
+                Swal.fire('', 'NO SE DETECTO UN PEDIDO TEMPORAL!', 'error' );
+            }
+            else if( data=='ERROR_GuardarProducto' )
+            {
+                Swal.fire('', 'ERROR AL GUARDAR EL PRODUCTO!', 'error' );
+            }
+            else
+            {
                 SuccessAutoClose();
                 GetSubtotalBolsa();
                 $('#ModalSingleProduct').modal('hide');
@@ -513,9 +519,16 @@ function CargarModalProducto(Codigo){
 
 function LoadFiltrarGrillaProductos(){
 
+    HacerScrollTop();
+
     var formInfo = new FormData($("#FormFiltrarGrillaProductos")[0]);
     formInfo.set('Pais', $("#SearchPais").val());
-
+    $('#eco_productos').html(`
+    <div style="width: 100% !important; text-align:center !important;margin-top:210px !important; margin-bottom:300px !important;">
+    <h2 class="title-Section2"> Procesando <span class="textBrandAcent">productos</span> </h2>
+    <img src="img/EnviandoEmail.gif" style="width: 500px !important;">
+    </div>
+    `);
     $.ajax({
         url: 'eco_getProductosActivos',
         type: 'POST',
@@ -534,11 +547,20 @@ function LoadFiltrarGrillaProductos(){
     });
 }
 
-
+function HacerScrollTop()
+{
+    $('html, body').animate({scrollTop:$('#eco_productos').position().top}, 'slow');
+}
 function LoadGrillaProductos(){
-
+    HacerScrollTop();
     var formInfo = new FormData($("#FormLoadGrillaProductos")[0]);
     formInfo.set('Pais', $("#SearchPais").val());
+    $('#eco_productos').html(`
+    <div style="width: 100% !important; text-align:center !important;margin-top:210px !important;">
+    <h2 class="title-Section2"> Procesando <span class="textBrandAcent">productos</span> </h2>
+    <img src="img/EnviandoEmail.gif" style="width: 500px !important;">
+    </div>
+    `);
     $.ajax({
         url: 'eco_getProductosActivos',
         type: 'POST',
@@ -747,7 +769,7 @@ function CargarPaginator(id){
     document.getElementById("page-item-btn-"+id+"_1").classList.add('active');
     document.getElementById("page-item-btn-"+id+"_2").classList.add('active');
 
-    $(window).scrollTop(0);
+    HacerScrollTop();
 }
 
 function SetClienteActivo(id){
@@ -823,7 +845,7 @@ function EnviarRegistro(Id)
         <img src="img/EnviandoEmail.gif" style="width: 500px !important;">
         </div>
         `);
-        window.scrollTo(0,0);
+        HacerScrollTop();
         var formInfo = new FormData($("#FormClienteNuevo")[0]);
         $.ajax({
                 url: 'eco_EnviarRegistro',
@@ -867,7 +889,7 @@ function EnviarContacto()
     }
     else if(ValidarRequeridos('ContCliente')==0)
     {
-        window.scrollTo(0,0);
+        HacerScrollTop();
         $.ajax({
                 url: '/eco_EnviarCorreoContacto',
                 type: 'POST',

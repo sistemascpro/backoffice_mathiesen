@@ -1,8 +1,5 @@
 @include("eco_templates.eco_template_01")
     <div id="eco_productos">
-        <!-- evidal
-            <nav aria-label="breadcrumb" style="margin-top:95px; margin-left: 28px;">
-        -->
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="/">Página de inicio</a></li>
@@ -10,7 +7,6 @@
             </ol>
         </nav>
         <div class="container-flow fullBanner-sm  "  style="background-image: url('img/headerregistro.jpg'); background-repeat: no-repeat; background-size: cover; background-position:top center" >
-        <!--<img src="images/contacto.png" alt="..."/>-->
         </div>
 
 <div class="container contContact" style="position:relative; top:-100px">
@@ -93,11 +89,6 @@
                 </div>
             </form>
             <div class="btn btn-primar btn-lg btn-primary-mat" style="width:100%; margin-top:20px" onclick="EnviarRegistro();">Enviar</div>
-            <br>
-                <br>
-                <br>
-                <br>
-            <div class="btn btn-danger btn-lg btn-danger-mat" style="width:100%; margin-top:20px" onclick="CargarRegistro('Botones');">Cancelar</div>
         </div>
         </div>
         <div class="col-xl-6 imgContact">

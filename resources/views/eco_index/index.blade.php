@@ -13,7 +13,7 @@
                     foreach($DatosGen['SliderContenidos'] as $lsRow)
                     {
                         ?>
-                            <img src="<?=$lsRow->imagen?>" alt="" title="<?=nl2br($lsRow->texto)?>" />
+                            <img src="<?=$lsRow->imagen?>" alt="" title="<?=nl2br($lsRow->texto)?>" class="card-title" />
                         <?php
                     }
                 ?>

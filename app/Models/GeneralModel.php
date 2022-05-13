@@ -12,7 +12,7 @@ class GeneralModel extends Model
         return DB::select("
         SELECT
         *
-        FROM ".$BDBACK.".dbo.sliders_contenidos
+        FROM ".$BDBACK.".public.sliders_contenidos
         order by id asc
         ");
     }
@@ -22,9 +22,9 @@ class GeneralModel extends Model
         return DB::select("
         SELECT 
         *
-        FROM ".$BDBACK.".dbo.paises
+        FROM ".$BDBACK.".public.paises
         where
-        estado=1
+        estado =true
         and id=".$Pais."
         order by 
         nombre asc
@@ -36,12 +36,42 @@ class GeneralModel extends Model
         return DB::select("
         SELECT 
         *
-        FROM ".$BDBACK.".dbo.paises
+        FROM ".$BDBACK.".public.paises
         where
-        estado=1
+        estado =true
         order by 
         nombre asc
         ");
+    }
+
+    public static function GetNoticiaIdSiguiente($DBBACK, $id)
+    {
+            return DB::select("
+            SELECT
+            *
+            FROM ".$DBBACK.".public.noticias
+            where
+            id>".$id."
+            order by
+            id
+            asc
+            limit 1
+            ");
+    }
+
+    public static function GetNoticiaIdAnterior($DBBACK, $id)
+    {
+            return DB::select("
+            SELECT
+            *
+            FROM ".$DBBACK.".public.noticias
+            where
+            id<".$id."
+            order by 
+            id
+            desc
+            limit 1
+            ");
     }
 
     public static function GetNoticiaId($DBBACK, $id)
@@ -49,9 +79,10 @@ class GeneralModel extends Model
             return DB::select("
             SELECT
             *
-            FROM ".$DBBACK.".dbo.noticias
+            FROM ".$DBBACK.".public.noticias
             where
-            cast(id as varchar(max))='".$id."'
+            id=".$id."
+            limit 1
             ");
     }
     
@@ -60,7 +91,7 @@ class GeneralModel extends Model
         return DB::select("
         SELECT
         *
-        FROM ".$DBBACK.".dbo.noticias
+        FROM ".$DBBACK.".public.noticias
         order by posicion, id asc
         ");
     }
@@ -69,8 +100,8 @@ class GeneralModel extends Model
         return DB::select("
         SELECT 
         *
-        FROM ".$BDBACK.".dbo.familias
-        where estado=1 and ruta!='' and ruta is not null
+        FROM ".$BDBACK.".public.familias
+        where estado =true and ruta!='' and ruta is not null
         order by nombre asc
         ");
     }  
@@ -80,9 +111,9 @@ class GeneralModel extends Model
         return DB::select("
         SELECT 
         *
-        FROM ".$BDBACK.".dbo.marcas
+        FROM ".$BDBACK.".public.marcas
         where 
-        estado=1 
+        estado =true 
         and ruta!=''
         and ruta is not null
         and posicion>=1
@@ -99,11 +130,8 @@ class GeneralModel extends Model
         ,titulo
         ,contenido
         ,imagen
-        ,cover
-        ,video
-        ,tipo
         ,posicion
-        FROM ".$BDBACK.".dbo.noticias
+        FROM ".$BDBACK.".public.noticias
         where posicion!=0 order by posicion asc
         ");
     }  
@@ -115,9 +143,9 @@ class GeneralModel extends Model
         codigo
         , nombre
         from
-        ".$BDBACK.".dbo.familias
+        ".$BDBACK.".public.familias
         where
-        estado=1
+        estado =true
         order by 
         nombre
         asc        
@@ -130,7 +158,7 @@ class GeneralModel extends Model
         SELECT
         *
         FROM
-        ".$BDBACK.".dbo.banners
+        ".$BDBACK.".public.banners
         order by posicion
         asc
         ");
@@ -142,7 +170,7 @@ class GeneralModel extends Model
         SELECT
         *
         FROM
-        ".$BDBACK.".dbo.sliders
+        ".$BDBACK.".public.sliders
         order by id 
         asc
         ");
@@ -150,12 +178,16 @@ class GeneralModel extends Model
 
     public static function GetCLientes($BDBACK, $id)
     {
+        if(!isset($id))
+        {
+            $id=0;
+        }
         return DB::select("
         SELECT
         cli.*
         FROM
-        ".$BDBACK.".dbo.clientes as cli
-        inner join  ".$BDBACK.".dbo.clientes_usuarios as cliusu on cli.codigo = cliusu.fk_cliente
+        ".$BDBACK.".public.clientes as cli
+        inner join  ".$BDBACK.".public.clientes_usuarios as cliusu on cli.id=CAST(cliusu.fk_cliente as int)
         where
         cliusu.fk_usuario='".$id."'
         ");
@@ -167,15 +199,15 @@ class GeneralModel extends Model
         SELECT
         *
         FROM
-        ".$BDBACK.".dbo.familias
+        ".$BDBACK.".public.familias
         where
-        estado=1
+        estado =true
         order by nombre asc
         ");
     }
 
     public static function GetNombreEmpresa($BDBACK)
     {
-        return DB::select("Select * from ".$BDBACK.".dbo.empresa where bdbackoffice='".$BDBACK."' ");
+        return DB::select("Select * from ".$BDBACK.".public.empresa where bdbackoffice='".$BDBACK."' ");
     }
 }

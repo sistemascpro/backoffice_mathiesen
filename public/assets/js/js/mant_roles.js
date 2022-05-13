@@ -109,7 +109,8 @@ function cambiarEstado(id, estado)
             {
                 ToastInformacionActualizada();
             }
-            else{
+            else
+            {
                 QuitarFondoToast();
                 $('#ToastBody').html(data)
                 $("#Toaster").addClass("bg-danger").addClass("text-white");
@@ -141,10 +142,14 @@ function actualizarEstado(id, estado)
     confirmButtonColor: `#52BE80`,
     denyButtonText: `NO`,
     cancelButtonText: `NO`,
-    }).then((result) => {
-        if (result.isConfirmed) {
+    }).then((result) =>
+    {
+        if (result.isConfirmed)
+        {
             cambiarEstado(id, estado)
-        } else if (result.isDenied) {
+        }
+        else if (result.isDenied)
+        {
 
         }
     })

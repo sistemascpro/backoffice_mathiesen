@@ -38,10 +38,12 @@ class EcoPaginas_Controller extends BaseController
         return view('eco_detallenoticia.index', [
             'DatosGen' => app('App\Http\Controllers\Home_Controller')->DatosGen($req)
             , 'Session' => $req->session()
-            , 'Noticia' => GeneralModel::GetNoticiaId($DatosGen['NombreEmpresa'][0]->bdbackoffice, $id)
+            , 'DetalleNocitia' => GeneralModel::GetNoticiaId($DatosGen['NombreEmpresa'][0]->bdbackoffice, $id)
+            , 'DetalleNocitiaAnterior' => GeneralModel::GetNoticiaIdAnterior($DatosGen['NombreEmpresa'][0]->bdbackoffice, $id)
+            , 'DetalleNocitiaSiguiente' => GeneralModel::GetNoticiaIdSiguiente($DatosGen['NombreEmpresa'][0]->bdbackoffice, $id)
         ]);
     }
-    
+
     public function Contacto(Request $req) {
 
         return view('eco_Contacto.index', [

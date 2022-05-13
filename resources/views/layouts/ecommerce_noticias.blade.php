@@ -10,7 +10,7 @@
     <?php 
     for($i=0; $i<count($DatosGen['Noticias']); $i++ ){ 
 
-        if($DatosGen['Noticias'][$i]->tipo=='Imagen'){ ?>
+        ?>
             <div class="col-xl-4 col-md-6 col-xs-12" style="padding:24px; ">
               <div class="card" style="width:100%">
                 <img src="<?=$DatosGen['Noticias'][$i]->imagen?>" class="card-img-top" alt="...">
@@ -22,7 +22,6 @@
               </div>
             </div>
         <?php
-        } 
         ?>
     <?php } ?>
 

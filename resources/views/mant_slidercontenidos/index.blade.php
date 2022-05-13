@@ -43,10 +43,7 @@
                                                     <span class="pointer badge badge-pill bg-danger" onclick="EliminarNoticia(<?=$Rows->id?>)">ELIMINAR</span>
                                                 </td>
                                                 <td><?=$Rows->texto?></td>
-                                                <?php if($Rows->tipo=='Imagen'){
-                                                    ?><td><a href="<?=$Rows->imagen?>" target="_blank"><img style="max-width:200px!important;" src="<?=$Rows->imagen?>?<?=date("YmdHis")?>" alt="logo icon"></a></td><?php
-                                                } else { ?><td></td><?php } ?>
-
+                                                <td><a href="<?=$Rows->imagen?>" target="_blank"><img style="max-width:200px!important;" src="<?=$Rows->imagen?>?<?=date("YmdHis")?>" alt="logo icon"></a></td>
                                             </tr>
                                             <?php
                                         }

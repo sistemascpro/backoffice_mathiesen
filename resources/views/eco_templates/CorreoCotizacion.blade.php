@@ -76,7 +76,7 @@
                                                             </tr>
                                                             <tr>
                                                                 <td bgcolor="#FFFFFF" style="color:#355da6;padding:47px 0px 30px 0px;text-align:center;font-size:16px;font-family:Verdana;line-height:20px"><strong>Información de los productos cotizados.</strong></td>
-                                                            </tr>                                                            
+                                                            </tr>
                                                             <tr>
                                                                 <td bgcolor="#FFFFFF" style="padding:20px 0px 20px 0px">
                                                                     <table border="1" cellpadding="0" cellspacing="0" role="presentation" width="100%" style="border-color: #E6E4E4;">
@@ -95,7 +95,7 @@
                                                                                     <td style="padding:0px 5px 0px 5px;text-align:justify;line-height:25px;color:#5c6777;font-family:Verdana,sans-serif;font-size:14px"><img src="http://34.222.195.82:1982/<?=trim($lsRow->imagen1)?>"></td>
                                                                                     <td style="padding:0px 5px 0px 5px;text-align:justify;line-height:25px;color:#5c6777;font-family:Verdana,sans-serif;font-size:14px"><?=trim($lsRow->codigo)?></td>
                                                                                     <td style="padding:0px 5px 0px 5px;text-align:justify;line-height:25px;color:#5c6777;font-family:Verdana,sans-serif;font-size:14px"><?=trim($lsRow->descripcion)?></td>
-                                                                                    <td style="padding:0px 5px 0px 5px;text-align:justify;line-height:25px;color:#5c6777;font-family:Verdana,sans-serif;font-size:14px"><?=substr(trim($lsRow->DesExtra),0,60)?>...</td>
+                                                                                    <td style="padding:0px 5px 0px 5px;text-align:justify;line-height:25px;color:#5c6777;font-family:Verdana,sans-serif;font-size:14px"><?=substr(trim($lsRow->desextra),0,60)?>...</td>
                                                                                 </tr>
                                                                             <?php
                                                                             }

@@ -45,9 +45,6 @@ class MantProductosFamilias_Controller extends BaseController
         $DatosGen = app('App\Http\Controllers\Home_Controller')->DatosGen($req);
 
         $data = $req->input();
-
-        /* $Rol = MantProductosFamilias::GetCaracteristicasInformacionRelacionada($data['id']); */
-
         MantProductosFamilias::DeleteCaracteristica($DatosGen['NombreEmpresa'][0]->bdbackoffice, $data['id']);
         return "OK";
     }}
@@ -76,7 +73,6 @@ class MantProductosFamilias_Controller extends BaseController
         }
         else
         {
-
             $Tipo = $Tipo[0]->tipo;
             $familiaid = $data['familiaid'];
             $estado = $data['estado'];
@@ -103,7 +99,6 @@ class MantProductosFamilias_Controller extends BaseController
                         'codigo'        => $codigo,
                         'descripcion'   => $descripcion,
                         'nombre'        => $nombre,
-                        'es_filtro'     => $data['EsFiltro'],
                     ];
                     $familiaid = MantProductosFamilias::GuardarFamilia($DatosGen['NombreEmpresa'][0]->bdbackoffice, $DataModel);
                 }
@@ -130,7 +125,7 @@ class MantProductosFamilias_Controller extends BaseController
                     ];
                     MantProductosFamilias::GuardarFamiliaCaracteristica($DatosGen['NombreEmpresa'][0]->bdbackoffice, $DataModel);
                 }
-                else if( $Tipo==3)
+                else if( $Tipo==4)
                 {
                     $DataModel = [
                         'fk_caracteristica' => $fk_caracteristica,
@@ -141,7 +136,7 @@ class MantProductosFamilias_Controller extends BaseController
                     ];
                     MantProductosFamilias::GuardarFamiliaCaracteristica($DatosGen['NombreEmpresa'][0]->bdbackoffice, $DataModel);
                 }
-                else if( $Tipo==4 || $Tipo==5)
+                else if( $Tipo==3 )
                 {
                     $DataModel = [
                         'fk_caracteristica' => $fk_caracteristica,
@@ -188,29 +183,32 @@ class MantProductosFamilias_Controller extends BaseController
 
         $data = $req->input();
 
-        if( !isset($data['nombre']) || strlen(trim($data['codigo']))==0 ){
+        if( !isset($data['nombre']) || strlen(trim($data['codigo']))==0 )
+        {
             return "FALTA INFORMACION";
         }
-        else{
-
+        else
+        {
             $familiaid = $data['familiaid'];
             $estado = $data['estado'];
             $nombre = limpiar_texto($data['nombre']);
             $codigo = limpiar_texto($data['codigo']);
             $descripcion = limpiar_texto($data['descripcion']);
 
-            if ( MantProductosFamilias::ExisteNombre($nombre, $familiaid) ) {
+            if ( MantProductosFamilias::ExisteNombre($nombre, $familiaid) )
+            {
                 return "EL NOMBRE YA ESTÁ REGISTRADO";
             }
-            else if ( MantProductosFamilias::ExisteCodigo($codigo, $familiaid) ) {
+            else if ( MantProductosFamilias::ExisteCodigo($codigo, $familiaid) )
+            {
                 return "EL CÓDIGO YA ESTÁ REGISTRADO";
             }
-            else {
-
+            else
+            {
                 $nombreFinalIcono = null;
                 $nombreFinalCabecera = null;
-                if($req->file()) {
-
+                if($req->file())
+                {
                     if(isset($req->archivo))
                     {
                         $Random = date("YmdHism").substr(md5(mt_rand()), 0, 7);
@@ -219,7 +217,6 @@ class MantProductosFamilias_Controller extends BaseController
                         $tempFile = $req->archivo;
                         $Archivo = move_uploaded_file($tempFile, $nombreTemp);
                     }
-
                     if(isset($req->cabecera))
                     {
                         $Random = date("YmdHism").substr(md5(mt_rand()), 0, 9);
@@ -228,12 +225,12 @@ class MantProductosFamilias_Controller extends BaseController
                         $tempFile = $req->cabecera;
                         $Archivo = move_uploaded_file($tempFile, $nombreTemp);
                     }
-
-
                 }
 
-                if('0'==$data['familiaid'] ){
-                    try {
+                if('0'==$data['familiaid'] )
+                {
+                    try
+                    {
                         $DataModel = [
                             'estado'       => $estado,
                             'codigo'       => $codigo,
@@ -244,23 +241,30 @@ class MantProductosFamilias_Controller extends BaseController
                         ];
                         MantProductosFamilias::GuardarFamilia($DataModel);
                         return "OK";
-                    } catch (Exception $e) {
+                    }
+                    catch (Exception $e)
+                    {
                         return "ERROR";
                     }
                 }
-                else {
-                    if(!MantProductosFamilias::ExisteId($familiaid)){
+                else
+                {
+                    if(!MantProductosFamilias::ExisteId($familiaid))
+                    {
                         return "NO EXISTE EL ID A ACTUALIZAR";
                     }
-                    else if ( MantProductosFamilias::ExisteNombre($nombre, $familiaid) ) {
+                    else if ( MantProductosFamilias::ExisteNombre($nombre, $familiaid) )
+                    {
                         return "EL NOMBRE YA ESTÁ REGISTRADO";
                     }
-                    else if ( MantProductosFamilias::ExisteCodigo($codigo, $familiaid) ) {
+                    else if ( MantProductosFamilias::ExisteCodigo($codigo, $familiaid) )
+                    {
                         return "EL CÓDIGO YA ESTÁ REGISTRADO";
                     }
-                    else {
-                        try {
-
+                    else
+                    {
+                        try
+                        {
                             $DataModel = [
                                 'estado'        => $estado,
                                 'codigo'        => $codigo,
@@ -268,7 +272,6 @@ class MantProductosFamilias_Controller extends BaseController
                                 'nombre'        => $nombre,
                             ];
                             MantProductosFamilias::UpdateFamilia($DataModel, $familiaid);
-
 
                             if($nombreFinalIcono!=null)
                             {
@@ -287,7 +290,9 @@ class MantProductosFamilias_Controller extends BaseController
                             }
 
                             return "OK";
-                        } catch (Exception $e) {
+                        }
+                        catch (Exception $e)
+                        {
                             return "ERROR";
                         }
                     }

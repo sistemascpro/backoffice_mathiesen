@@ -20,16 +20,6 @@
                     <button class="btn-search" type="button"><b>BUSCAR</b></button>
                 </div>
             </div>
-            <!-- evidal
-            <div class="row searchLink">
-                <div class="col-12 "> 
-                    <span class="ml-4">Búsquedas populares</span> 
-                    <a href="plp.html"><button type="button" class="btn btn-outline-primary ml-4 btn-sm">Alimentos</button> </a>
-                    <a href="plp.html"> <button type="button" class="btn btn-outline-primary ml-4 btn-sm">Celulosa</button></a>
-                    <a href="plp.html">  <button type="button" class="btn btn-outline-primary ml-4 btn-sm">Minería</button> </a>
-                </div>
-            </div>
-            -->
         </form>
     </div>
 </div>

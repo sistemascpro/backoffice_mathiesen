@@ -16,7 +16,7 @@ class EcoHome_Controller extends BaseController
     public function index(Request $req) {
         
         return view('eco_home.index', [
-            'NombreEmpresa' => GeneralModel::GetNombreEmpresa('backoffice_mathiesen_new')
+            'NombreEmpresa' => GeneralModel::GetNombreEmpresa('backoffice_mathiesen')
         ]);
 
     }

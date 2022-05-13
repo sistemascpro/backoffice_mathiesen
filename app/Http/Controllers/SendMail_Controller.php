@@ -35,7 +35,9 @@ class SendMail_Controller extends Controller
             $message->subject($data['ContAsunto'].' - '.date("Y-m-d H:i:s", time() - 14400));
             });
             return "OK";
-        } catch (Exception $e) {
+        }
+        catch (Exception $e) 
+        {
             return "ERROR";
         }
     }
@@ -53,7 +55,7 @@ class SendMail_Controller extends Controller
         {
             $EstadoEnvio = 0;
             $error="";
-    
+
             $DataModel = [
               'estado'        => 1,
               'usuario'       => $_POST['RegEmail'],
@@ -65,15 +67,44 @@ class SendMail_Controller extends Controller
               'telefono1'     => $_POST['RegTelefono'],
               'telefono2'     => $_POST['RegTelefono'],
               'email'         => $_POST['RegEmail'],
-              'avatar'        => $_POST['RegTipo'],
-              'fechaCreacion'         => app('App\Http\Controllers\Home_Controller')->GetDateTime(),
-              'fechaActualizacion'    =>  app('App\Http\Controllers\Home_Controller')->GetDateTime(),
+              'fechacreacion'         => app('App\Http\Controllers\Home_Controller')->GetDateTime(),
+              'fechaactualizacion'    =>  app('App\Http\Controllers\Home_Controller')->GetDateTime(),
               'fk_responsable'        => 1,
               'habilitado'            => 'PENDIENTE',
             ];
-    
-            MantClientes::GuardarUsuario($DataModel);
-    
+
+            $UserId = MantClientes::GuardarUsuario($DataModel);
+
+            $DataModel = [
+                'codigo'                => $_POST['RegEmail'],
+                'sucursar'              => '',
+                'nombre'                => $_POST['RegNombre'],
+                'tipocliente'           => '',
+                'giro'                  => '',
+                'direccion'             => '',
+                'direcciondespacho'     => '',
+                'comuna'                => '',
+                'ciudad'                => '',
+                'pais'                  => '',
+                'vendedor'              => '',
+                'formapago'              => '',
+                'listaprecio'           => 0,
+                'nombrelistaprecio'     => '',
+                'contacto'              => '',
+                'telefono'              => '',
+                'email'                 => '',
+                'comentarios'           => '',
+            ];
+
+            $ClienteId = MantClientes::GuardarCliente($DataModel);
+
+            $DataModel = [
+            'fk_cliente'        => $ClienteId,
+            'fk_usuario'        => $UserId,
+            ];
+
+            MantClientes::GuardarRelacionCliente($DataModel);
+
             $data['RegEmail']       = $_POST['RegEmail'];
             $data['RegEmpresa']     = $_POST['RegEmpresa'];
             $data['RegNombre']      = $_POST['RegNombre'];
@@ -81,7 +112,6 @@ class SendMail_Controller extends Controller
             $data['RegTelefono']    = $_POST['RegTelefono'];
             $data['RegEmail']       = $_POST['RegEmail'];
             $data['RegTipo']        = $_POST['RegTipo'];
-    
             //$Correos[0] = 'contacto.mathiesen@grupomathiesen.com';
             try{
             $Correos[0] = 'edo.v81@gmail.com';

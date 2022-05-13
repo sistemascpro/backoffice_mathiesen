@@ -1,4 +1,4 @@
-function EliminarSlider(id)
+function EliminarSlider(id, ruta)
 {
     Swal.fire({
     title: 'ELIMINAR?',
@@ -18,6 +18,7 @@ function EliminarSlider(id)
                 data: {
                     _token : $("#_token").val()
                     , id : id
+                    , ruta : ruta
                 },
                 success:function(data)
                 {

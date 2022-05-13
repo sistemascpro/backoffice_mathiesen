@@ -23,7 +23,7 @@
                             <input
                             type="hidden"
                             class="UsuRequired form-control"
-                            value="<?=$Usuario[0]->usuarioid?>"
+                            value="<?=$Usuario[0]->id?>"
                             id="UsuarioId"
                             name="UsuarioId"
                             readonly
@@ -61,6 +61,22 @@
                                     >
                                         <option value=true>ACTIVO</option>
                                         <option value=false>BLOQUEADO</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-sm-3">
+                                    <p class="mb-0">HABILITADO</p>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    <select
+                                    class="UsuRequired form-select"
+                                    maxlength="30"
+                                    id="habilitado"
+                                    name="habilitado"
+                                    >
+                                        <option value='SI'>SI</option>
+                                        <option value='NO'>NO</option>
                                     </select>
                                 </div>
                             </div>
@@ -234,25 +250,7 @@
                                     />
                                 </div>
                             </div>
-                            <div class="row mb-3">
-                                <div class="col-sm-3">
-                                    <p class="mb-0">IMAGEN</p>
-                                </div>
-                                <div class="col-sm-9 text-secondary">
-                                    <input
-                                    type="file"
-                                    class="form-control"
-                                    id="avatar"
-                                    name="avatar"
-                                    />
-                                </div>
-                            </div>
                             <span  class="row">
-                                <div class="col-lg-4">
-                                    <div class="d-flex flex-column align-items-center text-center">
-                                        <div id="AvatarUsuario"><img src="<?=$Usuario[0]->avatar?>" alt="Admin" class="rounded-circle p-1 bg-primary" width="110"></div>
-                                    </div>
-                                </div>
                                 <div class="col-sm-4 text-secondary align-middle">
                                     <input type="button" class="btn btn-primary px-4" value="GUARDAR CAMBIOS" onclick="GuardarUsuario();" />
                                 </div>
