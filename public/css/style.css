@@ -211,6 +211,10 @@ small, .text_small {font-size: var(--overline)}
 .mr-64{
   margin-right: 64px;
 }
+#eco_productos{
+  margin-top: 104px;
+}
+
 .btn-outline-secondary-mathiense-registro {
   color: #fff;
     border-color: #fff;
@@ -459,12 +463,16 @@ small, .text_small {font-size: var(--overline)}
   right: 0.2rem;
 }
 .fullBanner-sm {
-  width: 100%;
-  height: 300px;
-  background-color: var(--primary-50);
-  overflow: hidden;
-  padding: 40px;
-  box-sizing: border-box;
+  width: 60%;
+    height: 300px;
+    background-color: hsl(220deg 92% 95% / 69%);
+    overflow: hidden;
+    padding: 40px;
+    box-sizing: border-box;
+    position: absolute;
+    top: 150px;
+    left: 20%;
+    border-radius: 10px;
 }
 
 .fullBanner-sm img {
@@ -1617,9 +1625,15 @@ width: 100%;
  font-size: var(--h4);
   
 }
-
+.slider-home{
+  display: none;
+}
 .fullBanner-sm {
   padding: 8px;
+  width: 100%;
+  left:0;
+  position: unset;
+  top: unset;
 
 }}
 
@@ -1628,6 +1642,7 @@ width: 100%;
     float: left;
     top: 5px;
     border: none;
+
    
 }
 
