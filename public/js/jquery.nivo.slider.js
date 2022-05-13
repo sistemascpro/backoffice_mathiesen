@@ -121,7 +121,7 @@
         
         // Add Direction nav
         if(settings.directionNav){
-            slider.append('<div class="nivo-directionNav"><a class="nivo-prevNav">'+ settings.prevText +'</a><a class="nivo-nextNav">'+ settings.nextText +'</a></div>');
+            slider.append('<div class="nivo-directionNav"><a class="nivo-prevNav"> < </a><a class="nivo-nextNav"> > </a></div>');
             
             $(slider).on('click', 'a.nivo-prevNav', function(){
                 if(vars.running) { return false; }
@@ -141,6 +141,7 @@
         
         // Add Control nav
         if(settings.controlNav){
+            /*
             vars.controlNavEl = $('<div class="nivo-controlNav"></div>');
             slider.after(vars.controlNavEl);
             for(var i = 0; i < kids.length; i++){
@@ -155,7 +156,7 @@
                     vars.controlNavEl.append('<a class="nivo-control" rel="'+ i +'">'+ (i + 1) +'</a>');
                 }
             }
-
+            */
             //Set initial active link
             $('a:eq('+ vars.currentSlide +')', vars.controlNavEl).addClass('active');
             

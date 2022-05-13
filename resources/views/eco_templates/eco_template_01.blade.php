@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <input type="hidden" name="_token"  id="_token" value="{{csrf_token()}}">
     <input type="hidden" name="cliente_codigo"  id="cliente_codigo" value="<?=$DatosGen['Session']->get('cliente_codigo')?>">
+    <input type="hidden" name="CantSliderContenido" name="CantSliderContenido" value="<?php if( isset($DatosGen['SliderContenidos']) ) { echo count($DatosGen['SliderContenidos']);} else { echo "0"; } ?>"
     <meta name="description" content="" />
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title><?=$DatosGen['NombreEmpresa'][0]->nombre?></title>

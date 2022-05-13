@@ -21,6 +21,7 @@
             <?php
         }
         ?>
+        
         @include("layouts.ecommerce_noticias")
         @include("layouts.ecommerce_marcas")
     </div>

@@ -985,16 +985,28 @@ $(document).ready(function() {
     }
 
     $('#slider').nivoSlider({
+        manualAdvance: true,
+        beforeChange: function(){
+            if(condition){
+                $('#slider').data('nivoslider').stop();
+            }
+        },
+        afterChange: function(){
+
+        }, 
+    });
+
+    $('#slider').nivoSlider({
         effect: 'random',
-        slices: 15,
+        slices: $('#CantSliderContenido').val(),
         boxCols: 8,
         boxRows: 4,
         animSpeed: 500,
         pauseTime: 3000,
         startSlide: 0,
         directionNav: true,
-        controlNav: true,
-        controlNavThumbs: true,
+        controlNav: false,
+        controlNavThumbs: false,
         pauseOnHover: true,
         manualAdvance: true,
         prevText: '<',
@@ -1005,10 +1017,10 @@ $(document).ready(function() {
         slideshowEnd: function(){},
         lastSlide: function(){},
         afterLoad: function(){}
-        });
+    });
 
 
- const select = document.querySelector('#select');
+   const select = document.querySelector('#select');
    const opciones = document.querySelector('#opciones');
    const contenidoSelect = document.querySelector('#select .contenido-select');
    const hiddenInput = document.querySelector('#inputSelect');
