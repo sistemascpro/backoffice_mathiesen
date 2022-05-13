@@ -228,7 +228,7 @@
       
       <div class="container-fluid">
        
-        <a class="navbar-brand" href="home.html"><img src="img/Logo001.png" alt="Logo"></a>
+        <a class="navbar-brand" href="/eco_index"><img src="img/Logo001.png" alt="Logo"></a>
         <button id="navbar-toggler" class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false" aria-label="Toggle navigation">
           <i style="font-weight:bold; color:#fff;" class="icon icon-menu"></i>
         </button>
@@ -256,10 +256,7 @@
                 </div>
              </ul>
             </li>
-            <li class="nav-item dropdown responsiveHide" style="display:none"><a class="nav-link " href="#">Empresas Productivas</a></li>
-            <li class="nav-item dropdown" style="display:none"><a class="nav-link" href="#">Aplicaciones </a></li>
-            <li class="nav-item dropdown" style="display:none"><a class="nav-link" href="#">Carrera</a></li>
-            <li class="nav-item dropdown"><a class="nav-link" href="newsList.html">Noticias</a></li>
+            <li class="nav-item dropdown"><a class="nav-link" href="/eco_noticias">Noticias</a></li>
             <li class="marginButtonNav"><a href="contacto.html"><button type="button" style="margin-top: -5px;" class="btn btn-outline-secondary btn-outline-secondary-mathiense">Contacto</button></a>   </li>
            
           </ul>

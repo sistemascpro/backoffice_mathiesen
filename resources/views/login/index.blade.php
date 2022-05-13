@@ -21,12 +21,12 @@
   <div class="container contRegistro" style="margin-top: 45px;">
     <div class="row">
       <div class="col-xl-4 col-sm-12">
-        <a class="navbar-brand" style="position:absolute; top:-28px;" href="home.html"><img src="https://www.grupomathiesen.com/wp-content/uploads/2020/07/LOGO-MATHIESEN.png" alt="Logo"></a>
+        <a class="navbar-brand" style="position:absolute; top:-28px;" href="/eco_index"><img src="https://www.grupomathiesen.com/wp-content/uploads/2020/07/LOGO-MATHIESEN.png" alt="Logo"></a>
       </div>
     </div>
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="home.html">Home</a></li>
+        <li class="breadcrumb-item"><a href="/eco_index">Home</a></li>
         <li class="breadcrumb-item active" aria-current="page">Inicio de sesión</li>
       </ol>
     </nav>
