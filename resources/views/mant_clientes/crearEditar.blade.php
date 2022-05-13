@@ -210,7 +210,7 @@
                                         <input
                                         type="hidden"
                                         class="UsuRequired form-control"
-                                        value="<?php if(isset($Cliente[0]->codigo)){echo $Cliente[0]->codigo;} ?>"
+                                        value="<?php if(isset($Cliente[0]->id)){echo $Cliente[0]->id;} ?>"
                                         id="ClienteId"
                                         name="ClienteId"
                                         readonly

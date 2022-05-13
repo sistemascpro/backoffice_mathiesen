@@ -190,7 +190,7 @@ class MantClientes extends Model
         FROM
         ".$Bd.".public.clientes
         where
-        codigo='".$id."'
+        id=".$id."
         ");
     }
 
@@ -203,7 +203,8 @@ class MantClientes extends Model
     {
         return DB::select("
         SELECT
-        codigo
+        id
+        , codigo
         , nombre
         , email
         , telefono

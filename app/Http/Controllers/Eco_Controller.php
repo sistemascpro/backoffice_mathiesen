@@ -1094,8 +1094,8 @@ class Eco_Controller extends BaseController
 
                 if($i==0)
                 {
-                    $AuxCondicionCaracOpcion .= " 
-                    inner join backoffice_mathiesen_edo.public.productos_caracteristicas as car on car.fk_producto=prod.id and car.fk_caracteristica=".$AuxProdCarcOpcion[0]." and ( car.valor=cast(".$AuxProdCarcOpcion[1]." as varchar)
+                    $AuxCondicionCaracOpcion .= "
+                    inner join backoffice_mathiesen.public.productos_caracteristicas as car on car.fk_producto=prod.id and car.fk_caracteristica=".$AuxProdCarcOpcion[0]." and ( car.valor=cast(".$AuxProdCarcOpcion[1]." as varchar)
                     ";
                 }
                 else

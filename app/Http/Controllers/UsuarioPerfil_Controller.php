@@ -18,7 +18,7 @@ class UsuarioPerfil_Controller extends BaseController
     public function index(Request $req) { if(!$req->session()->get('nombre') || session()->get('fk_rol')==3) { $req->session()->flush();  return redirect('login'); } else {
 
         return view('usuarioPerfil.index', [
-            'NombreEmpresa' => GeneralModel::GetNombreEmpresa('backoffice_mathiesen_edo')
+            'NombreEmpresa' => GeneralModel::GetNombreEmpresa('backoffice_mathiesen')
             , 'usuario' =>  UsuarioPerfil::GetUsuario($req->session()->get('id'))
         ]);
 
