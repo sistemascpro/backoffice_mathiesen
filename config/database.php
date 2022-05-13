@@ -98,7 +98,7 @@ return [
             'port' => env('DB_PORT', '1433'),
             'database' => 'backoffice_mathiesen',
             'username' => 'postgres',
-            'password' => 'p0stgr3s.n0djs.r00t',
+            'password' => '1234',
             'charset' => 'utf8',
             'prefix' => '',
             'prefix_indexes' => true,
