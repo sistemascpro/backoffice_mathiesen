@@ -39,6 +39,8 @@ class EcoPaginas_Controller extends BaseController
             'DatosGen' => app('App\Http\Controllers\Home_Controller')->DatosGen($req)
             , 'Session' => $req->session()
             , 'DetalleNocitia' => GeneralModel::GetNoticiaId($DatosGen['NombreEmpresa'][0]->bdbackoffice, $id)
+            , 'DetalleNocitiaAnterior' => GeneralModel::GetNoticiaIdAnterior($DatosGen['NombreEmpresa'][0]->bdbackoffice, $id)
+            , 'DetalleNocitiaSiguiente' => GeneralModel::GetNoticiaIdSiguiente($DatosGen['NombreEmpresa'][0]->bdbackoffice, $id)
         ]);
     }
 

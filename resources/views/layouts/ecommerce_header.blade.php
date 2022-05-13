@@ -223,38 +223,46 @@
      
       
     </div>
-<nav class="navbar navbar-expand-lg navbar-fixed ">
+
+    <nav class="navbar navbar-expand-lg navbar-fixed">
+      
       <div class="container-fluid">
-        <a class="navbar-brand" href="/"><img src="img/Logo001.png" alt="Logo" /></a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false" aria-label="Toggle navigation">
+       
+        <a class="navbar-brand" href="home.html"><img src="img/Logo001.png" alt="Logo"></a>
+        <button id="navbar-toggler" class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false" aria-label="Toggle navigation">
           <i style="font-weight:bold; color:#fff;" class="icon icon-menu"></i>
         </button>
         <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
           <ul class="navbar-nav">
-            <li class="marginButtonNav nav-item dropdown"><a class="nav-link " href="https://www.grupomathiesen.com/nosotros/" target="_blank">Nosotros</a></li>
-            <li class="marginButtonNav nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <li class="nav-item dropdown"><a class="nav-link" href="https://www.grupomathiesen.com/nosotros/" target="_blank">Nosotros</a></li>
+
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle show" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="true">
                 Producto e Industrias <i style="font-weight:bold;" class="icon icon-chevron-down"></i>
               </a>
-              <ul class="dropdown-menu dropdown-menu-dark subMenuFullContent" aria-labelledby="navbarDarkDropdownMenuLink" style="margin-top:-7px !important;">
-                <div class="col-12 row">
-                    <?php
-                    foreach ($DatosGen['MenuWebPadres'] as $lsPadre){
-                        ?>
-                            <div class="col-lg-4 col-md-12 submenu" onclick="CargarProductos('Familia', '<?=$lsPadre->id?>')"><a class="dropdown-item" href="#"><?=mb_strtoupper($lsPadre->nombre)?></a></div>
-                        <?php
-                    }
-                    ?>
+              <ul class="dropdown-menu dropdown-menu-dark subMenuFullContent show" aria-labelledby="navbarDarkDropdownMenuLink" data-bs-popper="none">
+                <?php
+                $Cont=0;
+                for( $i=0; $i<count($DatosGen['MenuWebPadres']); $i++)
+                {
+                    if( $i==0 ) { ?> <div class="group-list group-list-marginFirst"> <?php }
+                    
+                    ?><li class="submenu"><a class="dropdown-item" href="#" onclick="CargarProductos('Familia', '<?=$DatosGen['MenuWebPadres'][$i]->id?>')"><?=$DatosGen['MenuWebPadres'][$i]->nombre?></a></li><?php
+
+                    if( $Cont%5==0 && $i>0 ) { ?></div><div class="group-list"><?php $Cont=0; }
+                    $Cont++;
+                }
+                ?>
                 </div>
-              </ul>
+             </ul>
             </li>
-            <li class="marginButtonNav nav-item dropdown"><a class="nav-link " href="/eco_noticias">Noticias</a></li>
-            <li class="marginButtonNav nav-item dropdown"><a href="/eco_contacto"><button type="button"  style="margin-top: -10px;" class=" btn btn-outline-secondary btn-outline-secondary-mathiense">Contacto</button></a>   </li>
-            <li class="marginButtonNav nav-item dropdown"><a href="#" onclick="CargarCarrito();"><button type="button"  style="margin-top: -10px;" class="btn btn-primar btn-primary-mat">Cotizador</button></a>   </li>
+            <li class="nav-item dropdown responsiveHide" style="display:none"><a class="nav-link " href="#">Empresas Productivas</a></li>
+            <li class="nav-item dropdown" style="display:none"><a class="nav-link" href="#">Aplicaciones </a></li>
+            <li class="nav-item dropdown" style="display:none"><a class="nav-link" href="#">Carrera</a></li>
+            <li class="nav-item dropdown"><a class="nav-link" href="newsList.html">Noticias</a></li>
+            <li class="marginButtonNav"><a href="contacto.html"><button type="button" style="margin-top: -5px;" class="btn btn-outline-secondary btn-outline-secondary-mathiense">Contacto</button></a>   </li>
+           
           </ul>
         </div>
       </div>
     </nav>
-    <div class="container-flow header">
-    </div>
-

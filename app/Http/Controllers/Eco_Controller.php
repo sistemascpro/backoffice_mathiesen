@@ -583,7 +583,7 @@ class Eco_Controller extends BaseController
                         ";
                         if($Productos[$i]->marca_ruta!=null)
                         {
-                            $Salida .="<img style=\"width:200px !important;\" src=\"".$Productos[$i]->marca_ruta."\">";
+                            /* $Salida .="<img style=\"width:200px !important;\" src=\"".$Productos[$i]->marca_ruta."\">"; */
                         }
                         $Salida .="</div>
                 </div>
@@ -603,87 +603,63 @@ class Eco_Controller extends BaseController
                         {
                             $CaractVal = EcoModel::GetCaracteristicasValoresFamiliasProducto($DatosGen['NombreEmpresa'][0]->bdbackoffice, $lsRow->caract_id, $Productos[$i]->id);
                             if(count($CaractVal)>0){ $Valor = $CaractVal[0]->valor; } else { $Valor=''; }
-                            $Salida .="<div
-                            style=\"padding: 1px!important; width:30% !important; margin-right:8px !important; font-size:10px !important\"
-                            class=\"mt-2 productItem-inner\"
-                            role=\"alert\">
-                            <span>".$lsRow->caract_nombre."</span>".$Valor."</div>";
+                            $Salida .="<div class=\"col-3 productItem\"><div class=\"productItem-inner\">
+                            <span>".$lsRow->caract_nombre."</span>".$Valor."</div></div>";
                         }
                         else if( $lsRow->caract_tipo_id==2)
                         {
                             $CaractVal = EcoModel::GetCaracteristicasValoresFamiliasProducto($DatosGen['NombreEmpresa'][0]->bdbackoffice, $lsRow->caract_id, $Productos[$i]->id);
                             if(count($CaractVal)>0){ $Valor = $CaractVal[0]->valor; } else { $Valor=''; }
-                            $Salida .="<div
-                            style=\"padding: 1px!important; width:30% !important; margin-right:8px !important; font-size:10px !important\"
-                            class=\"mt-2 productItem-inner\"
-                            role=\"alert\">
-                            <span>".$lsRow->caract_nombre."</span>".$Valor."</div>";
+                            $Salida .="<div class=\"col-3 productItem\"><div class=\"productItem-inner\">
+                            <span>".$lsRow->caract_nombre."</span>".$Valor."</div></div>";
                         }
                         else if( $lsRow->caract_tipo_id==3)
                         {
                             $CaractVal = EcoModel::GetCaracteristicasValoresFamiliasProducto($DatosGen['NombreEmpresa'][0]->bdbackoffice, $lsRow->caract_id, $Productos[$i]->id);
                             if(count($CaractVal)>0){ $Valor = $CaractVal[0]->valor; } else { $Valor=''; }
-                            $Salida .="<div
-                            style=\"padding: 1px!important; width:30% !important; margin-right:8px !important; font-size:10px !important\"
-                            class=\"mt-2 productItem-inner\"
-                            role=\"alert\">
-                            <span>".$lsRow->caract_nombre."</span>".$Valor."</div>";
+                            $Salida .="<div class=\"col-3 productItem\"><div class=\"productItem-inner\">
+                            <span>".$lsRow->caract_nombre."</span>".$Valor."</div></div>";
                         }
                         else if( $lsRow->caract_tipo_id==5 )
                         {
                             $Opciones = EcoModel::CargarCaracteristicasFamiliaProductosOpciones($DatosGen['NombreEmpresa'][0]->bdbackoffice, $lsRow->caract_id, $Productos[$i]->id);
-                            $Salida .="<div
-                            style=\"padding: 1px!important; width:30% !important; margin-right:8px !important; font-size:10px !important\"
-                            class=\"mt-2 productItem-inner\"
-                            role=\"alert\">
+                            $Salida .="<div class=\"col-3 productItem\"><div class=\"productItem-inner\">
                             <span>".$lsRow->caract_nombre."</span>";
                                 foreach($Opciones as $lsOpt){
                                     $Salida .=$lsOpt->opcion." - ";
                                 }
-                            $Salida .="</div>";
+                            $Salida .="</div></div>";
                         }
                     }
                 }
 
                 $Paises = EcoModel::GetPaisesProducto($DatosGen['NombreEmpresa'][0]->bdbackoffice, $Productos[$i]->id);
                 if( count($Paises)>0 ){
-                    $Salida .="<div
-                    style=\"padding: 1px!important; width:30% !important; margin-right:8px !important; font-size:10px !important\"
-                    class=\"mt-2 productItem-inner\"
-                    role=\"alert\">
+                    $Salida .="<div class=\"col-3 productItem\"><div class=\"productItem-inner\">
                     <span>PAISES</span>";
                         foreach($Paises as $lsRow) { $Salida .= $lsRow->nombre." - "; }
-                    $Salida .=" </div>";
+                    $Salida .=" </div></div>";
                 }
 
-                $Salida .="<div
-                style=\"padding: 1px!important; width:30% !important; margin-right:8px !important; font-size:10px !important\"
-                class=\"mt-2 productItem-inner\"
-                role=\"alert\">
+                $Salida .="<div class=\"col-3 productItem\"><div class=\"productItem-inner\">
                 <span>MARCA</span>";
                 $Salida .= $Productos[$i]->marca_nombre;
-                $Salida .=" </div>";
+                $Salida .=" </div></div>";
 
                 $Familias = EcoModel::GetSubFamiliasProducto($DatosGen['NombreEmpresa'][0]->bdbackoffice, $Productos[$i]->id);
                 if( count($Familias)>0 ){
-                    $Salida .="<div
-                    style=\"padding: 1px!important; width:30% !important; margin-right:8px !important; font-size:10px !important\"
-                    class=\"mt-2 productItem-inner\"
-                    role=\"alert\">
+                    $Salida .="<div class=\"col-3 productItem\"><div class=\"productItem-inner\">
                     <span>FAMILIAS</span>";
                         foreach($Familias as $lsRow) { $Salida .= $lsRow->nombre." - "; }
-                    $Salida .="</div>";
+                    $Salida .="</div></div>";
                 }
 
                 $Proveedores = EcoModel::GetProveedoresProducto($DatosGen['NombreEmpresa'][0]->bdbackoffice, $Productos[$i]->id);
                 if( count($Proveedores)>0 ){
-                    $Salida .="<div
-                    style=\"padding: 1px!important; width:30% !important; margin-right:8px !important; font-size:10px !important\"
-                    class=\"mt-2 productItem-inner\"
-                    role=\"alert\">
+                    $Salida .="<div class=\"col-3 productItem\"><div class=\"productItem-inner\">
                     <span>PROVEEDORES</span>";
                         foreach($Proveedores as $lsRow) { $Salida .= $lsRow->nombre." - "; }
-                    $Salida .=" </div>";
+                    $Salida .=" </div></div>";
                 }
 
                 $Salida .="</div>";
@@ -691,7 +667,7 @@ class Eco_Controller extends BaseController
                 $SalidaDocumentos = "";
 
             $Salida .="
-                <button type=\"button\" class=\"btn btn-primar btn-primary-mat btn-primary-matInModal\" onclick=\"AgregarProducto('".$Productos[$i]->id."')\">Solicitar una cotización</button>
+                <button type=\"button\" style=\"float:left\" class=\"btn btn-primar btn-primary-mat btn-primary-matInModal\" onclick=\"AgregarProducto('".$Productos[$i]->id."')\">Solicitar una cotización</button>
 </div>
             </div>
 </div>

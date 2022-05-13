@@ -44,6 +44,36 @@ class GeneralModel extends Model
         ");
     }
 
+    public static function GetNoticiaIdSiguiente($DBBACK, $id)
+    {
+            return DB::select("
+            SELECT
+            *
+            FROM ".$DBBACK.".public.noticias
+            where
+            id>".$id."
+            order by
+            id
+            asc
+            limit 1
+            ");
+    }
+
+    public static function GetNoticiaIdAnterior($DBBACK, $id)
+    {
+            return DB::select("
+            SELECT
+            *
+            FROM ".$DBBACK.".public.noticias
+            where
+            id<".$id."
+            order by 
+            id
+            desc
+            limit 1
+            ");
+    }
+
     public static function GetNoticiaId($DBBACK, $id)
     {
             return DB::select("

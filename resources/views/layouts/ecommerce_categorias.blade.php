@@ -12,7 +12,7 @@
         <div class="col-xl-2 col-md-4 col-sm-6 iconCat">
             <a href="#" onclick="CargarProductos('Familia', '<?=$lsRow->id?>')">
                 <div class="iconCat-inner">
-                    <span class="categoryIcon"><img src="<?=$lsRow->ruta?>"></span>
+                    <span class="categoryIcon"><img src="<?=$lsRow->ruta?>" style="width:45px !importantr"></span>
                     <span class="categoryDescriton"><?=$lsRow->nombre?></span>
                 </div>
             </a>
