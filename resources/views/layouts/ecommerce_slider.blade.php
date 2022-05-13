@@ -1,4 +1,4 @@
-<div class="slider-home" style="margin-top: 114px;">
+<div class="slider-home">
     <div id="carouselExampleCaptions" class="carousel slide pointer-event" data-bs-ride="carousel">
         <div class="carousel-indicators">
             <?php
