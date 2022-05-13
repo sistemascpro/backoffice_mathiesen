@@ -24,35 +24,39 @@
                                             <tbody>
                                                 <tr>
                                                     <td align="center"><table border="0" class="m_-4815641890327514086mobile" cellpadding="0" cellspacing="0" role="presentation" width="640">
-                                                        <tbody>
+                                                        <tbody style="background: #fafafa;">
                                                             <tr>
-                                                                <td align="center" bgcolor="#FFFFFF" style="padding:35px 10px"><img src="http://34.222.195.82:1982/img/Logo001.png" alt="LOGO" width="221" height="39" border="0" class="CToWUd"></td>
+                                                                <td align="center"  style="padding:20px 10px; background: hsl(220 92% 10%);"><img src="http://34.222.195.82:1982/img/logo-ondark.png" alt="LOGO" width="221" height="39" border="0" class="CToWUd"></td>
                                                             </tr>
                                                             <tr>
                                                                 <td>
                                                                     <table width="590" border="0" align="center" cellpadding="0" cellspacing="0" class="m_-4815641890327514086mobile">
                                                                         <tbody>
                                                                             <tr>
-                                                                                <td bgcolor="#042362" style="color:#ffffff;padding:30px;text-align:left;font-size:25px;font-family:Verdana;line-height:30px"><strong>Registro de cliente</strong></td>
-                                                                            </tr>
+                                                                                <td  style="color: #ff5722; padding: 25px; text-align: center;font-size:18px;font-family:Verdana;line-height:30px;text-transform: uppercase;"><strong>Registro de cliente</strong></td>
+                                                                           
+                                                                        
+                                                                           
+                                                                           
+                                                                              </tr>
                                                                         </tbody>
                                                                     </table>
                                                                 </td>
                                                             </tr>
                                                             <tr>
-                                                                <td bgcolor="#FFFFFF" style="color:#355da6;padding:47px 0px 30px 0px;text-align:center;font-size:16px;font-family:Verdana;line-height:20px"><strong>Se ha registrado un nuevo cliente</strong></td>
+                                                                <td  style="color:#355da6;padding:47px 0px 30px 0px;text-align:center;font-size:16px;font-family:Verdana;line-height:20px"><strong>Se ha registrado un nuevo cliente</strong></td>
                                                             </tr>
                                                             <tr>
-                                                                <td bgcolor="#FFFFFF" class="m_-4815641890327514086padding1" style="padding:0px 53px 0px 53px;text-align:justify;line-height:25px;color:#5c6777;font-family:Verdana,sans-serif;font-size:14px">Se ha registrado un nuevo cliente en nuestro portal web, es necesario validar la información y activar al usuario en caso de que corresponda.</td>
+                                                                <td  class="m_-4815641890327514086padding1" style="padding:0px 53px 0px 53px;text-align:justify;line-height:25px;color:#5c6777;font-family:Verdana,sans-serif;font-size:14px">Se ha registrado un nuevo cliente en nuestro portal web, es necesario validar la información y activar al usuario en caso de que corresponda.</td>
                                                             </tr>
                                                             <tr>
-                                                                <td bgcolor="#FFFFFF" style="padding:20px 0px 20px 0px"><hr></td>
+                                                                <td  style="padding:20px 0px 20px 0px"><hr></td>
                                                             </tr>
                                                             <tr>
-                                                                <td bgcolor="#FFFFFF" style="color:#355da6;padding:47px 0px 30px 0px;text-align:center;font-size:16px;font-family:Verdana;line-height:20px"><strong>Información ingresada por el usuario.</strong></td>
+                                                                <td  style="color:#355da6;padding:47px 0px 30px 0px;text-align:center;font-size:16px;font-family:Verdana;line-height:20px"><strong>Información ingresada por el usuario.</strong></td>
                                                             </tr> 
                                                             <tr>
-                                                                <td bgcolor="#FFFFFF" style="padding:5px 0px 5px 0px">
+                                                                <td style="padding:5px 0px 5px 0px">
                                                                     <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
                                                                         <tbody>
                                                                             <tr>
@@ -76,12 +80,38 @@
                                                                 </td>
                                                             </tr>
                                                             <tr>
-                                                                <td bgcolor="#FFFFFF" style="padding:20px 0px 20px 0px"><hr></td>
+                                                                <td  style="padding:20px 0px 20px 0px"><hr></td>
                                                             </tr>
                                                             <tr>
-                                                                <td bgcolor="#FFFFFF" class="m_-4815641890327514086padding1" style="padding:0px 53px 0px 53px;text-align:justify;line-height:25px;color:#5c6777;font-family:Verdana,sans-serif;font-size:14px">Saludos cordiales.</td>
+                                                                <td  class="m_-4815641890327514086padding1" style="padding:0px 53px 0px 53px;text-align:justify;line-height:25px;color:#5c6777;font-family:Verdana,sans-serif;font-size:14px">Saludos cordiales.</td>
                                                             </tr>
                                                         </tbody>
+
+
+                                                        
+
+  
+  <tbody><tr>
+          <td class="inner contents" style="background: hsl(220 92% 10%);padding-top:10px;padding-bottom:10px;padding-right:10px;padding-left:10px;width:100%;" align="center">
+            <p style="margin-top:0;margin-bottom:0;margin-right:0;margin-left:0;font-style:normal;font-variant:normal;font-weight:normal;font-size:12px;font-family:Arial,sans-serif;line-height:normal;color:#fff;"> Desarrollado con cariño por el equipo Mathiesen </p>
+          </td>
+        </tr>
+      </tbody>
+  
+  
+  
+  <tbody><tr>
+        <td class="inner contents" style="padding: 5px;width:100%;" align="center">
+          <p style="margin-top:0;margin-bottom:0;margin-right:0;margin-left:0;font-style:normal;font-variant:normal;font-weight:normal;font-size:12px;font-family:Arial,sans-serif;line-height:normal;color:#222; text-align: center;">Este es un email generado automáticamente. Por favor no responder.</p>
+        </td>
+      </tr>
+    </tbody>
+  
+
+
+
+
+
                                                     </table>
                                                 </td>
                                             </tr>
