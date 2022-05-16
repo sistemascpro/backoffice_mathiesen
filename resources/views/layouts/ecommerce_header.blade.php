@@ -61,136 +61,6 @@
                   <?php
                 }
                 ?>
-                <!--
-                <a href="#" class="opcion">
-                  <div class="contenido-opcion" onclick="DefinirPais('Argentina')">
-                    <img src="img/flag-ar.png" alt="">
-                    <div class="textos">
-                      <h1 class="titulo">Argentina</h1>
-                    </div>
-                  </div>
-                </a>
-                <a href="#" class="opcion">
-                  <div class="contenido-opcion" onclick="DefinirPais('Bolivia')">
-                    <img src="img/flag-bo.png" alt="">
-                    <div class="textos">
-                      <h1 class="titulo">Bolivia</h1>
-                    </div>
-                  </div>
-                </a>
-                <a href="#" class="opcion">
-                  <div class="contenido-opcion" onclick="DefinirPais('Brasil')">
-                    <img src="img/flag-br.png" alt="">
-                    <div class="textos">
-                      <h1 class="titulo">Brasil</h1>
-                    </div>
-                  </div>
-                </a>
-                <a href="#" class="opcion">
-                  <div class="contenido-opcion" onclick="DefinirPais('Chile')">
-                    <img src="img/flag-cl.png" alt="">
-                    <div class="textos">
-                      <h1 class="titulo">Chile</h1>
-                    </div>
-                  </div>
-                </a>
-                <a href="#" class="opcion">
-                  <div class="contenido-opcion" onclick="DefinirPais('China')">
-                    <img src="img/flag-cn.png" alt="">
-                    <div class="textos">
-                      <h1 class="titulo">China</h1>
-                    </div>
-                  </div>
-                </a>
-                <a href="#" class="opcion">
-                  <div class="contenido-opcion" onclick="DefinirPais('Colombia')">
-                    <img src="img/flag-co.png" alt="">
-                    <div class="textos">
-                      <h1 class="titulo">Colombia</h1>
-                    </div>
-                  </div>
-                </a>
-                <a href="#" class="opcion">
-                  <div class="contenido-opcion" onclick="DefinirPais('Costa Rica')">
-                    <img src="img/flag-cr.png" alt="">
-                    <div class="textos">
-                      <h1 class="titulo">Costa Rica</h1>
-                    </div>
-                  </div>
-                </a>
-                <a href="#" class="opcion">
-                  <div class="contenido-opcion" onclick="DefinirPais('Ecuador')">
-                    <img src="img/flag-ec.png" alt="">
-                    <div class="textos">
-                      <h1 class="titulo">Ecuador</h1>
-                    </div>
-                  </div>
-                </a>
-                <a href="#" class="opcion">
-                  <div class="contenido-opcion" onclick="DefinirPais('España')">
-                    <img src="img/flag-es.png" alt="">
-                    <div class="textos">
-                      <h1 class="titulo">España</h1>
-                    </div>
-                  </div>
-                </a>
-                <a href="#" class="opcion">
-                  <div class="contenido-opcion" onclick="DefinirPais('Guatemala')">
-                    <img src="img/flag-gt.png" alt="">
-                    <div class="textos">
-                      <h1 class="titulo">Guatemala</h1>
-                    </div>
-                  </div>
-                </a>
-                <a href="#" class="opcion">
-                  <div class="contenido-opcion" onclick="DefinirPais('Honduras')">
-                    <img src="img/flag-hn.png" alt="">
-                    <div class="textos">
-                      <h1 class="titulo">Honduras</h1>
-                    </div>
-                  </div>
-                </a>
-                <a href="#" class="opcion">
-                  <div class="contenido-opcion" onclick="DefinirPais('México')">
-                    <img src="img/flag-mx.png" alt="">
-                    <div class="textos">
-                      <h1 class="titulo">México</h1>
-                    </div>
-                  </div>
-                </a>
-                <a href="#" class="opcion">
-                  <div class="contenido-opcion" onclick="DefinirPais('Paraguay')">
-                    <img src="img/flag-py.png" alt="">
-                    <div class="textos">
-                      <h1 class="titulo">Paraguay</h1>
-                    </div>
-                  </div>
-                </a>
-                <a href="#" class="opcion">
-                  <div class="contenido-opcion" onclick="DefinirPais('Perú')">
-                    <img src="img/flag-pe.png" alt="">
-                    <div class="textos">
-                      <h1 class="titulo">Perú</h1>
-                    </div>
-                  </div>
-                </a>
-                <a href="#" class="opcion">
-                  <div class="contenido-opcion" onclick="DefinirPais('República Dominicana')">
-                    <img src="img/flag-do.png" alt="">
-                    <div class="textos">
-                      <h1 class="titulo">República Dominicana</h1>
-                    </div>
-                  </div>
-                </a>
-                <a href="#" class="opcion">
-                  <div class="contenido-opcion" onclick="DefinirPais('Uruguay')">
-                    <img src="img/flag-uy.png" alt="">
-                    <div class="textos">
-                      <h1 class="titulo">Uruguay</h1>
-                    </div>
-                  </div>
-                </a>
-                -->
               </div>
             </div>
       
@@ -219,15 +89,9 @@
     </div>
 </div>
 
-
-     
-      
     </div>
-
     <nav class="navbar navbar-expand-lg navbar-fixed">
-      
       <div class="container-fluid">
-       
         <a class="navbar-brand" href="/eco_index"><img src="img/Logo001.png" alt="Logo"></a>
         <button id="navbar-toggler" class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false" aria-label="Toggle navigation">
           <i style="font-weight:bold; color:#fff;" class="icon icon-menu"></i>
@@ -246,7 +110,6 @@
                 for( $i=0; $i<count($DatosGen['MenuWebPadres']); $i++)
                 {
                     if( $i==0 ) { ?> <div class="group-list group-list-marginFirst"> <?php }
-                    
                     ?><li class="submenu"><a class="dropdown-item" href="#" onclick="CargarProductos('Familia', '<?=$DatosGen['MenuWebPadres'][$i]->id?>')"><?=$DatosGen['MenuWebPadres'][$i]->nombre?></a></li><?php
 
                     if( $Cont%5==0 && $i>0 ) { ?></div><div class="group-list"><?php $Cont=0; }
@@ -256,14 +119,8 @@
                 </div>
              </ul>
             </li>
-            <!-- evidal
-            <li class="nav-item dropdown responsiveHide"><a class="nav-link "href="#">Empresas Productivas</a></li>
-            <li class="nav-item dropdown"><a class="nav-link"href="#">Aplicaciones </a></li>
-            <li class="nav-item dropdown"><a class="nav-link"href="#">Carrera</a></li>
-            <li class="nav-item dropdown"><a class="nav-link"href="#">Noticias</a></li>
-            -->
             <li class="marginButtonNav nav-item dropdown"><a class="nav-link " href="/eco_noticias">Noticias</a></li>
-            <li class="marginButtonNav nav-item dropdown"><button onclick="window.location.href=/eco_contacto" type="button"  style="margin-top: -10px;" class=" btn btn-outline-secondary btn-outline-secondary-mathiense">Contacto</button>  </li>
+            <li class="marginButtonNav nav-item dropdown"><button onclick="CargarContacto();" type="button" style="margin-top: -10px;" class="btn btn-outline-secondary btn-outline-secondary-mathiense">Contacto</button></li>
             <li class="marginButtonNav nav-item dropdown"><button type="button" onclick="CargarCarrito();"  style="margin-top: -10px;" class="btn btn-primar btn-primary-mat">Cotizador</button> </li>
           </ul>
         </div>

@@ -3705,7 +3705,9 @@ textarea.form-control-lg {
   border-color: rgba(0, 0, 0, 0.15);
 }
 .dropdown-menu-dark .dropdown-item {
-  color: #dee2e6;
+  color: var(--gray-900);
+  white-space: unset;
+  text-transform: initial;
 }
 .dropdown-menu-dark .dropdown-item:hover, .dropdown-menu-dark .dropdown-item:focus {
   color: #fff;

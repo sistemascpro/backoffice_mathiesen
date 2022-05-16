@@ -185,7 +185,7 @@ Route::get('/userLogout', [Login_Controller::class, 'userLogout']);
 /***********************************************/
 Route::get('/eco_noticias', [EcoPaginas_Controller::class, 'Noticias']);
 Route::get('/eco_noticia', [EcoPaginas_Controller::class, 'DetalleNoticias']);
-Route::get('/eco_contacto', [EcoPaginas_Controller::class, 'Contacto']);
+Route::post('/eco_contacto', [EcoPaginas_Controller::class, 'Contacto']);
 Route::post('/eco_EnviarRegistro', [SendMail_Controller::class, 'EnviarRegistro']);
 Route::post('/eco_EnviarCorreoContacto', [SendMail_Controller::class, 'EnviarCorreoContacto']);
 Route::get('/eco_registrate', [EcoPaginas_Controller::class, 'registrate']);

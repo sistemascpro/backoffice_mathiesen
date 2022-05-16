@@ -579,6 +579,23 @@ function LoadGrillaProductos(){
     });
 }
 
+function CargarContacto()
+{
+    var form = document.createElement("form");
+    form.method = "POST";
+    form.action = '/eco_contacto';
+    form.target = '_parent';
+
+    var element1 = document.createElement("input");
+    element1.value=$("#_token").val();
+    element1.name="_token";
+    element1.id="_token";
+    element1.type="hidden";
+    form.appendChild(element1);
+
+    document.body.appendChild(form);
+    form.submit();
+}
 function CargarCarrito()
 {
     var form = document.createElement("form");

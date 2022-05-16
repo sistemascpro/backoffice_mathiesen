@@ -9,7 +9,7 @@
         <div class="container-flow fullBanner-sm  "  style="background-image: url('img/contacto.png'); background-repeat: no-repeat; background-size: cover; background-position:top center" >
         </div>
 
-<div class="container contContact" style="position:relative; top:-100px">
+<div class="container contContact" style="position:relative;  margin-top:100px !important;">
      <div class="row">
       <div class="col-xl-6 col-md-12 formContact">
         <h1>Contacto</h1>

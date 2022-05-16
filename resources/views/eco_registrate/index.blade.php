@@ -1,6 +1,6 @@
 @include("eco_templates.eco_template_01")
     <div id="eco_productos">
-        <nav aria-label="breadcrumb">
+        <nav aria-label="breadcrumb" style="margin-left: 28px;">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="/">Página de inicio</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Registro</li>
