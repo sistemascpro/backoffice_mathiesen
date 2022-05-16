@@ -9,7 +9,7 @@ class MantProveedores extends Model
 {
     public static function MakeUpdate($BDBACK, $DataModel, $id)
     {
-        return DB::connection($BDBACK)->table('proveedores')->where('id', $id)->update($DataModel);
+        return DB::connection('pgsql')->table('proveedores')->where('id', $id)->update($DataModel);
     }
 
     public static function ExisteCodigo($BDBACK, $codigo, $id)
@@ -34,7 +34,7 @@ class MantProveedores extends Model
 
     public static function Guardar($BDBACK, $DataModel)
     {
-        return DB::connection($BDBACK)->table('proveedores')->insertGetId($DataModel);
+        return DB::connection('pgsql')->table('proveedores')->insertGetId($DataModel);
     }
 
     public static function GetDetalle($BDBACK, $id)

@@ -9,7 +9,7 @@ class MantProductosFamilias extends Model
 {
     public static function DeleteCaracteristica($BDBACK, $id)
     {
-        return DB::connection($BDBACK)->table('familias_caracteristicas')->where('id', $id)->delete();
+        return DB::connection('pgsql')->table('familias_caracteristicas')->where('id', $id)->delete();
     }
 
     public static function CargarCaracteristicasFamilias($BDBACK, $id)
@@ -34,7 +34,7 @@ class MantProductosFamilias extends Model
 
     public static function GuardarFamiliaCaracteristica($BDBACK, $DataModel)
     {
-        return DB::connection($BDBACK)->table('familias_caracteristicas')->insertGetId($DataModel);
+        return DB::connection('pgsql')->table('familias_caracteristicas')->insertGetId($DataModel);
     }
 
     public static function GetTipoCaracteristica($BDBACK, $id)
@@ -112,7 +112,7 @@ class MantProductosFamilias extends Model
 
     public static function GuardarFamilia($BDBACK, $DataModel)
     {
-        return DB::connection($BDBACK)->table('familias')->insertGetId($DataModel);
+        return DB::connection('pgsql')->table('familias')->insertGetId($DataModel);
     }
 
     public static function ExisteId($id)
@@ -189,7 +189,7 @@ class MantProductosFamilias extends Model
 
     public static function UpdateEstado($BDBACK, $DataModel, $id)
     {
-        return DB::connection($BDBACK)->table('familias')->where('id', $id)->update($DataModel);
+        return DB::connection('pgsql')->table('familias')->where('id', $id)->update($DataModel);
     }
 
     public static function GetList($BDBACK)

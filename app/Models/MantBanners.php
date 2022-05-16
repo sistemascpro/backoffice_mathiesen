@@ -9,17 +9,17 @@ class MantBanners extends Model
 {
     public static function EliminarBanners($BDBACK, $id)
     {
-        return DB::connection($BDBACK)->table('banners')->where('id', $id)->delete();
+        return DB::connection('pgsql')->table('banners')->where('id', $id)->delete();
     }
 
     public static function EliminarProductos($BDBACK, $id)
     {
-        return DB::connection($BDBACK)->table('banners_detalles')->where('banner', $id)->delete();
+        return DB::connection('pgsql')->table('banners_detalles')->where('banner', $id)->delete();
     }
 
     public static function EliminarProducto($BDBACK, $id)
     {
-        return DB::connection($BDBACK)->table('banners_detalles')->where('id', $id)->delete();
+        return DB::connection('pgsql')->table('banners_detalles')->where('id', $id)->delete();
     }
 
     public static function CargarProductosBanners($BDBACK, $Id)
@@ -37,7 +37,7 @@ class MantBanners extends Model
 
     public static function AgregarProducto($BDBACK, $DataModel)
     {
-        return DB::connection($BDBACK)->table('banners_detalles')->insertGetId($DataModel);
+        return DB::connection('pgsql')->table('banners_detalles')->insertGetId($DataModel);
     }
 
     public static function ExisteProductoBanner($BDBACK, $CodProd, $Id)
@@ -52,7 +52,7 @@ class MantBanners extends Model
 
     public static function UpdateBanner($BDBACK, $DataModel, $id)
     {
-        return DB::connection($BDBACK)->table('banners')->where('id', $id)->update($DataModel);
+        return DB::connection('pgsql')->table('banners')->where('id', $id)->update($DataModel);
     }
 
     public static function ExistePosicion($BDBACK, $Posicion, $id)
@@ -67,7 +67,7 @@ class MantBanners extends Model
 
     public static function GuardarBanner($BDBACK, $DataModel)
     {
-        return DB::connection($BDBACK)->table('banners')->insertGetId($DataModel);
+        return DB::connection('pgsql')->table('banners')->insertGetId($DataModel);
     }
 
     public static function GetDetalle($BDBACK, $id)

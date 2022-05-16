@@ -29,7 +29,7 @@ class MantProductos extends Model
 
     public static function GuardarProductosArchivos($BDBACK, $DataModel)
     {
-        return DB::connection($BDBACK)->table('productos_archivos')->insertGetId($DataModel);
+        return DB::connection('pgsql')->table('productos_archivos')->insertGetId($DataModel);
     }
 
     public static function GetMarcas($BDBACK, $id){
@@ -152,22 +152,22 @@ class MantProductos extends Model
 
     public static function EliminarProveedores($BDBACK, $id)
     {
-        return DB::connection($BDBACK)->table('productos_proveedores')->where('fk_producto', $id)->delete();
+        return DB::connection('pgsql')->table('productos_proveedores')->where('fk_producto', $id)->delete();
     }
 
     public static function EliminarPaises($BDBACK, $id)
     {
-        return DB::connection($BDBACK)->table('productos_paises')->where('fk_producto', $id)->delete();
+        return DB::connection('pgsql')->table('productos_paises')->where('fk_producto', $id)->delete();
     }
 
     public static function EliminarFamilias($BDBACK, $id)
     {
-        return DB::connection($BDBACK)->table('productos_familias')->where('fk_producto', $id)->delete();
+        return DB::connection('pgsql')->table('productos_familias')->where('fk_producto', $id)->delete();
     }
     
     public static function EliminarCaracteristicas($BDBACK, $id)
     {
-        return DB::connection($BDBACK)->table('productos_caracteristicas')->where('fk_producto', $id)->delete();
+        return DB::connection('pgsql')->table('productos_caracteristicas')->where('fk_producto', $id)->delete();
     }
 
     public static function CargarFamiliasSecundarias($BDBACK, $id, $producto){
@@ -190,32 +190,32 @@ class MantProductos extends Model
 
     public static function UpdateProducto($BDBACK, $DataModel, $id)
     {
-        return DB::connection($BDBACK)->table('productos')->where('id', $id)->update($DataModel);
+        return DB::connection('pgsql')->table('productos')->where('id', $id)->update($DataModel);
     }
 
     public static function GuardarProductoProveedor($BDBACK, $DataModel)
     {
-        return DB::connection($BDBACK)->table('productos_proveedores')->insertGetId($DataModel);
+        return DB::connection('pgsql')->table('productos_proveedores')->insertGetId($DataModel);
     }
     
     public static function GuardarProductoPais($BDBACK, $DataModel)
     {
-        return DB::connection($BDBACK)->table('productos_paises')->insertGetId($DataModel);
+        return DB::connection('pgsql')->table('productos_paises')->insertGetId($DataModel);
     }
 
     public static function GuardarCaracteristicaProducto($BDBACK, $DataModel)
     {
-        return DB::connection($BDBACK)->table('productos_caracteristicas')->insertGetId($DataModel);
+        return DB::connection('pgsql')->table('productos_caracteristicas')->insertGetId($DataModel);
     }
 
     public static function GuardarProductoFamilia($BDBACK, $DataModel)
     {
-        return DB::connection($BDBACK)->table('productos_familias')->insertGetId($DataModel);
+        return DB::connection('pgsql')->table('productos_familias')->insertGetId($DataModel);
     }
 
     public static function GuardarProducto($BDBACK, $DataModel)
     {
-        return DB::connection($BDBACK)->table('productos')->insertGetId($DataModel);
+        return DB::connection('pgsql')->table('productos')->insertGetId($DataModel);
     }
 
     public static function GetOpcionesSelect($BDBACK, $id){

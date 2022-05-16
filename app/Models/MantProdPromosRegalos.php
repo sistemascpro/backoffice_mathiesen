@@ -10,12 +10,12 @@ class MantProdPromosRegalos extends Model
 
     public static function UpdatePromo($BDBACK, $DataModel, $Id)
     {
-        return DB::connection($BDBACK)->table('prodpromosregalos')->where('id', $Id)->update($DataModel);
+        return DB::connection('pgsql')->table('prodpromosregalos')->where('id', $Id)->update($DataModel);
     }
 
     public static function Guardar($BDBACK, $DataModel)
     {
-        return DB::connection($BDBACK)->table('prodpromosregalos')->insertGetId($DataModel);
+        return DB::connection('pgsql')->table('prodpromosregalos')->insertGetId($DataModel);
     }
 
     public static function ExistePromo($BDBACK, $Prod1, $Cant1, $Fecha1, $Fecha2, $Id)

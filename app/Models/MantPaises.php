@@ -9,7 +9,7 @@ class MantPaises extends Model
 {
     public static function MakeUpdate($BDBACK, $DataModel, $id)
     {
-        return DB::connection($BDBACK)->table('paises')->where('id', $id)->update($DataModel);
+        return DB::connection('pgsql')->table('paises')->where('id', $id)->update($DataModel);
     }
 
     public static function ExisteCodigo($BDBACK, $codigo, $id)
@@ -34,7 +34,7 @@ class MantPaises extends Model
 
     public static function Guardar($BDBACK, $DataModel)
     {
-        return DB::connection($BDBACK)->table('paises')->insertGetId($DataModel);
+        return DB::connection('pgsql')->table('paises')->insertGetId($DataModel);
     }
 
     public static function GetDetalle($BDBACK, $id)
