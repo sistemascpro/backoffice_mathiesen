@@ -440,11 +440,49 @@ function AgregarProducto(Codigo){
 
             if( data=='ERROR_ClienteActivo' )
             {
-                Swal.fire('', 'DEBE INGRESAR COMO CLIENTE!', 'error' );
+                Swal.fire({
+                    title: 'DEBE INGRESAR COMO CLIENTE!',
+                    showDenyButton: true,
+                    showCancelButton: true,
+                    cancelButtonText: 'Volver',
+                    confirmButtonText: 'Ingresar',
+                    denyButtonText: `Registrate`,
+                    }).then((result) => 
+                    {
+                        if(result.isConfirmed)
+                        {
+                            window.location.href = "/login";
+                        }
+                        else if (result.isDenied)
+                        {
+                            window.location.href = "/eco_registrate";
+                        }
+                });
             }
             else if( data=='ERROR_InfoCliente' )
             {
-                Swal.fire('', 'DEBE INGRESAR COMO CLIENTE!', 'error' );
+                Swal.fire({
+                    icon: 'warning',
+                    title: '',
+                    text: 'DEBE INGRESAR COMO CLIENTE!',
+                    showDenyButton: true,
+                    showCancelButton: true,
+                    cancelButtonText: 'Volver',
+                    confirmButtonText: 'Ingresar',
+                    confirmButtonColor: '#069A8E',
+                    denyButtonText: `Registrate`,
+                    denyButtonColor: '#005555',
+                    }).then((result) => 
+                    {
+                        if(result.isConfirmed)
+                        {
+                            window.location.href = "/login";
+                        }
+                        else if (result.isDenied)
+                        {
+                            window.location.href = "/eco_registrate";
+                        }
+                });
             }
             else if( data=='ERROR_InfoProducto' )
             {

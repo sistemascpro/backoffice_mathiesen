@@ -564,7 +564,7 @@ class Eco_Controller extends BaseController
                     <svg width=\"24\" height=\"24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\" class=\"Icon-sc-11g2u8u-0 kxjGOY\" viewBox=\"0 0 24 24\" data-icon-name=\"file24\"><path d=\"M13 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V9l-7-7z\" stroke=\"#000\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path><path d=\"M13 2v7h7\" stroke=\"#000\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg>
                     </span>
                     <span> ".$ContDocumentos." documentos</span>
-                    <p>  Para ver los archivos <a href=\"registro1.html\">regístrate</a>  o  <a href=\"loging.html\">inicia sesión</a> </p>
+                    <p>  Para ver los archivos <strong><a href=\"registro1.html\" class=\"text-success\">regístrate</a></strong>  o  <strong><a href=\"loging.html\" class=\"text-success\">inicia sesión</a></strong> </p>
                 </div>
             </div>
             ";
