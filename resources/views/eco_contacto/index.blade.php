@@ -1,15 +1,15 @@
     @include("eco_templates.eco_template_01")
     <div id="eco_productos">
-        <nav aria-label="breadcrumb" style="margin-left: 28px;">
+        <nav aria-label="breadcrumb" style="margin-left: 28px; padding: 20px 0">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="/">Página de inicio</a></li>
             <li class="breadcrumb-item active" aria-current="page">Página de contacto</li>
         </ol>
         </nav>
-        <div class="container-flow fullBanner-sm  "  style="background-image: url('img/contacto.png'); background-repeat: no-repeat; background-size: cover; background-position:top center" >
+        <div class="container-flow fullBanner-sm2  "  style="background-image: url('img/contacto.png'); background-repeat: no-repeat; background-size: cover; background-position:top center" >
         </div>
 
-<div class="container contContact" style="position:relative;  margin-top:100px !important;">
+<div class="container contContact" style="position:relative;  margin-top:-80px !important;">
      <div class="row">
       <div class="col-xl-6 col-md-12 formContact">
         <h1>Contacto</h1>

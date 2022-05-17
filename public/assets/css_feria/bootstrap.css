@@ -4504,9 +4504,10 @@ textarea.form-control-lg {
 .breadcrumb {
   display: flex;
   flex-wrap: wrap;
-  padding: 0 0;
+  padding: 20px 0;
   margin-bottom: 1rem;
   list-style: none;
+  
 }
 
 .breadcrumb-item + .breadcrumb-item {

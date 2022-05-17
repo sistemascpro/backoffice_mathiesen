@@ -147,6 +147,8 @@ span.separator {
 .theme-border2 {
   border: 2px solid #ff7519 !important; }
 
+ 
+
 @media screen and (min-width: 1200px) {
   .position-xl-relative {
     position: relative; } }
@@ -1032,6 +1034,8 @@ textarea:active::placeholder {
 /****************************
  button style
  ****************************/
+ .breadcrumb-item {
+  padding-top: 20px!important; }
 .btn {
   font-family: "Gilroy-Bold ☞";
   font-size: 14px;
