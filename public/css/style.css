@@ -1061,6 +1061,8 @@ width: 100%;
 
 .dropdown-menu-dark .dropdown-item {
   color: var(--gray-900);
+  white-space: unset;
+  text-transform: initial;
 }
 
 .dropdown-menu-dark:hover .dropdown-item:hover {
