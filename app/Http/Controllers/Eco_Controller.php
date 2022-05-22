@@ -1154,7 +1154,7 @@ class Eco_Controller extends BaseController
 
         $Salida .="
         <div class=\"row\">
-            <div class=\"col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xxx-4\" >
+            <div class=\"col-xs-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xxx-3\" >
                 <form class=\"row g-3\" method=\"post\" id=\"FormFiltrarGrillaProductos\" enctype=\"multipart/form-data\">
                 <input type=\"hidden\" name=\"_token\" value=\"6bfqImq0ntza9OxGugdtJwmNFtk3gfOfIY1Qghty\">
                 <input type=\"hidden\" id=\"Codigo\" name=\"Codigo\" value=\"".$data['Codigo']."\" readonly/>
@@ -1299,7 +1299,7 @@ class Eco_Controller extends BaseController
                                 </div>
             </form>
             </div>
-            <div class=\"col-md-8\">
+            <div class=\"col-md-9\">
                 <nav aria-label=\"Page navigation example\">
                     <ul class=\"pagination\">
                         ";

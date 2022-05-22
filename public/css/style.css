@@ -722,10 +722,17 @@ margin-top: 0;
 
 .accordion-item {
   border: unset!important;
+text-align: left;
 
   border-bottom: 1px solid rgba(0,0,0,.125)!important;
 
 
+}
+
+.accordion-item h4 {
+font-size: 16px;
+text-align: left;
+font-weight: bold;
 }
 
 
