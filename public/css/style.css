@@ -80,10 +80,9 @@ body {
 }
 
 .bodyRegistro {
-  background-image: url(../images/bg-abstract3.png)!important ; 
-  background-position: top right!important;
-    background-repeat: no-repeat!important;
-background-size:45% 75%;
+  background-image: url(../images/bg-abstract33.png)!important ; 
+  background-size:cover;
+  background-repeat:no-repeat;
 
 }
 a { color:var(--acent-500)}
@@ -1520,7 +1519,7 @@ width: 100%;
     background: var(--primary-50);
     padding: 30px;
     border-radius: 16px;
-    box-shadow: 0 1px 5px 1px #f1f1f1;
+    box-shadow: 0 1px 17px 6px #00000059;
 }
 
 .center-card__body h1 {

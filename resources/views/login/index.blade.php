@@ -14,7 +14,7 @@
   <title>Registro</title>
 </head>
 
-<body class="bodyRegistro" style="background:#fff">
+<body class="bodyRegistro">
 
 
 
