@@ -1517,7 +1517,26 @@ width: 100%;
   float: right;
   margin-top: 5px;
 }
-
+.cont-cart {
+  position:relative;
+  float: right;
+}
+.bubble-number {
+  width: 20px;
+    height: 20px;
+    text-align: center;
+    background-color: #ff4400;
+    color: #fff;
+    font-size: 10px;
+    font-weight: bold;
+    position: absolute;
+    z-index: 2;
+    top: -2px;
+    border-radius: 44px;
+    box-sizing: border-box;
+    padding: 2px;
+    left: 17px;
+}
 .center-card__body {
   min-height: 26rem;
     padding-bottom: 0;
