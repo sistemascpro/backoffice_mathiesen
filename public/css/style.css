@@ -1327,8 +1327,8 @@ color:#fff;
 .registroItem{
   width:100%;
   display: block;
-  height: 150px;
-  margin-top: 35px;
+  height: 120px;
+  margin-top: 16px;
   border: solid 1px var(--acent-300);
   padding: 30px;
   box-sizing: border-box;
@@ -1401,7 +1401,7 @@ font-weight: 700;
 90deg);
 position: absolute;
 right:13px;
-top: 64px;
+top: 45px;
 }
 
 .registroItem h1{
@@ -1410,7 +1410,7 @@ top: 64px;
   font-weight: 450;
   display: block;
   margin-bottom: 4px;
-    margin-top: 14px;
+    margin-top: 0;
 }
 
 .subtitle-r {
