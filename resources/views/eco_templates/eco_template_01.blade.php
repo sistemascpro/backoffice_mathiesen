@@ -14,14 +14,14 @@
 
     <link rel="stylesheet" href="css/bootstrap.min.css"/>
     <link rel="stylesheet" href="css/style.css?<?=date("YmdHis")?>"/>
-    <link rel="stylesheet" href="css/icon.css"/>
-    <link rel="stylesheet" href="css/searchBar.css"/>
-    <link rel="stylesheet" href="css/searchBarPlp.css"/>
-    <link rel="stylesheet" href="css/font-awesome.min.css"/>
-    <link rel="stylesheet" href="css/controls.css"/>
-    <link rel="stylesheet" href="css/widgetSelect.css"/>
-    <link rel="stylesheet" href="css/themes/default/default.css"/>
-    <link rel="stylesheet" href="css/nivo-slider.css"/>
+    <link rel="stylesheet" href="css/icon.css?<?=date("YmdHis")?>"/>
+    <link rel="stylesheet" href="css/searchBar.css?<?=date("YmdHis")?>"/>
+    <link rel="stylesheet" href="css/searchBarPlp.css?<?=date("YmdHis")?>"/>
+    <link rel="stylesheet" href="css/font-awesome.min.css?<?=date("YmdHis")?>"/>
+    <link rel="stylesheet" href="css/controls.css?<?=date("YmdHis")?>"/>
+    <link rel="stylesheet" href="css/widgetSelect.css?<?=date("YmdHis")?>"/>
+    <link rel="stylesheet" href="css/themes/default/default.css?<?=date("YmdHis")?>"/>
+    <link rel="stylesheet" href="css/nivo-slider.css?<?=date("YmdHis")?>"/>
     
 </head>
 
