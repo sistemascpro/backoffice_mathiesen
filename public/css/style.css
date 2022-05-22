@@ -1511,6 +1511,13 @@ width: 100%;
   margin-top: 40px;
 }
 
+.loginBox svg {
+  color: #fff;
+  width: 26px;
+  float: right;
+  margin-top: 5px;
+}
+
 .center-card__body {
   min-height: 26rem;
     padding-bottom: 0;
