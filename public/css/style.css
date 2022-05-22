@@ -676,13 +676,29 @@ margin-top: 0;
 }
 
 .cat-sumary {
-  width: 100%;
-  float: left;
-  padding: 16px;
-  box-sizing: border-box;
-  background-color: #fff;
-  margin-top: 24px;
-  margin-bottom: 34px;
+  width: auto;
+    float: left;
+    padding: 14px;
+    box-sizing: border-box;
+    background-color: #ffffff;
+    margin-top: 24px;
+    margin-bottom: 34px;
+    top: 152px;
+    position: absolute;
+}
+
+@media only screen and (max-width: 991px) {
+  .cat-sumary {
+    width: 100%;
+      float: left;
+      padding: 14px;
+      box-sizing: border-box;
+      background-color: #ffffff;
+      margin-top: 24px;
+      margin-bottom: 34px;
+      top: unset;
+      position: unset;
+  }
 }
 
 

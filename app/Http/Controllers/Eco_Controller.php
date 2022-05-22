@@ -1148,12 +1148,12 @@ class Eco_Controller extends BaseController
         <div class=\"container\">
             <div class=\"cat-sumary col-12 mb-3\">
                 <h1>".mb_strtoupper($NombreProductos)."</h1>
-                ".mb_strtoupper($Descripcion).".</p>
+              
             </div>
         ";
 
         $Salida .="
-        <div class=\"row\">
+        <div style=\"padding-top:30px\" class=\"row\">
             <div class=\"col-xs-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xxx-3\" >
                 <form class=\"row g-3\" method=\"post\" id=\"FormFiltrarGrillaProductos\" enctype=\"multipart/form-data\">
                 <input type=\"hidden\" name=\"_token\" value=\"6bfqImq0ntza9OxGugdtJwmNFtk3gfOfIY1Qghty\">
@@ -1293,7 +1293,7 @@ class Eco_Controller extends BaseController
                                 $Salida .="
                                 <div class=\"accordion  text-center\" id=\"accordionPanelsStayOpenExample\" style=\"margin:0px !important; padding-bottom:10px !important;\">
                                     <div class=\"accordion-item mb-10\" style=\"padding-bottom:10px !important;\">
-                                        <button style=\"font-size: 20px; padding: 8px 10px; border-radius: 6px;\" type=\"button\" class=\"mt-3 btn btn-primary btn-lg\" onclick=\"LoadFiltrarGrillaProductos();\">FILTRAR</button>
+                                        <button style=\"font-size: 14px; padding: 8px 10px; border-radius: 6px; margin: 0 20px\" type=\"button\" class=\"mt-3 btn btn-primary btn-lg\" onclick=\"LoadFiltrarGrillaProductos();\">FILTRAR</button>
                                         <br>
                                     </div>
                                 </div>
