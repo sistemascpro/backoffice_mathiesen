@@ -57,6 +57,9 @@
         
         
         <button type="submit" class="btn btn-primar  btn-lg btn-primary-mat" style="width:100%; margin-top:20px">Continuar</button>
+        <p class="mt-3">
+          <strong><a href="registro1.html" class="text-success">Regístrate</a></strong>
+        </p>
       </form>
     </div>
   </div>

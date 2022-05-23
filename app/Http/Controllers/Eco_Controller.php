@@ -20,6 +20,7 @@ use Mail;
 
 class Eco_Controller extends BaseController
 {
+
     public function GetSinCorreo(Request $req) {
         $DatosGen = app('App\Http\Controllers\Home_Controller')->DatosGen($req);
         $Pedido = EcoModel::GetSinCorreo($DatosGen['NombreEmpresa'][0]->bd, $DatosGen['NombreEmpresa'][0]->bdbackoffice);
@@ -322,6 +323,27 @@ class Eco_Controller extends BaseController
         return EcoModel::getSubtotalTemporal($req->session()->get('cliente_codigo'), $DatosGen['NombreEmpresa'][0]->bdbackoffice);
     }
 
+    
+    public function CargarCotizador(Request $req) {
+        $data = $req->input();
+        $DatosGen = app('App\Http\Controllers\Home_Controller')->DatosGen($req);
+
+        $ClienteInfo = EcoModel::getInfoCliente($DatosGen['NombreEmpresa'][0]->bd, $req->session()->get('cliente_codigo'));
+
+        if( $req->session()->get('cliente_codigo')=='0' ) 
+        {
+            return "ERROR_ClienteActivo";
+        }
+        else if( count($ClienteInfo)<=0 )
+        {
+            return "ERROR_ClienteActivo";
+        }
+        else 
+        {
+            return "OK";
+        }
+    }
+
     public function addProducto(Request $req) {
         $data = $req->input();
         $DatosGen = app('App\Http\Controllers\Home_Controller')->DatosGen($req);
@@ -457,9 +479,12 @@ class Eco_Controller extends BaseController
         for($i=0; $i<count($Productos); $i++)
         {
             $Imagen = '';
-            if($i%2==0){
+            if($i%2==0)
+            {
                 $Imagen = 'producto_sample_001.jpg';
-            }else{
+            }
+            else
+            {
                 $Imagen = 'producto_sample_002.jpg';
             }
 
@@ -469,7 +494,7 @@ class Eco_Controller extends BaseController
             }
             else
             {
-                $imagen1 = '../img/productos/SinImagen.jpg?'.date("YmdHms");
+                $imagen1 = '';
             }
 
             if($Productos[$i]->imagen2!=null && file_exists('../public/'.$Productos[$i]->imagen2))
@@ -517,29 +542,29 @@ class Eco_Controller extends BaseController
                 $imagen6 = '../img/productos/SinImagen.jpg?'.date("YmdHms");
             }
 
-            $Salida .= "
-            <div class=\"container contPdp\">
-        <div class=\"row\">
-            <div class=\"col-xl-12 \">
-                <div class=\"col-xl-12 col-md-12\" style=\"border-bottom: solid 1px #c3c3c3; margin-bottom: 24px; padding-bottom: 24px;\">
-            <div class=\"row\">
-    <div class=\"col-xl-4 col-md-4 col-sm-12 imgPlp-modal\">
-        <div id=\"ImgDetalleProducto\">
-            <img src=\"".$imagen1."\">
-        </div>
-        <div class=\"row mt-3\">
-            <div class=\"col-2\" style=\"cursor:pointer\" onclick=\"SetImagenProducto('".$imagen1."')\"><img src=\"".$imagen1."\"></div>
-            <div class=\"col-2\" style=\"cursor:pointer\" onclick=\"SetImagenProducto('".$imagen2."')\"><img src=\"".$imagen2."\"></div>
-            <div class=\"col-2\" style=\"cursor:pointer\" onclick=\"SetImagenProducto('".$imagen3."')\"><img src=\"".$imagen3."\"></div>
-            <div class=\"col-2\" style=\"cursor:pointer\" onclick=\"SetImagenProducto('".$imagen4."')\"><img src=\"".$imagen4."\"></div>
-            <div class=\"col-2\" style=\"cursor:pointer\" onclick=\"SetImagenProducto('".$imagen5."')\"><img src=\"".$imagen5."\"></div>
-            <div class=\"col-2\" style=\"cursor:pointer\" onclick=\"SetImagenProducto('".$imagen6."')\"><img src=\"".$imagen6."\"></div>
-        </div>
-        ";
+            if( $imagen1!='' )
+            {
+                $ImagenGalegry = "
+                <div id=\"ImgDetalleProducto\">
+                    <img src=\"".$imagen1."\">
+                </div>
+                <div class=\"row mt-3\">
+                    <div class=\"col-2\" style=\"cursor:pointer\" onclick=\"SetImagenProducto('".$imagen1."')\"><img src=\"".$imagen1."\"></div>
+                    <div class=\"col-2\" style=\"cursor:pointer\" onclick=\"SetImagenProducto('".$imagen2."')\"><img src=\"".$imagen2."\"></div>
+                    <div class=\"col-2\" style=\"cursor:pointer\" onclick=\"SetImagenProducto('".$imagen3."')\"><img src=\"".$imagen3."\"></div>
+                    <div class=\"col-2\" style=\"cursor:pointer\" onclick=\"SetImagenProducto('".$imagen4."')\"><img src=\"".$imagen4."\"></div>
+                    <div class=\"col-2\" style=\"cursor:pointer\" onclick=\"SetImagenProducto('".$imagen5."')\"><img src=\"".$imagen5."\"></div>
+                    <div class=\"col-2\" style=\"cursor:pointer\" onclick=\"SetImagenProducto('".$imagen6."')\"><img src=\"".$imagen6."\"></div>
+                </div>";
+            }
+            else
+            {
+                $ImagenGalegry = '';
+            }
 
-        if( $req->session()->get('cliente_codigo')!='0' && $req->session()->get('cliente_codigo')!='' && $req->session()->get('cliente_codigo')!=null )
+            if( $req->session()->get('cliente_codigo')!='0' && $req->session()->get('cliente_codigo')!='' && $req->session()->get('cliente_codigo')!=null )
         {
-            $Salida .="
+            $DocumentDownload ="
             <div class=\"downloadFile\">
                 <div class=\"downloadFile-inner\">
                     <h2>Documentos</h2>";
@@ -556,7 +581,8 @@ class Eco_Controller extends BaseController
             if ($Productos[$i]->fichatecnica!=null  ){ $ContDocumentos++; }
             if ($Productos[$i]->hojaseguridad!=null  ){ $ContDocumentos++; }
             if ($Productos[$i]->archivoextra!=null  ){ $ContDocumentos++; }
-            $Salida .="
+            
+            $DocumentDownload ="
             <div class=\"downloadFile\">
                 <div class=\"downloadFile-inner\">
                     <h2>Documentos</h2>
@@ -569,6 +595,20 @@ class Eco_Controller extends BaseController
             </div>
             ";
         }
+
+            $Salida .= "
+            <div class=\"container contPdp\">
+        <div class=\"row\">
+            <div class=\"col-xl-12 \">
+                <div class=\"col-xl-12 col-md-12\" style=\"border-bottom: solid 1px #c3c3c3; margin-bottom: 24px; padding-bottom: 24px;\">
+            <div class=\"row\">
+                <div class=\"col-xl-4 col-md-4 col-sm-12 imgPlp-modal\">                    
+                ".$ImagenGalegry."
+                ".$DocumentDownload."
+                ";
+    
+
+        
 
     $Salida .="
     </div>
@@ -1123,7 +1163,7 @@ class Eco_Controller extends BaseController
         </div>";
 
         $Ornenometro1 ="
-        <select class=\"border border-default form-sm form-control-sm\" id=\"OrdenoMetro\" name=\"OrdenoMetro\" style=\"background-color: white; padding:0px 0px 0px 5px !important\" onChange=\"CargarProductos('".$Type."','".$Codigo."');\">";
+        <select class=\"border border-default form-sm form-control-sm\" id=\"OrdenoMetro\" name=\"OrdenoMetro\" style=\"width: 100% !important; background-color: white; padding:0px 0px 0px 5px !important\" onChange=\"CargarProductos('".$Type."','".$Codigo."');\">";
             if( $Order==1) { $Selected = " selected "; }else{ $Selected = " "; }
             $Ornenometro1 .= "<option style=\"display:block;width:100%;\" value=\"1\" ".$Selected.">Nombre A -> Z</option>";
             if( $Order==2) { $Selected = " selected "; }else{ $Selected = " "; }
@@ -1132,7 +1172,7 @@ class Eco_Controller extends BaseController
         ";
 
         $Ornenometro2 ="
-        <select class=\"border border-default form form-control-sm\" id=\"OrdenoMetroCant\" name=\"OrdenoMetroCant\" style=\"background-color: white; padding:0px 0px 0px 5px !important\" onChange=\"CargarProductos('".$Type."','".$Codigo."');\">";
+        <select class=\"border border-default form form-control-sm\" id=\"OrdenoMetroCant\" name=\"OrdenoMetroCant\" style=\"width:100% !important; background-color: white; padding:0px 0px 0px 5px !important\" onChange=\"CargarProductos('".$Type."','".$Codigo."');\">";
             if( $OrderCant==12) { $Selected = " selected "; }else{ $Selected = " "; }
             $Ornenometro2 .= "<option value=\"12\" ".$Selected.">12</option>";
             if( $OrderCant==24) { $Selected = " selected "; }else{ $Selected = " "; }
@@ -1300,25 +1340,29 @@ class Eco_Controller extends BaseController
             </form>
             </div>
             <div class=\"col-md-9\">
-                <nav aria-label=\"Page navigation example\">
-                    <ul class=\"pagination\">
-                        ";
-                        for($i=1; $i<=$TotPaginator; $i++){
-                            if($i==1){ $Active = ' active '; } else { $Active = '';}
-                            $Salida .= "<li id=\"page-item-btn-".$i."_1\" class=\"page-item-btn page-item ".$Active."\" onclick=\"CargarPaginator(".$i.");\" style=\"cursor:pointer;\">
-                            <a class=\"page-link\" href=\"#top\">".$i."</a>
-                            </li>";
-                        }
-                    $Salida .="
-                    </ul>
-                </nav>
-                <div class=\"row topFilter\">
-                    <div class=\"col-sm-6 col-md-6 col-lg-8 col-xl-8  position-relative numberItem\">".count($Productos)." productos encontrados.</div>
-                    <div class=\"col-sm-3 col-md-3 col-lg-2 col-xl-2  position-relative\">
-                    ".$Ornenometro1."
+                <div class=\"row\">
+                    <div class=\"col-5\">
+                        <nav aria-label=\"Page navigation example\">
+                            <ul class=\"pagination\">
+                                ";
+                                for($i=1; $i<=$TotPaginator; $i++){
+                                    if($i==1){ $Active = ' active '; } else { $Active = '';}
+                                    $Salida .= "<li id=\"page-item-btn-".$i."_1\" class=\"page-item-btn page-item ".$Active."\" onclick=\"CargarPaginator(".$i.");\" style=\"cursor:pointer;\">
+                                    <a class=\"page-link\" href=\"#top\">".$i."</a>
+                                    </li>";
+                                }
+                            $Salida .="
+                            </ul>
+                        </nav>
                     </div>
-                    <div class=\" col-sm-3 col-md-3 col-lg-2 col-xl-2  position-relative\">
-                    ".$Ornenometro2."
+                    <div class=\"row col-7 topFilter\">
+                        <div style=\"margin:0px !important; padding:0 !important; font-size:14px !important;\" class=\"col-5 position-relative numberItem\">".count($Productos)." productos encontrados.</div>
+                        <div style=\"margin:0px !important; padding:0 !important;\" class=\"col-4 position-relative\">
+                        ".$Ornenometro1."
+                        </div>
+                        <div style=\"margin:0px !important; padding:0 !important;\" class=\"col-3 position-relative\">
+                        ".$Ornenometro2."
+                        </div>
                     </div>
                 </div>
         ";
@@ -1348,7 +1392,7 @@ class Eco_Controller extends BaseController
                 if($Productos[$i]->imagen1!=null && file_exists('../public/'.$Productos[$i]->imagen1)){
                     $imagen = ''.$Productos[$i]->imagen1.'?'.date("YmdHms");
                 }else{
-                    $imagen = 'img/productos/SinImagen.jpg?'.date("YmdHms");
+                    $imagen = '';
                 }
 
                 $BackGround = '';
@@ -1361,13 +1405,17 @@ class Eco_Controller extends BaseController
 
                 $Salida .= "
                 <div class=\"cont-product-cardInfo mb-3\">
-                <div class=\"data-info\">
-                    <div class=\"imgPlp\">
-                        <img src=\"".$imagen."\">
-                    </div>
-                    <div class=\"cont-textInfo\">
+                <div class=\"data-info\">";
+                    if( $imagen!='' )
+                    {
+                        $Salida .="<div class=\"imgPlp\">
+                            <img src=\"".$imagen."\">
+                        </div>";
+                    }
+                    
+                    $Salida .="<div class=\"cont-textInfo\">
                         <span class=\"pdpCat\">".$NombreProductos."</span>
-                        <h2>".$Productos[$i]->descripcion."</h2>
+                        <h2 style=\"cursor:pointer !important;\" onclick=\"CargarModalProducto('".$Productos[$i]->codigo."');\">".$Productos[$i]->descripcion."</h2>
                         <span class=\"idPlp\">COD: ".$Productos[$i]->id." -- ".$Productos[$i]->codigo."</span>
                         <div class=\"descriptionPlp\">".substr(nl2br($Productos[$i]->desextra),0,250)."...</div>
                     </div>

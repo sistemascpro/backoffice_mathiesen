@@ -33,7 +33,7 @@ class EcoModel extends Model
         return DB::select("
         SELECT 
         id
-        , UPPER(nombre) as nombre
+        , nombre as nombre
         FROM ".$BDBACK.".public.familias
         where
         estado =true
@@ -45,7 +45,7 @@ class EcoModel extends Model
         return DB::select("
         SELECT 
         id
-        , UPPER(nombre) as nombre
+        , nombre as nombre
         FROM ".$BDBACK.".public.marcas
         where
         estado =true
@@ -57,7 +57,7 @@ class EcoModel extends Model
         return DB::select("
         SELECT 
         id
-        , UPPER(nombre) as nombre
+        , nombre as nombre
         FROM ".$BDBACK.".public.proveedores
         where
         estado =true
@@ -69,7 +69,7 @@ class EcoModel extends Model
         return DB::select("
         SELECT 
         id
-        , UPPER(nombre) as nombre
+        , nombre as nombre
         FROM ".$BDBACK.".public.paises
         where
         estado =true
@@ -80,7 +80,7 @@ class EcoModel extends Model
     {
         return DB::select("
         SELECT 
-        UPPER(prov.nombre) as nombre
+        prov.nombre as nombre
         FROM ".$BDBACK.".public.productos_proveedores as prodprov
         INNER join ".$BDBACK.".public.proveedores as prov on prodprov.fk_proveedor=prov.id
         where
@@ -92,7 +92,7 @@ class EcoModel extends Model
     {
         return DB::select("
         SELECT 
-        UPPER(fam.nombre) as nombre
+        fam.nombre as nombre
         FROM ".$BDBACK.".public.productos_familias as prodfam
         INNER join ".$BDBACK.".public.familias as fam on prodfam.fk_familia=fam.id
         where
@@ -104,7 +104,7 @@ class EcoModel extends Model
     {
         return DB::select("
         SELECT 
-        UPPER(pais.nombre) as nombre
+        pais.nombre as nombre
         FROM ".$BDBACK.".public.productos_paises as prodpais
         INNER join ".$BDBACK.".public.paises as pais on prodpais.fk_pais=pais.id
         where

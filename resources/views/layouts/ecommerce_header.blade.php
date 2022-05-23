@@ -125,7 +125,7 @@
             </li>
             <li class="marginButtonNav nav-item dropdown"><a class="nav-link " href="/eco_noticias">Noticias</a></li>
             <li class="marginButtonNav nav-item dropdown"><button onclick="CargarContacto();" type="button" style="margin-top: -10px;" class="btn btn-outline-secondary btn-outline-secondary-mathiense">Contacto</button></li>
-            <li class="marginButtonNav nav-item dropdown"><button type="button" onclick="CargarCarrito();"  style="margin-top: -10px;" class="btn btn-primar btn-primary-mat">Cotizador</button> </li>
+            <li class="marginButtonNav nav-item dropdown"><button type="button" onclick="CargarCotizador();"  style="margin-top: -10px;" class="btn btn-primar btn-primary-mat">Cotizador</button> </li>
           </ul>
         </div>
       </div>

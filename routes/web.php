@@ -86,6 +86,7 @@ Route::post('/mant_prodpromosregalosCargarProducto', [MantProdPromosRegalos_Cont
 Route::post('/mant_prodpromosregalosCrearEditar', [MantProdPromosRegalos_Controller::class, 'CrearEditar']);
 Route::get('/mant_prodpromosregalos', [MantProdPromosRegalos_Controller::class, 'index']);
 /***********************************************/
+Route::post('/eco_CargarCotizador', [Eco_Controller::class, 'CargarCotizador']);
 Route::post('/eco_RealizarPago', [Eco_Controller::class, 'RealizarPago']);
 Route::post('/eco_UpdateComentario', [Eco_Controller::class, 'UpdateComentario']);
 Route::post('/eco_UpdateDireccionDespacho', [Eco_Controller::class, 'UpdateDireccionDespacho']);

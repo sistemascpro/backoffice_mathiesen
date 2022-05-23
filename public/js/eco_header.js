@@ -426,6 +426,83 @@ function GetDetalleBolsa(){
     });
 }
 
+function CargarCotizador(){
+    
+    $.ajax({
+        url: 'eco_CargarCotizador',
+        type: 'POST',
+        headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+        data: {
+            _token : $("#_token").val()
+        },
+        success:function(data) {
+
+            if( data=='ERROR_ClienteActivo' )
+            {
+                Swal.fire({
+                    icon: 'warning',
+                    text: 'DEBE INGRESAR COMO CLIENTE!',
+                    showDenyButton: true,
+                    showCancelButton: true,
+                    
+                    confirmButtonText: 'Ingresar',
+                    confirmButtonColor: '#83BD75',
+
+                    denyButtonText: `Registrate`,
+                    denyButtonColor: `#4E944F`,
+
+                    cancelButtonText: 'Volver',
+                    cancelButtonColor: '#73777B',
+                    
+
+                    }).then((result) => 
+                    {
+                        if(result.isConfirmed)
+                        {
+                            window.location.href = "/login";
+                        }
+                        else if (result.isDenied)
+                        {
+                            window.location.href = "/eco_registrate";
+                        }
+                });
+            }
+            else if( data=='ERROR_InfoCliente' )
+            {
+                Swal.fire({
+                    icon: 'warning',
+                    title: '',
+                    text: 'DEBE INGRESAR COMO CLIENTE!',
+                    showDenyButton: true,
+                    showCancelButton: true,
+                    cancelButtonText: 'Volver',
+                    confirmButtonText: 'Ingresar',
+                    confirmButtonColor: '#069A8E',
+                    denyButtonText: `Registrate`,
+                    denyButtonColor: '#005555',
+                    }).then((result) => 
+                    {
+                        if(result.isConfirmed)
+                        {
+                            window.location.href = "/login";
+                        }
+                        else if (result.isDenied)
+                        {
+                            window.location.href = "/eco_registrate";
+                        }
+                });
+            }
+            else 
+            {
+                window.location.href = "/carrito";
+            }
+        },error:function(XMLHttpRequest,textStatus,errorThrown) {
+            $('#ModalSingleProduct').modal('hide');
+            Swal.fire('', 'NO SE LOGRO AGREGAR EL PRODUCTO, FAVOR CONTACTAR A SOPORTE!', 'error' );
+        }
+    });
+}
+
 function AgregarProducto(Codigo){
     
     $.ajax({
